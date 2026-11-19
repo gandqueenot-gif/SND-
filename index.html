@@ -166,15 +166,11 @@ tbody tr:last-child td{border-bottom:0}
 <div class="auth-gate" id="auth-gate">
  <form class="auth-card" id="login-form">
   <div class="eyebrow">SND / SECURE ACCESS</div>
-  <h2>Operator sign in</h2>
-  <p>Sign in with an account created by the SND project administrator in Firebase Authentication.</p>
-  <label for="login-email">Email address</label>
-  <input id="login-email" type="email" autocomplete="username" required placeholder="name@example.com">
-  <label for="login-password">Password</label>
-  <input id="login-password" type="password" autocomplete="current-password" required placeholder="Password">
-  <button class="btn primary" id="login-submit" type="submit">Sign in to SND</button>
+  <h2>Sign in to SND</h2>
+  <p>Use one of the three Google accounts authorized for this project.</p>
+  <button class="btn primary" id="google-login" type="button">Continue with Google</button>
   <div class="auth-error" id="auth-error" role="alert"></div>
-  <p class="auth-note">Accounts are provisioned by the project administrator. Do not share passwords. Firebase stores the authenticated session; incident records are stored in Cloud Firestore.</p>
+  <p class="auth-note">Your assigned role determines which SND workspace opens. Access is checked against the project's Firebase role registry.</p>
  </form>
 </div>
 
@@ -243,8 +239,8 @@ tbody tr:last-child td{border-bottom:0}
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, updateDoc, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 
 (()=>{
 "use strict";
@@ -265,15 +261,15 @@ const db=getFirestore(firebaseApp);
 let currentUser=null, stopIncidentFeed=null, remoteIncidents=[], firebaseReady=false;
 const authGate=$("auth-gate"), appShell=$("app-shell");
 function setAuthError(message){$("auth-error").textContent=message||""}
-$("login-form").addEventListener("submit",async e=>{
- e.preventDefault();setAuthError("");
- const email=$("login-email").value.trim(), password=$("login-password").value;
- const button=$("login-submit");button.disabled=true;button.textContent="Signing in…";
- try{await signInWithEmailAndPassword(auth,email,password)}
- catch(err){setAuthError(err.code==="auth/invalid-credential"?"Email or password is incorrect.":err.code==="auth/too-many-requests"?"Too many attempts. Try again later.":"Sign-in failed: "+err.message)}
- finally{button.disabled=false;button.textContent="Sign in to SND"}
+const googleProvider=new GoogleAuthProvider();
+googleProvider.setCustomParameters({prompt:"select_account"});
+$("google-login").addEventListener("click",async()=>{
+ const button=$("google-login");setAuthError("");
+ button.disabled=true;button.textContent="Redirecting to Google…";
+ try{await signInWithRedirect(auth,googleProvider)}
+ catch(err){setAuthError("Google sign-in failed: "+(err.message||err.code));button.disabled=false;button.textContent="Continue with Google"}
 });
-$("signout").addEventListener("click",()=>signOut(auth));
+getRedirectResult(auth).catch(err=>setAuthError("Google sign-in failed: "+(err.message||err.code)));
 function startIncidentFeed(){
  if(stopIncidentFeed)stopIncidentFeed();
  const q=query(collection(db,"sndIncidents"),orderBy("updatedAt","desc"),limit(30));
@@ -287,17 +283,32 @@ function startIncidentFeed(){
   notify("Firestore read failed: "+error.message);
  });
 }
-onAuthStateChanged(auth,user=>{
+onAuthStateChanged(auth,async user=>{
  currentUser=user;
- authGate.classList.toggle("hidden",!!user);
- appShell.classList.toggle("hidden",!user);
- $("signout").classList.toggle("hidden",!user);
- $("user-chip").textContent=user?user.email:"FIREBASE: SIGN IN REQUIRED";
- if(user){startIncidentFeed();render()}
- else{if(stopIncidentFeed)stopIncidentFeed();stopIncidentFeed=null;remoteIncidents=[];firebaseReady=false}
+ if(!user){
+  authGate.classList.remove("hidden");appShell.classList.add("hidden");
+  if(stopIncidentFeed)stopIncidentFeed();stopIncidentFeed=null;
+  remoteIncidents=[];firebaseReady=false;return;
+ }
+ authGate.classList.add("hidden");appShell.classList.add("hidden");
+ try{
+  const roleSnap=await getDoc(doc(db,"userRoles",user.uid));
+  if(!roleSnap.exists())throw new Error("This Google account has not been assigned an SND role yet. Ask the project administrator to add its UID to userRoles.");
+  const roleData=roleSnap.data(),role=roleData.role;
+  if(role!=="core"&&role!=="operator")throw new Error("The assigned SND role is invalid.");
+  const allowedEmail=(roleData.email||"").toLowerCase();
+  if(allowedEmail&&allowedEmail!==String(user.email||"").toLowerCase())throw new Error("The signed-in Google account does not match the email registered for this role.");
+  s.mode=role==="core"?"core":"operator";
+  $("user-chip").textContent=(user.email||"SIGNED IN")+" · "+(role==="core"?"SND CORE":"OPERATOR");
+  appShell.classList.remove("hidden");startIncidentFeed();render();
+ }catch(err){
+  setAuthError(err.message||"Unable to verify your SND role.");
+  authGate.classList.remove("hidden");appShell.classList.add("hidden");
+  await signOut(auth);
+ }
 });
 async function persistIncident(eventType){
- if(!currentUser||s.step<2)return;
+ if(!currentUser||s.mode!=="core"||s.step<2)return;
  try{
   const isNew=!s.incidentId;
   if(isNew)s.incidentId=doc(collection(db,"sndIncidents")).id;
@@ -497,8 +508,8 @@ function exportRecord(){
  const record={product:"SND — Saudi Nullity Detector",recordType:"Frontend preview only",scenario:scenario(),phase:phases[s.step],selectedRoute:s.route,failoverExecuted:false,recoveryVerified:false,operatorAcknowledged:s.reviewed,measurements:null,rawEvidence:null,limitations:["No execution engine connected","No live telemetry connected","No network route changed","No measured experiment data available"]};
  const blob=new Blob([JSON.stringify(record,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="SND-incident-preview.json";a.click();URL.revokeObjectURL(url);notify("JSON preview record exported.");
 }
-$("core-mode").onclick=()=>{s.mode="core";render()};
-$("operator-mode").onclick=()=>{s.mode="operator";render()};
+$("core-mode").onclick=()=>{if(s.mode==="core")render()};
+$("operator-mode").onclick=()=>{if(s.mode==="operator")render()};
 $("advance").onclick=advance;$("reset").onclick=reset;
 document.addEventListener("click",e=>{
  const p=e.target.closest("[data-page]"),o=e.target.closest("[data-op]"),r=e.target.closest("[data-route]");
