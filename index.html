@@ -159,6 +159,35 @@ tbody tr:last-child td{border-bottom:0}
 .user-chip{max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .signout{border:1px solid var(--border);background:#20202b;color:var(--muted);border-radius:4px;padding:5px 8px;font-size:9px}
 
+
+.phone-controller{display:none}
+.sync-banner{border:1px solid #4d4568;background:#201d2d;color:#d8cff4;border-radius:6px;padding:11px 13px;margin:0 0 13px;font-size:10px}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.scenario-choice{border:1px solid var(--border);background:#1c1c28;color:var(--text);border-radius:6px;padding:10px;text-align:left;min-height:76px}
+.scenario-choice.selected{border-color:var(--accent);background:#29243a}
+.scenario-choice b{display:block;font-size:11px;margin-bottom:5px}
+.scenario-choice small{color:var(--muted);font-size:9px;line-height:1.4}
+.run-status{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0}
+.run-status strong{font:12px var(--mono);color:var(--accent)}
+@media(max-width:700px){
+ .phone-controller{display:block}
+ .scenario-grid{grid-template-columns:1fr}
+ .content{padding:14px 12px 24px}
+ .heading{display:block}
+ .heading-actions{margin-top:10px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .columns,.columns.equal{grid-template-columns:1fr}
+ .top-center{display:none}
+ .user-chip{font-size:8px;max-width:130px;overflow-wrap:anywhere}
+ .brand{min-width:0}
+ .brand-sub{display:none}
+ .sidebar{display:none}
+ .frame{display:block}
+ .topology{grid-template-columns:1fr;gap:7px}
+ .connector{height:10px;width:2px;margin:auto;background:var(--border)}
+}
+@media(min-width:701px){.phone-only{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -228,9 +257,9 @@ tbody tr:last-child td{border-bottom:0}
  </nav>
  <div class="heading">
   <div><div class="eyebrow" id="eyebrow">SND CORE / OPERATIONS</div><h1 id="title">Operations overview</h1><p class="subtitle" id="subtitle">Service health, active incidents, and resilience state across the configured environment.</p></div>
-  <div class="heading-actions" id="actions"><button class="btn" id="reset">Reset lab state</button><button class="btn primary" id="advance">Advance workflow</button></div>
+  <div class="heading-actions" id="actions"><button class="btn" id="reset">Reset simulation</button><button class="btn primary" id="advance">Advance workflow</button></div>
  </div>
- <div class="notice"><b>LAB MODE</b><span>Firebase stores authenticated incident workflow records and operator review in Firestore. This frontend is still not connected to the SND execution engine: it does not monitor live infrastructure or execute traffic failover.</span></div>
+ <div class="sync-banner"><b>SND SIMULATION</b> · The phone controls the scenario. The iPad displays the live SND workflow, and the laptop presents the incident record and operational summary. This is a simulated demonstration, not a live infrastructure connection.</div>
  <div id="view"></div>
  <div class="footer"><span>SND · Saudi Nullity Detector · Operations interface</span><span>All timestamps are local preview values unless supplied by the experiment engine.</span></div>
 </main>
@@ -258,7 +287,7 @@ const firebaseConfig = {
 const firebaseApp=initializeApp(firebaseConfig);
 const auth=getAuth(firebaseApp);
 const db=getFirestore(firebaseApp);
-let currentUser=null, stopIncidentFeed=null, remoteIncidents=[], firebaseReady=false;
+let currentUser=null, stopIncidentFeed=null, stopControlFeed=null, remoteIncidents=[], firebaseReady=false, currentSimulation=null, simulationTimer=null, lastPersistedStep=-1;
 const authGate=$("auth-gate"), appShell=$("app-shell");
 function setAuthError(message){$("auth-error").textContent=message||""}
 const GOOGLE_ROLES={
@@ -288,6 +317,66 @@ $("google-login").addEventListener("click",async()=>{
   button.textContent="Continue with Google";
  }
 });
+function startControlFeed(){
+ if(stopControlFeed)stopControlFeed();
+ stopControlFeed=onSnapshot(doc(db,"sndControl","current"),snapshot=>{
+  currentSimulation=snapshot.exists()?snapshot.data():null;
+  if(!currentSimulation)return;
+  if(currentSimulation.scenarioKey&&scenarios[currentSimulation.scenarioKey])s.scenario=currentSimulation.scenarioKey;
+  if(currentSimulation.status==="running"||currentSimulation.status==="completed"){
+   syncSimulationClock();
+  }else{
+   s.step=0;
+   if(s.mode==="core")render();
+  }
+ },error=>notify("Simulation sync unavailable: "+error.message));
+}
+function syncSimulationClock(){
+ if(!currentSimulation||!currentSimulation.startedAtMs)return;
+ if(simulationTimer)clearInterval(simulationTimer);
+ const tick=async()=>{
+  const elapsed=Math.max(0,Date.now()-Number(currentSimulation.startedAtMs));
+  const duration=Math.max(1000,Number(currentSimulation.phaseDurationMs)||3000);
+  const nextStep=Math.min(7,Math.floor(elapsed/duration));
+  if(nextStep!==s.step){
+   s.step=nextStep;
+   if(s.mode==="core")render();
+   // Only the phone controller writes phase updates; other screens are read-only mirrors.
+   if(s.mode==="core"&&window.matchMedia("(max-width: 700px)").matches&&nextStep!==lastPersistedStep){
+    lastPersistedStep=nextStep;
+    if(nextStep>=2)await persistIncident("simulation_phase_"+nextStep);
+    if(nextStep===7){
+     try{await updateDoc(doc(db,"sndControl","current"),{status:"completed",completedAtMs:Date.now()})}catch(err){notify("Could not complete simulation state sync: "+err.message)}
+    }
+   }
+  }
+ };
+ tick();
+ simulationTimer=setInterval(tick,500);
+}
+async function startSimulation(){
+ if(!currentUser||s.mode!=="core")return;
+ const key=s.scenario;
+ const now=Date.now();
+ s.step=0;s.incidentId=null;s.reviewed=false;s.route="Standby Cluster B";lastPersistedStep=-1;
+ try{
+  await setDoc(doc(db,"sndControl","current"),{
+   status:"running",scenarioKey:key,startedAtMs:now,phaseDurationMs:3000,
+   runId:"SND-SIM-"+now,initiatedBy:{uid:currentUser.uid,email:currentUser.email||null},
+   updatedAt:serverTimestamp()
+  });
+  currentSimulation={status:"running",scenarioKey:key,startedAtMs:now,phaseDurationMs:3000};
+  syncSimulationClock();
+  notify("Simulation started. iPad and operator console are synchronizing.");
+ }catch(err){notify("Could not start simulation: "+err.message)}
+}
+async function stopSimulation(){
+ try{
+  await updateDoc(doc(db,"sndControl","current"),{status:"stopped",stoppedAtMs:Date.now(),updatedAt:serverTimestamp()});
+  if(simulationTimer)clearInterval(simulationTimer);
+  s.step=0;render();notify("Simulation stopped.");
+ }catch(err){notify("Could not stop simulation: "+err.message)}
+}
 function startIncidentFeed(){
  if(stopIncidentFeed)stopIncidentFeed();
  const q=query(collection(db,"sndIncidents"),orderBy("updatedAt","desc"),limit(30));
@@ -307,7 +396,9 @@ onAuthStateChanged(auth,async user=>{
   authGate.classList.remove("hidden");
   appShell.classList.add("hidden");
   if(stopIncidentFeed)stopIncidentFeed();
-  stopIncidentFeed=null;
+  if(stopControlFeed)stopControlFeed();
+  if(simulationTimer)clearInterval(simulationTimer);
+  stopIncidentFeed=null;stopControlFeed=null;
   remoteIncidents=[];
   firebaseReady=false;
   $("google-login").disabled=false;
@@ -332,6 +423,7 @@ onAuthStateChanged(auth,async user=>{
  authGate.classList.add("hidden");
  appShell.classList.remove("hidden");
  startIncidentFeed();
+ startControlFeed();
  render();
 });
 async function persistIncident(eventType){
@@ -343,6 +435,7 @@ async function persistIncident(eventType){
   const record={
    incidentId:s.incidentId,
    scenarioKey:s.scenario,
+   environment:scenario().environment,
    incidentTitle:scenario().name,
    affectedComponent:scenario().component,
    observedSignal:scenario().signal,
@@ -375,13 +468,13 @@ async function persistIncident(eventType){
   console.error("SND Firestore save error",err);
  }
 }
-const initial={mode:"core",page:"overview",op:"op-overview",step:0,scenario:"gateway",route:"Standby Cluster B",reviewed:false,incidentId:null};
+const initial={mode:"core",page:"overview",op:"op-overview",step:0,scenario:"airport",route:"Standby Cluster B",reviewed:false,incidentId:null};
 let s={...initial};
 try{const v=JSON.parse(localStorage.getItem("snd_ops_ui_v3")||"null");if(v&&Number.isInteger(v.step)&&v.step>=0&&v.step<=7)s={...initial,...v}}catch(e){}
 const scenarios={
- gateway:{name:"Primary gateway unavailable",component:"API Gateway / Region A",signal:"Synthetic health check timeout",impact:"API traffic cannot reach primary gateway"},
- identity:{name:"Identity dependency failure",component:"Identity Provider / Region A",signal:"Dependency probe failed",impact:"Authentication-dependent requests affected"},
- latency:{name:"Gateway latency breach",component:"API Gateway / Region A",signal:"Latency objective exceeded",impact:"Service response time degraded"}
+ airport:{name:"Airport operations disruption",environment:"Airport",component:"Passenger Processing Gateway / Terminal A",signal:"Synthetic terminal service health-check timeout",impact:"Passenger processing and connected airport services are affected"},
+ hospital:{name:"Hospital systems disruption",environment:"Hospital",component:"Clinical Systems Gateway / Main Site",signal:"Synthetic clinical application dependency failure",impact:"Clinical application access and connected hospital workflows are affected"},
+ datacenter:{name:"Data center service disruption",environment:"Data Center",component:"Core API and Storage Gateway / Zone A",signal:"Synthetic service latency and dependency threshold breach",impact:"Hosted services and dependent workloads are affected"}
 };
 const phases=["Ready","Monitoring","Detected","Analyzed","Route selected","Failover preview","Verification pending","Report prepared"];
 const pages={
@@ -429,9 +522,9 @@ function pipeline(){
 function events(){
  if(!active())return `<div class="empty">No incident events recorded in this session.</div>`;
  const list=[
- ["09:14:02","Health probe timeout","API Gateway / Region A · synthetic probe","bad"],
+ ["09:14:02","Health probe timeout","Primary service / Zone A · synthetic probe","bad"],
  ["09:14:03","Threshold evaluation","Consecutive failures exceed configured policy","warn"],
- ["09:14:04","Incident candidate created","Correlation ID: SND-LAB-INC-0001","warn"],
+ ["09:14:04","Incident candidate created","Correlation ID: SND-SIM-INC-0001","warn"],
  ...(s.step>=3?[["09:14:05","Impact assessment","Primary API path marked unavailable","warn"]]:[]),
  ...(s.step>=4?[["09:14:06","Alternative selected",s.route,"good"]]:[]),
  ...(s.step>=5?[["09:14:07","Route action preview","No network route was modified","warn"]]:[]),
@@ -439,22 +532,43 @@ function events(){
  ];
  return `<div class="event-list">${list.map(x=>`<div class="event-row"><div class="event-time">${x[0]}</div><i class="event-mark ${x[3]}"></i><div class="event-text"><b>${x[1]}</b><small>${x[2]}</small></div></div>`).join("")}</div>`;
 }
-function scenarioControl(){return `<div class="field"><label for="scenario">TEST SCENARIO</label><select id="scenario"><option value="gateway" ${s.scenario==="gateway"?"selected":""}>Primary gateway unavailable</option><option value="identity" ${s.scenario==="identity"?"selected":""}>Identity dependency failure</option><option value="latency" ${s.scenario==="latency"?"selected":""}>Gateway latency breach</option></select></div><div class="kv">${kv("Target component",esc(scenario().component))}${kv("Signal",esc(scenario().signal))}${kv("Impact",esc(scenario().impact))}${kv("Current phase",phases[s.step])}</div><div style="margin-top:12px"><button class="btn primary" id="advance-local" ${s.step>=7?"disabled":""}>Advance one workflow phase</button></div>`}
+function scenarioControl(){
+ const running=currentSimulation?.status==="running";
+ const completed=currentSimulation?.status==="completed";
+ const choices=[
+  ["airport","Airport","Passenger and terminal services"],
+  ["hospital","Hospital","Clinical systems and workflows"],
+  ["datacenter","Data Center","Core services and hosted workloads"]
+ ];
+ if(window.matchMedia("(max-width: 700px)").matches){
+  return `<div class="phone-controller">
+   <div class="dim" style="font-size:10px;margin-bottom:9px">Choose the environment to demonstrate</div>
+   <div class="scenario-grid">${choices.map(([key,label,desc])=>`<button class="scenario-choice ${s.scenario===key?"selected":""}" data-scenario-choice="${key}" ${running?"disabled":""}><b>${label}</b><small>${desc}</small></button>`).join("")}</div>
+   <div class="run-status"><span>Simulation status</span><strong>${running?"RUNNING":completed?"COMPLETED":"READY"}</strong></div>
+   <div class="kv">${kv("Current phase",phases[s.step])}${kv("Affected environment",scenario().environment)}${kv("Incident",active()?"SND-SIM-INC":"Not started")}</div>
+   <div style="display:flex;gap:8px;margin-top:12px"><button class="btn primary" id="start-simulation" ${running?"disabled":""}>${completed?"Run again":"Start simulation"}</button><button class="btn" id="stop-simulation" ${running?"":"disabled"}>Stop</button></div>
+   <p class="dim" style="font-size:9px;margin:10px 0 0">Once started, the workflow advances automatically. Keep this phone open as the controller.</p>
+  </div>`;
+ }
+ return `<div class="run-status"><span>Remote controller</span><strong>${running?"RUNNING":completed?"COMPLETED":"WAITING"}</strong></div>
+ <div class="kv">${kv("Selected environment",scenario().environment)}${kv("Current phase",phases[s.step])}${kv("Affected component",esc(scenario().component))}</div>
+ <div class="notice info" style="margin-top:10px">Select and start a scenario from the phone controller. This screen mirrors the workflow automatically for the demonstration panel.</div>`;
+}
 function overview(){
- return `<div class="statusline"><span>WORKSPACE <strong>LOCAL LAB</strong></span><span>ENGINE <strong class="warn">DISCONNECTED</strong></span><span>ACTIVE INCIDENT <strong>${active()?"SND-LAB-INC-0001":"NONE"}</strong></span><span>WORKFLOW <strong class="accent">${phases[s.step].toUpperCase()}</strong></span></div>
+ return `<div class="statusline"><span>WORKSPACE <strong>SYNCHRONIZED SIMULATION</strong></span><span>ENGINE <strong class="warn">DISCONNECTED</strong></span><span>ACTIVE INCIDENT <strong>${active()?"SND-SIM-INC-0001":"NONE"}</strong></span><span>WORKFLOW <strong class="accent">${phases[s.step].toUpperCase()}</strong></span></div>
  <div class="kpis">${kpi("Monitored components","—","Telemetry adapter not configured")}${kpi("Active incidents",active()?"01":"00",active()?"Local workflow record":"No active incident",active()?"warn":"good")}${kpi("Selected route",s.step>=4?(s.route.includes("B")?"REGION B":"REGION C"):"—","Preview state only","accent")}${kpi("Recovery status","UNVERIFIED","No post-switch probe data","warn")}</div>
  <div class="columns"><div>
  ${panel("SERVICE TOPOLOGY","LOGICAL VIEW",topology()+`<div style="margin-top:17px">${pipeline()}</div>`)}
  ${panel("SERVICE INVENTORY","5 CONFIGURED COMPONENTS",table(["ID","COMPONENT","REGION","STATE","ROLE"],serviceRows()))}
  </div><div>
- ${panel("SCENARIO CONTROLS","LOCAL PREVIEW",scenarioControl())}
- ${panel("RECENT EVENT STREAM",active()?"SND-LAB-INC-0001":"NO ACTIVE INCIDENT",events())}
+ ${panel("SCENARIO CONTROLS","SIMULATION CONTROL",scenarioControl())}
+ ${panel("RECENT EVENT STREAM",active()?"SND-SIM-INC-0001":"NO ACTIVE INCIDENT",events())}
  </div></div>`;
 }
 function servicesPage(){return panel("Service inventory","CONFIGURED COMPONENTS",table(["ID","COMPONENT","REGION","CURRENT STATE","ROLE"],serviceRows())+`<p class="dim" style="font-size:9px;margin:11px 0 0">Service states are placeholders until the health-monitoring adapter is connected.</p>`)}
 function eventsPage(){return panel("Event stream","LOCAL SESSION",events())}
 function incidentPage(){
- return `<div class="columns equal">${panel("INCIDENT RECORD","SND-LAB-INC-0001",`<div class="kv">${kv("Incident title",active()?esc(scenario().name):"Not created")}${kv("Affected component",active()?esc(scenario().component):"—")}${kv("Detection source","Synthetic lab scenario")}${kv("Observed signal",active()?esc(scenario().signal):"—")}${kv("Severity","Not assessed")}${kv("Correlation ID",active()?"SND-LAB-CORR-0001":"—")}${kv("Detection timestamp","Not measured")}${kv("Raw evidence","Not connected")}</div>`)}
+ return `<div class="columns equal">${panel("INCIDENT RECORD","SND-SIM-INC-0001",`<div class="kv">${kv("Incident title",active()?esc(scenario().name):"Not created")}${kv("Affected component",active()?esc(scenario().component):"—")}${kv("Detection source","Controlled simulated scenario")}${kv("Observed signal",active()?esc(scenario().signal):"—")}${kv("Severity","Not assessed")}${kv("Correlation ID",active()?"SND-SIM-CORR-0001":"—")}${kv("Detection timestamp","Not measured")}${kv("Raw evidence","Not connected")}</div>`)}
  ${panel("IMPACT ASSESSMENT","DECISION INPUTS",`<div class="kv">${kv("Service impact",active()?esc(scenario().impact):"Awaiting incident")}${kv("Dependency graph","Not loaded")}${kv("Customer impact","Not measured")}${kv("Data integrity","Not assessed")}${kv("Business criticality","Requires configuration")}${kv("Analysis engine","Not connected")}</div><div class="notice info" style="margin:12px 0 0">An incident label is not proof of detection. Production detection must be based on correlated telemetry and preserved source events.</div>`)}
  </div>`;
 }
@@ -473,8 +587,8 @@ function experimentsPage(){
  return `<div class="notice info"><b>RESEARCH INTEGRITY</b><span>Only import paired runs produced by the controlled experiment runner. Do not enter illustrative values as measured results.</span></div><div class="columns equal">${panel("BASELINE · WITHOUT SND","RUN NOT IMPORTED",`<div class="kv">${kv("Detection time","—")}${kv("Service recovery","—")}${kv("Failed requests","—")}${kv("Successful requests","—")}${kv("Downtime","—")}${kv("Run identifier","—")}</div>`)}${panel("SND · WITH RESILIENCE LAYER","RUN NOT IMPORTED",`<div class="kv">${kv("Detection time","—")}${kv("Decision time","—")}${kv("Failover completion","—")}${kv("Failed requests","—")}${kv("Successful requests","—")}${kv("Run identifier","—")}</div>`)}</div>${panel("COMPARISON PROTOCOL","PAIRED EXPERIMENT",`<div class="pipeline">${["Freeze workload","Baseline run","Reset state","SND run","Verify logs","Pair results","Report"].map((x,i)=>`<div class="pipe-step">0${i+1}<b>${x}</b></div>`).join("")}</div><p class="dim" style="font-size:9px;margin:13px 0 0">Required evidence: raw timestamped logs, identical workload configuration, fault injection timestamp, request outcomes, and independent verification of route changes.</p>`)}`;
 }
 function reportsPage(){
- return `${panel("INCIDENT AUDIT RECORD","SND-LAB-INC-0001",`<div class="kv">${kv("Incident",active()?esc(scenario().name):"No incident")}${kv("Phase",phases[s.step])}${kv("Affected component",active()?esc(scenario().component):"—")}${kv("Selected alternative",s.step>=4?esc(s.route):"—")}${kv("Execution evidence","Not available")}${kv("Recovery evidence","Not available")}${kv("Operator acknowledgement",s.reviewed?"Acknowledged locally":"Pending")}${kv("Record source","Frontend preview")}</div><div style="display:flex;gap:7px;margin-top:13px;flex-wrap:wrap"><button class="btn primary" id="export">Export JSON record</button><button class="btn" id="print">Print</button><button class="btn" id="ack">Acknowledge preview</button></div>`)}
- <div class="notice info"><b>AUDIT LIMITATION</b><span>This report does not contain measured timing, packet routing, or verified recovery evidence. Those fields must be populated from the lab runner before research use.</span></div>`;
+ return `${panel("INCIDENT AUDIT RECORD","SND-SIM-INC-0001",`<div class="kv">${kv("Incident",active()?esc(scenario().name):"No incident")}${kv("Phase",phases[s.step])}${kv("Affected component",active()?esc(scenario().component):"—")}${kv("Selected alternative",s.step>=4?esc(s.route):"—")}${kv("Execution evidence","Not available")}${kv("Recovery evidence","Not available")}${kv("Operator acknowledgement",s.reviewed?"Acknowledged locally":"Pending")}${kv("Record source","Frontend preview")}</div><div style="display:flex;gap:7px;margin-top:13px;flex-wrap:wrap"><button class="btn primary" id="export">Export JSON record</button><button class="btn" id="print">Print</button><button class="btn" id="ack">Acknowledge preview</button></div>`)}
+ <div class="notice info"><b>AUDIT LIMITATION</b><span>This report does not contain measured timing, packet routing, or verified recovery evidence. Those fields must be populated from the simulation runner before research use.</span></div>`;
 }
 function architecturePage(){
  const rows=[["Infrastructure","Existing services and dependencies remain authoritative."],["Telemetry adapter","Collects health, latency, error, capacity, and dependency signals."],["Detection service","Correlates events and creates incident records."],["Analysis service","Assesses impact, severity, dependencies, and constraints."],["Decision service","Ranks eligible alternatives and records rationale."],["Execution controller","Performs authorized failover in the controlled environment."],["Verification service","Tests service behavior after the route change."],["Audit service","Persists incident timeline, metrics, and operator review."]];
@@ -482,7 +596,30 @@ function architecturePage(){
 }
 function operatorOverview(){
  const latest=remoteIncidents[0];
- return `<div class="kpis">${kpi("Open incidents",String(remoteIncidents.filter(x=>x.status==="in_progress").length).padStart(2,"0"),"Firestore live feed",remoteIncidents.length?"warn":"good")}${kpi("Awaiting review",String(remoteIncidents.filter(x=>x.status==="report_prepared"&&!x.operatorAcknowledged).length).padStart(2,"0"),"Operator queue")}${kpi("Service health","UNKNOWN","No live monitoring feed","warn")}${kpi("Failover state",s.step>=5?"PREVIEW":"NOT RUN","No external route action","accent")}</div><div class="columns equal">${panel("LATEST FIRESTORE INCIDENT","REAL-TIME FEED",latest?`<div class="kv">${kv("Incident ID",esc(latest.incidentId||latest.id))}${kv("Affected service",esc(latest.affectedComponent||"—"))}${kv("Current phase",esc(latest.phase||"—"))}${kv("Selected path",esc(latest.selectedAlternative||"—"))}${kv("Status",esc(latest.status||"—"))}${kv("Updated by",esc(latest.updatedBy?.email||"—"))}</div>`:`<div class="empty">No incident records have been received from Firestore yet.</div>`)}${panel("OPERATOR RESPONSIBILITIES","HUMAN OVERSIGHT",`<div class="event-list">${["Review incident evidence","Confirm operational impact","Inspect alternative selection rationale","Monitor recovery verification","Diagnose and repair primary service","Authorize final restoration"].map(x=>`<div class="event-row"><i class="event-mark"></i><div class="event-text"><b>${x}</b><small>Operator action / not completed</small></div></div>`).join("")}</div>`)}</div>`;
+ const completedPhases=phases.slice(0,Math.max(1,Number(latest?.step||0)+1));
+ const summary=latest
+  ? `${latest.incidentTitle||"A simulated service disruption"} was introduced in the ${latest.environment||scenarios[latest.scenarioKey]?.environment||"selected"} scenario. SND progressed through ${latest.phase||"the workflow"} and selected ${latest.selectedAlternative||"an alternative path not yet selected"}. This record describes a synchronized simulation; no live infrastructure route was changed.`
+  : "Waiting for a phone controller to start an airport, hospital, or data center scenario.";
+ return `<div class="kpis">
+ ${kpi("Simulation incidents",String(remoteIncidents.length).padStart(2,"0"),"Synchronized Firestore records")}
+ ${kpi("Awaiting review",String(remoteIncidents.filter(x=>!x.operatorAcknowledged).length).padStart(2,"0"),"Operator review queue")}
+ ${kpi("Latest phase",latest?esc(latest.phase||"—"):"READY","Current workflow stage","accent")}
+ ${kpi("Run status",latest?(latest.status==="report_prepared"?"COMPLETED":"IN PROGRESS"):"WAITING","Simulation only",latest?"good":"warn")}
+ </div>
+ <div class="columns equal">
+ ${panel("LATEST INCIDENT SUMMARY",latest?esc(latest.incidentId||latest.id):"NO RUN",`<div class="kv">
+ ${kv("Environment",esc(latest?.environment||scenarios[latest?.scenarioKey]?.environment||"—"))}
+ ${kv("Incident",esc(latest?.incidentTitle||"—"))}
+ ${kv("Affected component",esc(latest?.affectedComponent||"—"))}
+ ${kv("Observed signal",esc(latest?.observedSignal||"—"))}
+ ${kv("Impact",esc(latest?.impact||"—"))}
+ ${kv("Current phase",esc(latest?.phase||"—"))}
+ ${kv("Selected alternative",esc(latest?.selectedAlternative||"—"))}
+ ${kv("Initiated by",esc(latest?.updatedBy?.email||latest?.createdBy?.email||"—"))}
+ </div><p class="dim" style="font-size:9px;margin-top:12px">${esc(summary)}</p>`)}
+ ${panel("SND ACTION TIMELINE","AUTOMATIC WORKFLOW",latest?`<div class="event-list">${completedPhases.map((phase,i)=>`<div class="event-row"><i class="event-mark ${i<completedPhases.length-1?"good":""}"></i><div class="event-text"><b>${esc(phase)}</b><small>${i===0?"Scenario initialized":i===1?"Monitoring stage":i===2?"Simulated fault detected":i===3?"Impact analysis stage":i===4?"Alternative selected":i===5?"Failover decision preview":i===6?"Recovery verification stage":"Incident summary prepared"}</small></div></div>`).join("")}</div>`:`<div class="empty">The phone controller has not started a scenario yet.</div>`)}
+ </div>
+ <div class="notice info"><b>DEMONSTRATION SCOPE</b><span>The laptop is the review and reporting console. It receives the simulated incident record and workflow stages from the phone through Firestore. No live airport, hospital, or data-center infrastructure is monitored or modified.</span></div>`;
 }
 function operatorIncidents(){
  const rows=remoteIncidents.map(x=>[esc(x.incidentId||x.id),esc(x.incidentTitle||"—"),esc(x.phase||"—"),x.operatorAcknowledged?"Acknowledged":"Pending"]);
@@ -543,6 +680,10 @@ document.addEventListener("click",e=>{
  if(p){s.page=p.dataset.page;render()}
  if(o){s.op=o.dataset.op;render()}
  if(r){s.route=r.dataset.route;render();persistIncident("alternative_selected");notify("Candidate selection saved as a decision preview.")}
+ const scenarioChoice=e.target.closest("[data-scenario-choice]");
+ if(scenarioChoice&&currentSimulation?.status!=="running"){s.scenario=scenarioChoice.dataset.scenarioChoice;render()}
+ if(e.target.closest("#start-simulation"))startSimulation();
+ if(e.target.closest("#stop-simulation"))stopSimulation();
  if(e.target.closest("#advance-local"))advance();
  if(e.target.closest("#export"))exportRecord();
  if(e.target.closest("#print"))window.print();
