@@ -9,7 +9,7 @@
 :root{
  --bg:#101018;--surface:#171721;--surface-2:#1d1d29;--surface-3:#242432;
  --border:#30303e;--border-soft:#282835;--text:#eeedf4;--muted:#a4a2b2;--dim:#777585;
- --accent:#b6a2f6;--accent-2:#8f79d8;--good:#82c9aa;--warn:#e4bd79;--bad:#df8998;--info:#8eb8d9;
+ --accent:#b6a2f6;--accent-2:#8f79d8;--good:#82c9aa;--warn:#b6a2f6;--bad:#df8998;--info:#8eb8d9;
  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
  --sans:Inter,"Segoe UI",Arial,sans-serif;
 }
@@ -286,6 +286,45 @@ tbody tr:last-child td{border-bottom:0}
  .role-viewer .viewer-flow-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 
+ 
+.viewer-failover{background:linear-gradient(135deg,#191724,#211d31);border:1px solid #65558f;border-radius:15px;padding:18px;margin:0 0 18px;box-shadow:0 0 0 1px rgba(182,162,246,.08) inset}
+.viewer-failover-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:18px;font-size:10px;letter-spacing:.12em;color:#d9cffb}
+.viewer-failover-heading span{color:#b6a2f6;font-size:9px}
+.viewer-failover-main{display:grid;grid-template-columns:minmax(110px,1fr) 28px minmax(150px,1.25fr) 28px minmax(150px,1.25fr) 28px minmax(110px,1fr);align-items:center;gap:7px}
+.viewer-failover-node{min-height:112px;border-radius:11px;border:1px solid #514b67;background:#201f2b;padding:13px;display:flex;flex-direction:column;justify-content:center}
+.viewer-failover-node small,.viewer-alt small{font-size:8px;color:#aaa5bd;letter-spacing:.08em}
+.viewer-failover-node b{font-size:13px;line-height:1.4;margin:9px 0}
+.viewer-failover-node em{font-style:normal;font-size:9px;color:#b6a2f6}
+.viewer-failover-node.primary{border-color:#a16b83;background:#2b202d}
+.viewer-failover-node.success{border-color:#6a9f8a;background:#1d2b2a}
+.viewer-failover-node.success em{color:#91d2b2}
+.viewer-failover-arrow{text-align:center;color:#c5b5ff;font-size:25px}
+.viewer-snd-layer{min-height:132px;padding:15px 10px;border:1px solid #c3b2ff;border-radius:13px;text-align:center;background:linear-gradient(145deg,#59438f,#9276d8 55%,#49346f);box-shadow:0 0 0 3px rgba(182,162,246,.12),0 0 24px rgba(155,126,232,.38);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.viewer-snd-mark{font-size:28px;font-weight:850;letter-spacing:.08em;color:white;text-shadow:0 2px 12px #2b1a53}
+.viewer-snd-layer b{font-size:11px;color:#fff;margin-top:5px}
+.viewer-snd-layer small{font-size:8px;color:#eee7ff;margin-top:7px}
+.viewer-alternatives{display:grid;gap:6px}
+.viewer-alt{display:grid;grid-template-columns:22px 1fr;gap:2px 8px;align-items:center;padding:8px 9px;border:1px solid #555064;border-radius:8px;background:#22202d}
+.viewer-alt b{grid-row:span 2;color:#d5c7ff;font-size:14px}
+.viewer-alt span{font-size:9px;color:#f0edf8}
+.viewer-alt small{font-size:7px}
+.viewer-alt.selected{border-color:#b6a2f6;background:#342b4d;box-shadow:0 0 12px rgba(182,162,246,.18)}
+.viewer-human-oversight{margin:16px auto 0;max-width:440px;text-align:center;padding:9px 14px;border-radius:30px;background:#47357a;border:1px solid #a995e9;color:#f5f0ff;font-size:9px;letter-spacing:.06em}
+.operator-report{border:1px solid var(--border);border-radius:12px;padding:15px;background:var(--surface)}
+.operator-report-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.operator-report-head strong{font-size:12px}
+.operator-report-head span{font:10px var(--mono);color:var(--muted)}
+.operator-report-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.operator-report-stat{padding:10px;border-radius:8px;background:#201d2c;border:1px solid #403750}
+.operator-report-stat small{display:block;color:var(--muted);font-size:8px;letter-spacing:.07em}
+.operator-report-stat b{display:block;color:#e7ddff;font-size:15px;margin-top:6px}
+.operator-report-timeline{display:grid;gap:0;margin-top:12px}
+.operator-report-row{display:grid;grid-template-columns:76px 13px 1fr;gap:8px;align-items:start;padding:9px 0;border-top:1px solid var(--border)}
+.operator-report-row time{font:9px var(--mono);color:#c7b7f5}
+.operator-report-row i{width:8px;height:8px;border-radius:50%;background:#b6a2f6;margin-top:3px;box-shadow:0 0 0 3px rgba(182,162,246,.12)}
+.operator-report-row b{font-size:10px;display:block}
+.operator-report-row p{font-size:9px;color:var(--muted);margin:4px 0 0;line-height:1.5}
+@media(max-width:760px){.viewer-failover-main{grid-template-columns:1fr;gap:8px}.viewer-failover-arrow{transform:rotate(90deg);font-size:20px}.viewer-failover-node{min-height:80px}.viewer-snd-layer{min-height:105px}.viewer-alternatives{grid-template-columns:repeat(3,minmax(0,1fr))}.viewer-alt{grid-template-columns:18px 1fr}.viewer-alt span{font-size:8px}.operator-report-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -540,6 +579,8 @@ async function persistIncident(eventType){
    phase:(s.step>=7?"Report prepared":phases[Math.max(0,s.step-1)]),
    step:s.step,
    selectedAlternative:s.route,
+   startedAtMs:currentSimulation?.startedAtMs||Date.now(),
+   phaseDurationMs:currentSimulation?.phaseDurationMs||4500,
    operatorAcknowledged:!!s.reviewed,
    status:s.step>=7?"report_prepared":"in_progress",
    source:"SND frontend workflow",
@@ -699,10 +740,22 @@ function viewerDashboard(){
   <div class="viewer-state"><div class="viewer-state-label">SND CORE</div><div><div class="viewer-state-value">${state}</div><div class="viewer-state-foot">${esc(env)}${latest?.incidentId?" · "+esc(latest.incidentId):""}</div></div></div>
   <div class="viewer-metric"><span>CURRENT STAGE</span><strong>${String(step).padStart(2,"0")} / 07</strong><span>${esc(phase)}</span></div>
  </div>
- <div class="viewer-route">
-  <div class="viewer-route-node primary"><span>PRIMARY SERVICE</span><b>${esc(comp)}</b></div>
-  <div class="viewer-route-arrow">⟶</div>
-  <div class="viewer-route-node standby"><span>STANDBY SERVICE</span><b>${esc(alt)}</b></div>
+ <div class="viewer-failover">
+  <div class="viewer-failover-heading"><strong>FAILOVER ARCHITECTURE</strong><span>${running?"ACTIVE RESPONSE":"SERVICE CONTINUITY"}</span></div>
+  <div class="viewer-failover-main">
+   <div class="viewer-failover-node primary"><small>PRIMARY SYSTEM</small><b>${esc(comp)}</b><em>${running?"Failure detected":"Primary path"}</em></div>
+   <div class="viewer-failover-arrow">⟶</div>
+   <div class="viewer-snd-layer"><div class="viewer-snd-mark">SND</div><b>Adaptive Resilience Layer</b><small>Monitor · Analyze · Select</small></div>
+   <div class="viewer-failover-arrow">⟶</div>
+   <div class="viewer-alternatives">
+    <div class="viewer-alt ${step>=4?"selected":""}"><b>B</b><span>${esc(alt||"Standby path B")}</span><small>${step>=4?"Selected path":"Available alternative"}</small></div>
+    <div class="viewer-alt"><b>C</b><span>Alternative Path C</span><small>Available alternative</small></div>
+    <div class="viewer-alt"><b>D</b><span>Alternative Path D</span><small>Available alternative</small></div>
+   </div>
+   <div class="viewer-failover-arrow">⟶</div>
+   <div class="viewer-failover-node success"><small>SERVICE STATE</small><b>${step>=6?"Continuity verified":running?"Recovery in progress":"Ready"}</b><em>${step>=6?"Service continues":"Awaiting incident"}</em></div>
+  </div>
+  <div class="viewer-human-oversight">HUMAN OPERATOR · DIAGNOSIS & PERMANENT RECOVERY</div>
  </div>
  <div class="viewer-flow"><div class="operator-headline"><strong>Resilience sequence</strong><span>${running?"LIVE":"STATUS"}</span></div><div class="viewer-flow-grid">${steps}</div></div>
  <div class="viewer-detail-grid">
@@ -721,11 +774,39 @@ function operatorOverview(){
  const donePct=total?completed/donutTotal*100:0;
  const runPct=total?running/donutTotal*100:0;
  const pendingPct=Math.max(0,100-donePct-runPct);
- const donut=`conic-gradient(#8f79d8 0 ${donePct}%,#d8a85f ${donePct}% ${donePct+runPct}%,#3b3948 ${donePct+runPct}% 100%)`;
+ const donut=`conic-gradient(#8f79d8 0 ${donePct}%,#b6a2f6 ${donePct}% ${donePct+runPct}%,#62557f ${donePct+runPct}% 100%)`;
  const step=latest?Math.max(0,Math.min(7,Number(latest.step||0))):0;
  const stageCounts=phases.map((p,i)=>({label:p,count:latest&&step>i?1:0}));
- const maxStage=Math.max(1,...stageCounts.map(x=>x.count));
- const bars=stageCounts.map(x=>`<div class="bar-row"><span class="bar-label">${esc(x.label)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(x.count/maxStage*100)}%"></div></div><span class="bar-value">${x.count}</span></div>`).join("");
+ const fmtClock=ms=>new Date(ms).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+ const started=Number(latest?.startedAtMs||Date.now());
+ const interval=Math.max(1000,Number(latest?.phaseDurationMs)||4500);
+ const reportStep=Math.max(0,Math.min(7,Number(latest?.step||0)));
+ const elapsedMs=reportStep*interval;
+ const downtimeMs=reportStep>=6?6*interval:elapsedMs;
+ const recoveryMs=reportStep>=6?Math.max(0,elapsedMs-2*interval):0;
+ const reportDetails=[
+  ["Monitoring","SND observed service health and transaction performance.", "Baseline checks"],
+  ["Detection","The selected service crossed its configured failure threshold.", latest?.observedSignal||"Failure signal detected"],
+  ["Impact analysis","SND assessed the affected component and the services dependent on it.",latest?.impact||"Impact assessment"],
+  ["Alternative evaluation","SND compared the available continuity paths against the current incident conditions.", "Availability, dependency and suitability checks"],
+  ["Path selection","SND selected the configured standby alternative for this scenario.",latest?.selectedAlternative||"Standby path"],
+  ["Recovery verification","SND checked the service state after the continuity path was selected.", "Recovery verification stage"],
+  ["Report preparation","SND assembled the incident sequence and response summary.", "Incident record prepared"]
+ ];
+ const reportRows=reportDetails.slice(0,reportStep).map((r,i)=>`<div class="operator-report-row"><time>${fmtClock(started+(i+1)*interval)}</time><i></i><div><b>${esc(r[0])}</b><p>${esc(r[1])}<br>${esc(r[2])}</p></div></div>`).join("");
+ const report=latest?`<div class="operator-report">
+  <div class="operator-report-head"><strong>${esc(latest.incidentTitle||"Incident response report")}</strong><span>${esc(latest.incidentId||latest.id)}</span></div>
+  <div class="operator-report-grid">
+   <div class="operator-report-stat"><small>STARTED AT</small><b>${fmtClock(started)}</b></div>
+   <div class="operator-report-stat"><small>ELAPSED RESPONSE</small><b>${(elapsedMs/1000).toFixed(1)} sec</b></div>
+   <div class="operator-report-stat"><small>RECOVERY STAGE</small><b>${reportStep>=6?"Reached":"In progress"}</b></div>
+   <div class="operator-report-stat"><small>EST. INTERRUPTION</small><b>${(downtimeMs/1000).toFixed(1)} sec</b></div>
+   <div class="operator-report-stat"><small>RECOVERY ACTION</small><b>${(recoveryMs/1000).toFixed(1)} sec</b></div>
+   <div class="operator-report-stat"><small>LAST UPDATED</small><b>${fmtClock(started+elapsedMs)}</b></div>
+  </div>
+  <div class="operator-report-timeline">${reportRows||'<div class="empty">The incident timeline will appear as the scenario progresses.</div>'}</div>
+  <p style="font-size:8px;color:var(--muted);margin-top:12px">Elapsed times are calculated from the demonstration sequence clock, not measured production outage telemetry.</p>
+ </div>`:`<div class="empty">A full incident report will appear here when a scenario starts.</div>`;
  const summary=latest?`${latest.incidentTitle||"Incident"} · ${latest.environment||"—"} · ${latest.phase||"—"}`:"No incidents recorded";
  return `<div class="kpis">
  ${kpi("Incidents",String(total).padStart(2,"0"),"All recorded events")}
@@ -736,10 +817,10 @@ function operatorOverview(){
  <div class="operator-charts">
   <div class="chart-card"><div class="chart-title">INCIDENT DISTRIBUTION</div><div class="donut-wrap"><div class="donut" style="background:${donut}"><div class="donut-center">${total}<small>INCIDENTS</small></div></div><div class="chart-legend">
    <div class="legend-row"><i class="legend-dot" style="background:#8f79d8"></i>Completed <b>${completed}</b></div>
-   <div class="legend-row"><i class="legend-dot" style="background:#d8a85f"></i>In progress <b>${running}</b></div>
-   <div class="legend-row"><i class="legend-dot" style="background:#3b3948"></i>Other <b>${Math.max(0,total-completed-running)}</b></div>
+   <div class="legend-row"><i class="legend-dot" style="background:#b6a2f6"></i>In progress <b>${running}</b></div>
+   <div class="legend-row"><i class="legend-dot" style="background:#62557f"></i>Other <b>${Math.max(0,total-completed-running)}</b></div>
   </div></div></div>
-  <div class="chart-card"><div class="chart-title">RESPONSE STAGES</div><div class="bar-chart">${bars}</div></div>
+  <div class="chart-card" style="grid-column:1/-1"><div class="chart-title">INCIDENT RESPONSE REPORT · TIME & ACTIONS</div>${report}</div>
  </div>
  <div class="columns equal">
   ${panel("LATEST INCIDENT",latest?esc(latest.incidentId||latest.id):"—",latest?`<div class="kv">
