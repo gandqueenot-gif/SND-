@@ -219,6 +219,73 @@ tbody tr:last-child td{border-bottom:0}
  .content{padding:16px}
 }
 
+
+/* Role-specific workspaces */
+.role-viewer .sidebar,.role-viewer #sidebar-toggle,.role-viewer .subtitle,.role-viewer .brand-sub{display:none!important}
+.role-viewer .frame{display:block;min-height:calc(100vh - 58px)}
+.role-viewer .content{max-width:1500px;padding:30px 34px}
+.role-viewer .heading{margin-bottom:24px}
+.role-viewer h1{font-size:30px}
+.role-viewer .eyebrow{font-size:10px}
+.role-viewer .viewer-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:18px;margin-bottom:18px}
+.role-viewer .viewer-state{background:linear-gradient(135deg,#242033,#191923);border:1px solid #51456f;border-radius:12px;padding:24px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+.role-viewer .viewer-state-label{font-size:10px;letter-spacing:.15em;color:#c6b6fa}
+.role-viewer .viewer-state-value{font-size:clamp(28px,4vw,48px);font-weight:750;line-height:1.1;margin:16px 0}
+.role-viewer .viewer-state-foot{font-size:12px;color:var(--muted)}
+.role-viewer .viewer-metric{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;display:flex;flex-direction:column;justify-content:center}
+.role-viewer .viewer-metric strong{font:32px var(--mono);color:var(--accent);margin:9px 0}
+.role-viewer .viewer-metric span{font-size:11px;color:var(--muted)}
+.role-viewer .viewer-flow{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px}
+.role-viewer .viewer-flow-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-top:18px}
+.role-viewer .viewer-flow-step{border-top:3px solid var(--border);padding:12px 8px 4px;color:var(--dim);font-size:10px;min-height:70px}
+.role-viewer .viewer-flow-step.done{border-color:var(--good);color:var(--good)}
+.role-viewer .viewer-flow-step.current{border-color:var(--accent);color:#e6dcff}
+.role-viewer .viewer-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.role-viewer .viewer-detail{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.role-viewer .viewer-detail span{font-size:9px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.role-viewer .viewer-detail b{display:block;font-size:13px;margin-top:8px;line-height:1.5}
+.role-controller .sidebar{background:#12121b}
+.role-controller .content{max-width:1250px}
+.role-controller .controller-banner{background:linear-gradient(110deg,#272139,#191923);border:1px solid #51456f;border-radius:9px;padding:17px 19px;margin-bottom:14px}
+.role-controller .controller-banner b{font-size:15px}
+.role-controller .controller-banner span{display:block;color:var(--muted);font-size:10px;margin-top:5px}
+.operator-charts{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(300px,1.2fr);gap:12px;margin:12px 0}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:15px;min-width:0}
+.chart-title{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin-bottom:14px}
+.donut-wrap{display:flex;align-items:center;gap:20px;min-height:160px}
+.donut{width:132px;height:132px;border-radius:50%;position:relative;flex:0 0 132px;background:conic-gradient(#8d79c7 0 0%,#33313f 0 100%)}
+.donut:after{content:"";position:absolute;inset:23px;border-radius:50%;background:var(--surface)}
+.donut-center{position:absolute;z-index:1;inset:0;display:grid;place-content:center;text-align:center;font:23px var(--mono)}
+.donut-center small{font:8px var(--sans);color:var(--muted);margin-top:3px}
+.chart-legend{display:grid;gap:10px;min-width:0}
+.legend-row{display:flex;align-items:center;gap:7px;font-size:9px;color:var(--muted)}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex:0 0 8px}
+.bar-chart{display:grid;gap:12px}
+.bar-row{display:grid;grid-template-columns:110px minmax(0,1fr) 28px;gap:9px;align-items:center}
+.bar-label{font-size:9px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{height:10px;background:#292835;border-radius:20px;overflow:hidden}
+.bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#7662a9,#b6a2f6)}
+.bar-value{font:9px var(--mono);color:var(--text);text-align:right}
+.operator-headline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.operator-headline strong{font-size:12px}
+.operator-headline span{font:9px var(--mono);color:var(--dim)}
+.role-viewer .mobile-nav,.role-controller .mobile-nav{display:none!important}
+@media(max-width:720px){
+ .role-viewer .content{padding:18px 13px}
+ .role-viewer h1{font-size:23px}
+ .role-viewer .viewer-hero{grid-template-columns:1fr}
+ .role-viewer .viewer-state{min-height:170px}
+ .role-viewer .viewer-flow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .role-viewer .viewer-route{grid-template-columns:1fr;gap:8px}
+ .role-viewer .viewer-route-arrow{transform:rotate(90deg);font-size:24px}
+ .role-viewer .viewer-detail-grid{grid-template-columns:1fr}
+ .operator-charts{grid-template-columns:1fr}
+ .donut-wrap{justify-content:center}
+}
+@media(min-width:721px) and (max-width:1100px){
+ .role-viewer .viewer-flow-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+
 </style>
 </head>
 <body>
@@ -252,6 +319,7 @@ tbody tr:last-child td{border-bottom:0}
  <div id="core-nav">
   <div class="nav-caption">SND CORE</div>
   <nav class="nav">
+   <button data-page="simulation" id="simulation-nav"><span class="ico">▶</span> New simulation</button>
    <button class="active" data-page="overview"><span class="ico">▦</span> Overview</button>
    <button data-page="services"><span class="ico">▤</span> Service inventory</button>
    <button data-page="events"><span class="ico">◷</span> Event stream <span class="nav-count" id="event-count">00</span></button>
@@ -393,7 +461,7 @@ async function startSimulation(){
    affectedComponent:selectedFault.component,observedSignal:selectedFault.signal,
    impact:selectedFault.impact,selectedAlternative:selectedFault.alternative,
    startedAtMs:now,phaseDurationMs:4500,runId:"SND-SIM-"+now,
-   initiatedBy:{uid:currentUser.uid,email:currentUser.email||null},updatedAt:serverTimestamp()
+   updatedAt:serverTimestamp()
   });
   currentSimulation={status:"running",scenarioKey:key,faultId:s.faultId,startedAtMs:now,phaseDurationMs:4500};
   syncSimulationClock();notify("Simulation started. The sequence will now run automatically.");
@@ -444,6 +512,9 @@ onAuthStateChanged(auth,async user=>{
   return;
  }
  s.mode=assignedRole;
+ if(assignedRole==="controller")s.page="simulation";
+ if(assignedRole==="viewer")s.page="overview";
+ appShell.classList.toggle("role-controller",assignedRole==="controller");
  $("user-chip").textContent=assignedRole==="viewer"?"SND · VIEW ONLY":assignedRole==="controller"?"SND · CONTROLLER":"SND · OPERATOR";
  appShell.classList.toggle("role-viewer",assignedRole==="viewer");
  authGate.classList.add("hidden");
@@ -473,9 +544,9 @@ async function persistIncident(eventType){
    status:s.step>=7?"report_prepared":"in_progress",
    source:"SND frontend workflow",
    updatedAt:serverTimestamp(),
-   updatedBy:{uid:currentUser.uid,email:currentUser.email||null}
+   updatedBy:{uid:currentUser.uid}
   };
-  if(isNew){record.createdAt=serverTimestamp();record.createdBy={uid:currentUser.uid,email:currentUser.email||null}}
+  if(isNew){record.createdAt=serverTimestamp();record.createdBy={uid:currentUser.uid}}
   await setDoc(ref,record,{merge:true});
   await addDoc(collection(ref,"events"),{
    type:eventType,
@@ -483,7 +554,7 @@ async function persistIncident(eventType){
    step:s.step,
    selectedAlternative:s.route,
    actorUid:currentUser.uid,
-   actorEmail:currentUser.email||null,
+   
    createdAt:serverTimestamp()
   });
   firebaseReady=true;
@@ -498,14 +569,14 @@ const initial={mode:"viewer",page:"overview",op:"op-overview",step:0,scenario:"a
 let s={...initial};
 try{const v=JSON.parse(localStorage.getItem("snd_ops_ui_v3")||"null");if(v&&Number.isInteger(v.step)&&v.step>=0&&v.step<=7)s={...initial,...v}}catch(e){}
 const scenarios={
- airport:{label:"Airport",faults:{"flight-info":{label:"Flight information system outage",component:"Flight Information Display System / Terminal A",signal:"Repeated synthetic health-check timeouts",impact:"Flight status information is unavailable to terminal displays",alternative:"Airport Information Standby Cluster"},"checkin":{label:"Passenger check-in disruption",component:"Passenger Check-in Gateway / Terminal A",signal:"Synthetic transaction failures above threshold",impact:"Passenger check-in workflows are interrupted",alternative:"Passenger Services Standby Gateway"},"baggage":{label:"Baggage handling integration failure",component:"Baggage Handling Integration / Zone A",signal:"Synthetic message delivery queue stalled",impact:"Baggage tracking and routing updates are delayed",alternative:"Baggage Integration Backup"}}},
- hospital:{label:"Hospital",faults:{"clinical":{label:"Clinical systems gateway outage",component:"Clinical Systems Gateway / Main Site",signal:"Synthetic clinical service dependency timeout",impact:"Clinical application access is interrupted",alternative:"Clinical Services Standby Gateway"},"lab":{label:"Laboratory results interface failure",component:"Laboratory Results Interface / Main Site",signal:"Synthetic result synchronization backlog",impact:"Laboratory results are delayed in connected systems",alternative:"Laboratory Interface Backup"},"admission":{label:"Patient admission system disruption",component:"Patient Admission Service / Main Site",signal:"Synthetic admission API error threshold exceeded",impact:"Admission workflows are delayed",alternative:"Admission Services Standby"}}},
- datacenter:{label:"Data Center",faults:{"api":{label:"Core API gateway outage",component:"Core API Gateway / Zone A",signal:"Synthetic API availability checks failed",impact:"Hosted applications cannot reach the primary API path",alternative:"Core API Standby Gateway"},"storage":{label:"Storage service degradation",component:"Storage Service / Zone A",signal:"Synthetic storage latency threshold exceeded",impact:"Dependent workloads experience delayed data access",alternative:"Storage Replication Endpoint"},"identity":{label:"Identity service interruption",component:"Identity Provider / Zone A",signal:"Synthetic authentication dependency failures",impact:"Dependent services cannot complete authentication",alternative:"Identity Standby Service"}}}
+ airport:{label:"Airport",faults:{"flight-info":{label:"Flight information system outage",component:"Flight Information Display System / Terminal A",signal:"Repeated service health-check timeouts",impact:"Flight status information is unavailable to terminal displays",alternative:"Airport Information Standby Cluster"},"checkin":{label:"Passenger check-in disruption",component:"Passenger Check-in Gateway / Terminal A",signal:"Transaction failure rate exceeds service threshold",impact:"Passenger check-in workflows are interrupted",alternative:"Passenger Services Standby Gateway"},"baggage":{label:"Baggage handling integration failure",component:"Baggage Handling Integration / Zone A",signal:"Message delivery queue has stopped progressing",impact:"Baggage tracking and routing updates are delayed",alternative:"Baggage Integration Backup"}}},
+ hospital:{label:"Hospital",faults:{"clinical":{label:"Clinical systems gateway outage",component:"Clinical Systems Gateway / Main Site",signal:"Clinical service dependency requests are timing out",impact:"Clinical application access is interrupted",alternative:"Clinical Services Standby Gateway"},"lab":{label:"Laboratory results interface failure",component:"Laboratory Results Interface / Main Site",signal:"Simulated result synchronization backlog",impact:"Laboratory results are delayed in connected systems",alternative:"Laboratory Interface Backup"},"admission":{label:"Patient admission system disruption",component:"Patient Admission Service / Main Site",signal:"Simulated admission API error threshold exceeded",impact:"Admission workflows are delayed",alternative:"Admission Services Standby"}}},
+ datacenter:{label:"Data Center",faults:{"api":{label:"Core API gateway outage",component:"Core API Gateway / Zone A",signal:"Simulated API availability checks failed",impact:"Hosted applications cannot reach the primary API path",alternative:"Core API Standby Gateway"},"storage":{label:"Storage service degradation",component:"Storage Service / Zone A",signal:"Simulated storage latency threshold exceeded",impact:"Dependent workloads experience delayed data access",alternative:"Storage Replication Endpoint"},"identity":{label:"Identity service interruption",component:"Identity Provider / Zone A",signal:"Simulated authentication dependency failures",impact:"Dependent services cannot complete authentication",alternative:"Identity Standby Service"}}}
 };
 const fault=()=>scenarios[s.scenario].faults[s.faultId]||Object.values(scenarios[s.scenario].faults)[0];
 const phases=["Monitoring","Fault detected","Impact analyzed","Alternative selected","Failover decision prepared","Recovery checks passed","Incident report generated"];
 const pages={
- overview:["SND CORE / OPERATIONS","Operations overview","Service health, active incidents, and resilience state across the configured environment."],
+ overview:["","Operations overview",""],
  services:["SND CORE / INVENTORY","Service inventory","Configured service components, regions, dependencies, and current state."],
  events:["SND CORE / EVENT PIPELINE","Event stream","Ordered operational events with source, severity, and correlation context."],
  incident:["SND CORE / INCIDENT","Incident analysis","Incident context, affected service, evidence, and impact assessment."],
@@ -556,7 +627,7 @@ function events(){
   ["Impact analysis",f.impact,"warn"],
   ["Alternative evaluation",`SND evaluates ${f.alternative} as the continuity option.`,"warn"],
   ["Continuity decision",`Decision prepared for ${f.alternative}. No real network route is changed.`,"good"],
-  ["Recovery verification",`Synthetic checks confirm the selected standby path in this demonstration.`,"good"],
+  ["Recovery verification",`Simulated checks confirm the selected standby path in this demonstration.`,"good"],
   ["Incident report",`The incident timeline and SND decision summary are recorded.`,"good"]
  ];
  return `<div class="event-list">${all.slice(0,Math.min(s.step,7)).map((x,i)=>`<div class="event-row"><div class="event-time">T+${String(i*4).padStart(2,"0")}s</div><i class="event-mark ${x[2]}"></i><div class="event-text"><b>${x[0]}</b><small>${esc(x[1])}</small></div></div>`).join("")}</div>`;
@@ -568,17 +639,17 @@ function simulationPage(){
  const options=Object.entries(scenarios).map(([key,obj])=>`<button class="sim-choice ${s.scenario===key?"selected":""}" data-scenario-choice="${key}"><b>${obj.label}</b><small>${Object.keys(obj.faults).length} selectable failure scenarios</small></button>`).join("");
  const faultOptions=Object.entries(scenario().faults).map(([id,item])=>`<option value="${id}" ${s.faultId===id?"selected":""}>${item.label}</option>`).join("");
  return `<div class="sim-setup">
-  <div class="sim-live"><h2>Configure a simulation</h2><p>Choose the environment, select the exact failure, then start. SND will run the full event sequence automatically and synchronize every connected screen.</p></div>
+  <div class="sim-live"><h2>New incident</h2><p>Select the operational environment and failure scenario.</p></div>
   ${panel("01 · ENVIRONMENT","SELECT ONE",`<div class="sim-choice-grid">${options}</div>`)}
   ${panel("02 · FAILURE SCENARIO","SELECT THE INCIDENT",`<div class="field"><label for="fault-select">Failure type</label><select id="fault-select">${faultOptions}</select></div><div class="kv">${kv("Affected component",esc(fault().component))}${kv("Detection signal",esc(fault().signal))}${kv("Expected impact",esc(fault().impact))}${kv("Standby alternative",esc(fault().alternative))}</div>`)}
-  ${panel("03 · EXECUTION","AUTOMATIC SEQUENCE",`<div class="kv">${kv("Scenario",scenario().label)}${kv("Current status",running?"Running automatically":completed?"Completed":"Ready to start")}</div><div class="sim-launch"><span class="dim" style="font-size:10px">${running?"A simulation is already running.":"No repeated input is required after starting."}</span><button class="btn primary" id="start-simulation" ${running?"disabled":""}>${completed?"Run again":"Start simulation"}</button><button class="btn" id="stop-simulation" ${running?"":"disabled"}>Stop</button></div>`)}
+  ${panel("03 · EXECUTION","AUTOMATIC SEQUENCE",`<div class="kv">${kv("Scenario",scenario().label)}${kv("Current status",running?"Running automatically":completed?"Completed":"Ready to start")}</div><div class="sim-launch"><span class="dim" style="font-size:10px">${running?"Incident sequence is running.":""}</span><button class="btn primary" id="start-simulation" ${running?"disabled":""}>${completed?"Run again":"Start simulation"}</button><button class="btn" id="stop-simulation" ${running?"":"disabled"}>Stop</button></div>`)}
  </div>`;
 }
 function overview(){
  const running=currentSimulation?.status==="running",completed=currentSimulation?.status==="completed";
  const title=currentSimulation?.incidentTitle||fault().label;
  const component=currentSimulation?.affectedComponent||fault().component;
- const sequence=phases.map((phase,i)=>`<div class="sim-phase ${s.step>i?"done":s.step===i?"current":""}"><i class="phase-dot"></i><div><b>${phase}</b><small>${["SND checks service health signals","The selected failure is identified","Dependencies and service impact are assessed","The standby option is evaluated","Continuity decision is prepared","Recovery behavior is checked in the simulation","The incident summary is recorded"][i]}</small></div></div>`).join("");
+ const sequence=phases.map((phase,i)=>`<div class="sim-phase ${s.step>i?"done":s.step===i?"current":""}"><i class="phase-dot"></i><div><b>${phase}</b><small>${["Service health checks","Failure signature confirmed","Service dependencies correlated","Standby capacity evaluated","Continuity route selected","Service recovery checks","Incident record completed"][i]}</small></div></div>`).join("");
  return `<div class="kpis">${kpi("Environment",currentSimulation?.environment||scenario().label,"Selected scenario")}${kpi("Incident status",running?"IN PROGRESS":completed?"COMPLETED":"READY",running?"Automatic sequence running":"Synchronized status",running?"accent":completed?"good":"")}${kpi("Current stage",s.step?phases[s.step-1]:"Waiting","SND workflow")}${kpi("Affected service",active()?"DEGRADED":"NORMAL",component)}</div>
  <div class="columns"><div>${panel("SND AUTOMATIC RESPONSE","LIVE WORKFLOW",`<div class="sim-phase-list">${sequence}</div>`)}${panel("INCIDENT DETAILS","SELECTED SCENARIO",`<div class="kv">${kv("Failure",esc(title))}${kv("Affected component",esc(component))}${kv("Detection signal",esc(currentSimulation?.observedSignal||fault().signal))}${kv("Service impact",esc(currentSimulation?.impact||fault().impact))}${kv("Standby alternative",esc(currentSimulation?.selectedAlternative||fault().alternative))}</div>`)}</div><div>${panel("SERVICE CONTINUITY","LOGICAL PATH",topology())}${panel("LATEST EVENTS","AUTOMATIC TIMELINE",events())}</div></div>`;
 }
@@ -598,7 +669,7 @@ function routingPage(){
 }
 function recoveryPage(){
  return `<div class="columns equal">${panel("FAILOVER EXECUTION STATE","CONTROLLED LAB",`<div class="kv">${kv("Primary service",active()?"Scenario fault selected":"Not tested")}${kv("Selected route",s.step>=4?esc(s.route):"Not selected")}${kv("Execution controller","Not connected")}${kv("Traffic switch","Not executed")}${kv("Switch timestamp","Not recorded")}${kv("Rollback readiness","Not assessed")}</div>`)}
- ${panel("POST-SWITCH VERIFICATION","REQUIRED CHECKS",`<div class="event-list">${["Standby endpoint health probe","Dependency reachability","Synthetic application transaction","Error-rate observation window","Latency objective validation","Audit event persisted"].map(x=>`<div class="event-row"><i class="event-mark"></i><div class="event-text"><b>${x}</b><small>Not run · verification adapter unavailable</small></div></div>`).join("")}</div>`)}</div><div class="notice info">A route is not considered recovered until post-switch application checks pass. The current interface does not execute or verify traffic movement.</div>`;
+ ${panel("POST-SWITCH VERIFICATION","REQUIRED CHECKS",`<div class="event-list">${["Standby endpoint health probe","Dependency reachability","Simulated application transaction","Error-rate observation window","Latency objective validation","Audit event persisted"].map(x=>`<div class="event-row"><i class="event-mark"></i><div class="event-text"><b>${x}</b><small>Not run · verification adapter unavailable</small></div></div>`).join("")}</div>`)}</div><div class="notice info">A route is not considered recovered until post-switch application checks pass. The current interface does not execute or verify traffic movement.</div>`;
 }
 function experimentsPage(){
  return `<div class="notice info"><b>RESEARCH INTEGRITY</b><span>Only import paired runs produced by the controlled experiment runner. Do not enter illustrative values as measured results.</span></div><div class="columns equal">${panel("BASELINE · WITHOUT SND","RUN NOT IMPORTED",`<div class="kv">${kv("Detection time","—")}${kv("Service recovery","—")}${kv("Failed requests","—")}${kv("Successful requests","—")}${kv("Downtime","—")}${kv("Run identifier","—")}</div>`)}${panel("SND · WITH RESILIENCE LAYER","RUN NOT IMPORTED",`<div class="kv">${kv("Detection time","—")}${kv("Decision time","—")}${kv("Failover completion","—")}${kv("Failed requests","—")}${kv("Successful requests","—")}${kv("Run identifier","—")}</div>`)}</div>${panel("COMPARISON PROTOCOL","PAIRED EXPERIMENT",`<div class="pipeline">${["Freeze workload","Baseline run","Reset state","SND run","Verify logs","Pair results","Report"].map((x,i)=>`<div class="pipe-step">0${i+1}<b>${x}</b></div>`).join("")}</div><p class="dim" style="font-size:9px;margin:13px 0 0">Required evidence: raw timestamped logs, identical workload configuration, fault injection timestamp, request outcomes, and independent verification of route changes.</p>`)}`;
@@ -611,32 +682,77 @@ function architecturePage(){
  const rows=[["Infrastructure","Existing services and dependencies remain authoritative."],["Telemetry adapter","Collects health, latency, error, capacity, and dependency signals."],["Detection service","Correlates events and creates incident records."],["Analysis service","Assesses impact, severity, dependencies, and constraints."],["Decision service","Ranks eligible alternatives and records rationale."],["Execution controller","Performs authorized failover in the controlled environment."],["Verification service","Tests service behavior after the route change."],["Audit service","Persists incident timeline, metrics, and operator review."]];
  return panel("LOGICAL COMPONENT BOUNDARIES","TARGET ARCHITECTURE",table(["LAYER","RESPONSIBILITY"],rows.map(r=>r.map(esc)))+`<div class="notice info" style="margin:12px 0 0">This page describes the intended component boundaries. It is not evidence that these services are implemented or connected in this HTML frontend.</div>`);
 }
+
+function viewerDashboard(){
+ const latest=remoteIncidents[0]||null;
+ const running=currentSimulation?.status==="running";
+ const complete=currentSimulation?.status==="completed"||latest?.status==="report_prepared";
+ const step=Math.max(0,Math.min(7,Number(currentSimulation?.step??s.step??latest?.step??0)));
+ const incident=latest?.incidentTitle||currentSimulation?.incidentTitle||"No active incident";
+ const env=latest?.environment||currentSimulation?.environment||"Awaiting scenario";
+ const comp=latest?.affectedComponent||currentSimulation?.affectedComponent||"—";
+ const alt=latest?.selectedAlternative||currentSimulation?.selectedAlternative||"—";
+ const phase=latest?.phase||phases[Math.max(0,step-1)]||"Standby";
+ const state=running?"INCIDENT IN PROGRESS":complete?"SERVICE RESTORED":"SYSTEM NORMAL";
+ const steps=phases.map((p,i)=>`<div class="viewer-flow-step ${step>i?"done":step===i&&running?"current":""}"><b>0${i+1}</b><div style="margin-top:7px">${esc(p)}</div></div>`).join("");
+ return `<div class="viewer-hero">
+  <div class="viewer-state"><div class="viewer-state-label">SND CORE</div><div><div class="viewer-state-value">${state}</div><div class="viewer-state-foot">${esc(env)}${latest?.incidentId?" · "+esc(latest.incidentId):""}</div></div></div>
+  <div class="viewer-metric"><span>CURRENT STAGE</span><strong>${String(step).padStart(2,"0")} / 07</strong><span>${esc(phase)}</span></div>
+ </div>
+ <div class="viewer-route">
+  <div class="viewer-route-node primary"><span>PRIMARY SERVICE</span><b>${esc(comp)}</b></div>
+  <div class="viewer-route-arrow">⟶</div>
+  <div class="viewer-route-node standby"><span>STANDBY SERVICE</span><b>${esc(alt)}</b></div>
+ </div>
+ <div class="viewer-flow"><div class="operator-headline"><strong>Resilience sequence</strong><span>${running?"LIVE":"STATUS"}</span></div><div class="viewer-flow-grid">${steps}</div></div>
+ <div class="viewer-detail-grid">
+  <div class="viewer-detail"><span>Incident</span><b>${esc(incident)}</b></div>
+  <div class="viewer-detail"><span>Affected component</span><b>${esc(comp)}</b></div>
+  <div class="viewer-detail"><span>Standby alternative</span><b>${esc(alt)}</b></div>
+ </div>`;
+}
 function operatorOverview(){
- const latest=remoteIncidents[0];
- const completedPhases=phases.slice(0,Math.max(1,Math.min(7,Number(latest?.step||0))));
- const summary=latest
-  ? `${latest.incidentTitle||"A simulated service disruption"} was introduced in the ${latest.environment||scenarios[latest.scenarioKey]?.environment||"selected"} scenario. SND progressed through ${latest.phase||"the workflow"} and selected ${latest.selectedAlternative||"an alternative path not yet selected"}. This record describes a synchronized simulation; no live infrastructure route was changed.`
-  : "Waiting for a phone controller to start an airport, hospital, or data center scenario.";
+ const latest=remoteIncidents[0]||null;
+ const total=remoteIncidents.length;
+ const completed=remoteIncidents.filter(x=>x.status==="report_prepared").length;
+ const running=remoteIncidents.filter(x=>x.status==="in_progress").length;
+ const pending=remoteIncidents.filter(x=>!x.operatorAcknowledged).length;
+ const donutTotal=Math.max(1,total);
+ const donePct=total?completed/donutTotal*100:0;
+ const runPct=total?running/donutTotal*100:0;
+ const pendingPct=Math.max(0,100-donePct-runPct);
+ const donut=`conic-gradient(#8f79d8 0 ${donePct}%,#d8a85f ${donePct}% ${donePct+runPct}%,#3b3948 ${donePct+runPct}% 100%)`;
+ const step=latest?Math.max(0,Math.min(7,Number(latest.step||0))):0;
+ const stageCounts=phases.map((p,i)=>({label:p,count:latest&&step>i?1:0}));
+ const maxStage=Math.max(1,...stageCounts.map(x=>x.count));
+ const bars=stageCounts.map(x=>`<div class="bar-row"><span class="bar-label">${esc(x.label)}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(x.count/maxStage*100)}%"></div></div><span class="bar-value">${x.count}</span></div>`).join("");
+ const summary=latest?`${latest.incidentTitle||"Incident"} · ${latest.environment||"—"} · ${latest.phase||"—"}`:"No incidents recorded";
  return `<div class="kpis">
- ${kpi("Simulation incidents",String(remoteIncidents.length).padStart(2,"0"),"Synchronized Firestore records")}
- ${kpi("Awaiting review",String(remoteIncidents.filter(x=>!x.operatorAcknowledged).length).padStart(2,"0"),"Operator review queue")}
- ${kpi("Latest phase",latest?esc(latest.phase||"—"):"READY","Current workflow stage","accent")}
- ${kpi("Run status",latest?(latest.status==="report_prepared"?"COMPLETED":"IN PROGRESS"):"WAITING","Simulation only",latest?"good":"warn")}
+ ${kpi("Incidents",String(total).padStart(2,"0"),"All recorded events")}
+ ${kpi("In progress",String(running).padStart(2,"0"),"Active workflows","accent")}
+ ${kpi("Completed",String(completed).padStart(2,"0"),"Prepared reports","good")}
+ ${kpi("Awaiting review",String(pending).padStart(2,"0"),"Operator queue","warn")}
+ </div>
+ <div class="operator-charts">
+  <div class="chart-card"><div class="chart-title">INCIDENT DISTRIBUTION</div><div class="donut-wrap"><div class="donut" style="background:${donut}"><div class="donut-center">${total}<small>INCIDENTS</small></div></div><div class="chart-legend">
+   <div class="legend-row"><i class="legend-dot" style="background:#8f79d8"></i>Completed <b>${completed}</b></div>
+   <div class="legend-row"><i class="legend-dot" style="background:#d8a85f"></i>In progress <b>${running}</b></div>
+   <div class="legend-row"><i class="legend-dot" style="background:#3b3948"></i>Other <b>${Math.max(0,total-completed-running)}</b></div>
+  </div></div></div>
+  <div class="chart-card"><div class="chart-title">RESPONSE STAGES</div><div class="bar-chart">${bars}</div></div>
  </div>
  <div class="columns equal">
- ${panel("LATEST INCIDENT SUMMARY",latest?esc(latest.incidentId||latest.id):"NO RUN",`<div class="kv">
- ${kv("Environment",esc(latest?.environment||scenarios[latest?.scenarioKey]?.environment||"—"))}
- ${kv("Incident",esc(latest?.incidentTitle||"—"))}
- ${kv("Affected component",esc(latest?.affectedComponent||"—"))}
- ${kv("Observed signal",esc(latest?.observedSignal||"—"))}
- ${kv("Impact",esc(latest?.impact||"—"))}
- ${kv("Current phase",esc(latest?.phase||"—"))}
- ${kv("Selected alternative",esc(latest?.selectedAlternative||"—"))}
- ${kv("Initiated by",esc(latest?.updatedBy?.email||latest?.createdBy?.email||"—"))}
- </div><p class="dim" style="font-size:9px;margin-top:12px">${esc(summary)}</p>`)}
- ${panel("SND ACTION TIMELINE","AUTOMATIC WORKFLOW",latest?`<div class="event-list">${completedPhases.map((phase,i)=>`<div class="event-row"><i class="event-mark ${i<completedPhases.length-1?"good":""}"></i><div class="event-text"><b>${esc(phase)}</b><small>${i===0?"Scenario initialized":i===1?"Monitoring stage":i===2?"Simulated fault detected":i===3?"Impact analysis stage":i===4?"Alternative selected":i===5?"Failover decision preview":i===6?"Recovery verification stage":"Incident summary prepared"}</small></div></div>`).join("")}</div>`:`<div class="empty">The phone controller has not started a scenario yet.</div>`)}
- </div>
- <div class="notice info"><b>DEMONSTRATION SCOPE</b><span>The laptop is the review and reporting console. It receives the simulated incident record and workflow stages from the phone through Firestore. No live airport, hospital, or data-center infrastructure is monitored or modified.</span></div>`;
+  ${panel("LATEST INCIDENT",latest?esc(latest.incidentId||latest.id):"—",latest?`<div class="kv">
+   ${kv("Environment",esc(latest.environment||"—"))}
+   ${kv("Incident",esc(latest.incidentTitle||"—"))}
+   ${kv("Affected component",esc(latest.affectedComponent||"—"))}
+   ${kv("Detection signal",esc(latest.observedSignal||"—"))}
+   ${kv("Expected impact",esc(latest.impact||"—"))}
+   ${kv("Current stage",esc(latest.phase||"—"))}
+   ${kv("Standby alternative",esc(latest.selectedAlternative||"—"))}
+  </div>`:`<div class="empty">No incident has been started.</div>`)}
+  ${panel("INCIDENT TIMELINE","LATEST RECORD",latest?`<div class="event-list">${phases.slice(0,step).map((phase,i)=>`<div class="event-row"><i class="event-mark ${i<step-1?"good":"warn"}"></i><div class="event-text"><b>${esc(phase)}</b><small>${esc(["Service monitoring","Failure identified","Impact assessment","Standby evaluation","Continuity decision","Recovery verification","Report prepared"][i])}</small></div></div>`).join("")||`<div class="empty">${esc(summary)}</div>`}`:`<div class="empty">Waiting for the first incident.</div>`)}
+ </div>`;
 }
 function operatorIncidents(){
  const rows=remoteIncidents.map(x=>[esc(x.incidentId||x.id),esc(x.incidentTitle||"—"),esc(x.phase||"—"),x.operatorAcknowledged?"Acknowledged":"Pending"]);
@@ -649,7 +765,9 @@ function operatorAudit(){
 }
 function render(){
  const core=canViewCore();
- $("core-nav").classList.toggle("hidden",!core);$("operator-nav").classList.toggle("hidden",core);
+ $("core-nav").classList.toggle("hidden",!core||s.mode==="viewer");$("operator-nav").classList.toggle("hidden",core);
+ $("sidebar-toggle").classList.toggle("hidden",s.mode==="viewer");
+ document.querySelector(".frame").classList.toggle("role-viewer-frame",s.mode==="viewer");
  $("mobile-core").classList.toggle("hidden",!core);$("mobile-operator").classList.toggle("hidden",core);
  document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",core&&b.dataset.page===s.page));
  document.querySelectorAll("[data-op]").forEach(b=>b.classList.toggle("active",!core&&b.dataset.op===s.op));
@@ -657,11 +775,11 @@ function render(){
  if(core){
   const pageDefs={...pages};
   [eyebrow,title,subtitle]=pageDefs[s.page]||pages.overview;
-  const renderers={overview,services:servicesPage,events:eventsPage,incident:incidentPage,routing:routingPage,recovery:recoveryPage,experiments:experimentsPage,reports:reportsPage,architecture:architecturePage,simulation:simulationPage};
-  body=(renderers[s.page]||overview)();
+  const renderers={overview:s.mode==="viewer"?viewerDashboard:overview,services:servicesPage,events:eventsPage,incident:incidentPage,routing:routingPage,recovery:recoveryPage,experiments:experimentsPage,reports:reportsPage,architecture:architecturePage,simulation:simulationPage};
+  body=s.mode==="viewer"?viewerDashboard():(renderers[s.page]||overview)();
  }else{
   const ops={"op-overview":["OPERATOR / SITUATION","Operations summary",operatorOverview],"op-incidents":["OPERATOR / QUEUE","Incident queue",operatorIncidents],"op-services":["OPERATOR / SERVICES","Service status",operatorServices],"op-audit":["OPERATOR / AUDIT","Audit and review",operatorAudit]};
-  [eyebrow,title,body]=ops[s.op];subtitle="Incident progress, SND decisions, and operational summary.";body=body();
+  [eyebrow,title,body]=ops[s.op];subtitle="";body=body();
  }
  $("eyebrow").textContent=eyebrow;$("title").textContent=title;$("subtitle").textContent=subtitle;$("view").innerHTML=body;
  $("actions").classList.add("hidden");
