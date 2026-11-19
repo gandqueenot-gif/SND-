@@ -170,7 +170,7 @@ tbody tr:last-child td{border-bottom:0}
   <p>Use one of the three Google accounts authorized for this project.</p>
   <button class="btn primary" id="google-login" type="button">Continue with Google</button>
   <div class="auth-error" id="auth-error" role="alert"></div>
-  <p class="auth-note">Your assigned role determines which SND workspace opens. Access is checked against the project's Firebase role registry.</p>
+  <p class="auth-note">Your verified Google account determines your SND workspace. Only the three approved project accounts can enter.</p>
  </form>
 </div>
 
@@ -239,8 +239,8 @@ tbody tr:last-child td{border-bottom:0}
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
-import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, updateDoc, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
 
 (()=>{
 "use strict";
@@ -261,15 +261,33 @@ const db=getFirestore(firebaseApp);
 let currentUser=null, stopIncidentFeed=null, remoteIncidents=[], firebaseReady=false;
 const authGate=$("auth-gate"), appShell=$("app-shell");
 function setAuthError(message){$("auth-error").textContent=message||""}
+const GOOGLE_ROLES={
+ "gandqueenot@gmail.com":"core",
+ "sebaotibi130@gmail.com":"core",
+ "saudinationaldigital@gmail.com":"operator"
+};
 const googleProvider=new GoogleAuthProvider();
 googleProvider.setCustomParameters({prompt:"select_account"});
 $("google-login").addEventListener("click",async()=>{
- const button=$("google-login");setAuthError("");
- button.disabled=true;button.textContent="Redirecting to Google…";
- try{await signInWithRedirect(auth,googleProvider)}
- catch(err){setAuthError("Google sign-in failed: "+(err.message||err.code));button.disabled=false;button.textContent="Continue with Google"}
+ const button=$("google-login");
+ setAuthError("");
+ button.disabled=true;
+ button.textContent="Opening Google sign-in…";
+ try{
+  await signInWithPopup(auth,googleProvider);
+ }catch(err){
+  const messages={
+   "auth/popup-blocked":"The browser blocked the sign-in window. Allow pop-ups for this site and try again.",
+   "auth/popup-closed-by-user":"The Google sign-in window was closed before completion.",
+   "auth/unauthorized-domain":"This website domain is not authorized in Firebase Authentication.",
+   "auth/operation-not-allowed":"Google sign-in is not enabled in Firebase Authentication.",
+   "auth/network-request-failed":"Network connection failed. Check your connection and try again."
+  };
+  setAuthError(messages[err.code]||("Google sign-in failed: "+(err.message||err.code)));
+  button.disabled=false;
+  button.textContent="Continue with Google";
+ }
 });
-getRedirectResult(auth).catch(err=>setAuthError("Google sign-in failed: "+(err.message||err.code)));
 function startIncidentFeed(){
  if(stopIncidentFeed)stopIncidentFeed();
  const q=query(collection(db,"sndIncidents"),orderBy("updatedAt","desc"),limit(30));
@@ -280,32 +298,41 @@ function startIncidentFeed(){
   if(s.mode==="operator")render();
  },error=>{
   firebaseReady=false;
-  notify("Firestore read failed: "+error.message);
+  notify("Firestore read failed. Check that the SND Firestore rules have been deployed: "+error.message);
  });
 }
 onAuthStateChanged(auth,async user=>{
  currentUser=user;
  if(!user){
-  authGate.classList.remove("hidden");appShell.classList.add("hidden");
-  if(stopIncidentFeed)stopIncidentFeed();stopIncidentFeed=null;
-  remoteIncidents=[];firebaseReady=false;return;
+  authGate.classList.remove("hidden");
+  appShell.classList.add("hidden");
+  if(stopIncidentFeed)stopIncidentFeed();
+  stopIncidentFeed=null;
+  remoteIncidents=[];
+  firebaseReady=false;
+  $("google-login").disabled=false;
+  $("google-login").textContent="Continue with Google";
+  return;
  }
- authGate.classList.add("hidden");appShell.classList.add("hidden");
- try{
-  const roleSnap=await getDoc(doc(db,"userRoles",user.uid));
-  if(!roleSnap.exists())throw new Error("This Google account has not been assigned an SND role yet. Ask the project administrator to add its UID to userRoles.");
-  const roleData=roleSnap.data(),role=roleData.role;
-  if(role!=="core"&&role!=="operator")throw new Error("The assigned SND role is invalid.");
-  const allowedEmail=(roleData.email||"").toLowerCase();
-  if(allowedEmail&&allowedEmail!==String(user.email||"").toLowerCase())throw new Error("The signed-in Google account does not match the email registered for this role.");
-  s.mode=role==="core"?"core":"operator";
-  $("user-chip").textContent=(user.email||"SIGNED IN")+" · "+(role==="core"?"SND CORE":"OPERATOR");
-  appShell.classList.remove("hidden");startIncidentFeed();render();
- }catch(err){
-  setAuthError(err.message||"Unable to verify your SND role.");
-  authGate.classList.remove("hidden");appShell.classList.add("hidden");
+ const email=String(user.email||"").trim().toLowerCase();
+ const assignedRole=GOOGLE_ROLES[email];
+ if(!assignedRole||!user.emailVerified){
+  setAuthError(!assignedRole
+   ?"This Google account is not authorized for SND."
+   :"Google email verification is required.");
+  authGate.classList.remove("hidden");
+  appShell.classList.add("hidden");
   await signOut(auth);
+  return;
  }
+ s.mode=assignedRole;
+ $("user-chip").textContent=email+" · "+(assignedRole==="core"?"SND CORE":"OPERATOR");
+ $("core-mode").classList.add("hidden");
+ $("operator-mode").classList.add("hidden");
+ authGate.classList.add("hidden");
+ appShell.classList.remove("hidden");
+ startIncidentFeed();
+ render();
 });
 async function persistIncident(eventType){
  if(!currentUser||s.mode!=="core"||s.step<2)return;
