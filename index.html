@@ -539,6 +539,85 @@ tbody tr:last-child td{border-bottom:0}
 .tablet-system.service.verified{box-shadow:0 0 0 1px #75bd9233,0 0 18px #75bd9218}
 .tablet-alt.chosen{border-color:#b89ce8;background:linear-gradient(100deg,#46345f,#2b2437);box-shadow:0 0 14px #a98bd522}
 
+
+/* SND FINAL iPAD LAYOUT */
+.tablet-console{gap:10px}
+.tablet-section{padding:17px 19px}
+.tablet-topology .tablet-section-head{margin-bottom:17px}
+.tablet-flow{grid-template-columns:minmax(145px,1fr) 28px minmax(190px,1.18fr) 28px minmax(220px,1.32fr) 28px minmax(145px,.95fr);gap:9px}
+.tablet-system{min-height:190px;padding:16px;gap:10px}
+.tablet-system-icon{font-size:29px}
+.tablet-system small{font-size:9px}
+.tablet-system b{font-size:13px}
+.tablet-system em{font-size:10px;line-height:1.4}
+.tablet-snd-core{min-height:210px;padding:18px 12px;gap:11px}
+.tablet-snd-emblem{width:82px;height:82px;border-radius:23px}
+.tablet-snd-emblem span{font-size:23px}
+.tablet-snd-core>b{font-size:14px}
+.tablet-snd-core>small{font-size:10px}
+.tablet-alternatives{gap:10px}
+.tablet-alt{grid-template-columns:32px minmax(0,1fr) 16px;padding:11px;gap:10px;min-height:53px}
+.tablet-alt-code{width:31px;height:31px;font-size:13px}
+.tablet-alt b{font-size:11px}
+.tablet-alt small{font-size:9px}
+.tablet-phase-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.tablet-phase{min-height:91px;padding:11px;gap:7px}
+.tablet-phase-icon{width:32px;height:32px;font-size:18px}
+.tablet-phase b{font-size:11px}
+.tablet-phase small{font-size:9px;line-height:1.45}
+.tablet-event-list{max-height:115px}
+.tablet-section-head h3{font-size:17px}
+@media(min-width:850px) and (max-width:1200px){
+ .tablet-console{gap:9px}
+ .tablet-hero{padding:15px 18px;gap:14px}
+ .tablet-hero h2{font-size:26px;margin:8px 0 4px}
+ .tablet-hero p{font-size:10px}
+ .tablet-hero-meta{gap:8px;padding-left:12px}
+ .tablet-hero-meta b{font-size:10px}
+ .tablet-section{padding:13px 15px}
+ .tablet-flow{grid-template-columns:minmax(0,1fr) 18px minmax(0,1.05fr) 18px minmax(0,1.2fr) 18px minmax(0,.9fr);gap:5px}
+ .tablet-system{min-height:160px;padding:10px;gap:7px}
+ .tablet-system b{font-size:11px}
+ .tablet-snd-core{min-height:176px;padding:10px 6px;gap:7px}
+ .tablet-snd-emblem{width:62px;height:62px;border-radius:17px}
+ .tablet-snd-core>b{font-size:11px}
+ .tablet-snd-core>small{font-size:8px}
+ .tablet-alt{padding:7px;min-height:43px;gap:6px}
+ .tablet-alt-code{width:25px;height:25px;font-size:11px}
+ .tablet-alt b{font-size:9px}
+ .tablet-alt small{font-size:8px}
+ .tablet-phase-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+ .tablet-phase{min-height:78px;padding:7px;gap:5px}
+ .tablet-phase-icon{width:25px;height:25px;font-size:15px}
+ .tablet-phase b{font-size:9px}
+ .tablet-phase small{font-size:7px}
+ .tablet-bottom{gap:8px}
+ .tablet-event-list{max-height:82px}
+ .tablet-facts>div{padding:6px 0;gap:4px}
+ .tablet-facts b{font-size:9px}
+}
+@media(min-width:701px) and (max-width:849px){
+ .tablet-console{gap:8px}
+ .tablet-hero{grid-template-columns:1fr;padding:13px 15px;gap:9px}
+ .tablet-hero-meta{border-left:0;border-top:1px solid #55496b;padding:8px 0 0}
+ .tablet-flow{grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);gap:7px}
+ .tablet-flow-arrow{min-height:22px}
+ .tablet-alternatives{grid-column:1/4;grid-row:2;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .tablet-flow-arrow:nth-of-type(6){display:none}
+ .tablet-system.service{grid-column:3;grid-row:1}
+ .tablet-phase-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .tablet-bottom{grid-template-columns:1fr 1fr}
+ .tablet-event-list{max-height:90px}
+}
+@media(max-width:700px){
+ .tablet-flow{grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr);gap:5px}
+ .tablet-system{min-height:130px;padding:9px}
+ .tablet-snd-core{min-height:145px}
+ .tablet-alternatives{grid-column:1/4;grid-template-columns:1fr}
+ .tablet-system.service{grid-column:3;grid-row:1}
+ .tablet-phase-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
 </style>
 </head>
 <body>
@@ -1024,8 +1103,7 @@ function viewerDashboard(){
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
     <div class="tablet-system service ${verified?"verified":""}"><span class="tablet-system-icon">${verified?"✓":"◷"}</span><small>SERVICE STATUS</small><b>${verified?"Continuity verified":routeActive?"Path switched":running?"Recovery in progress":"Ready"}</b><em>${verified?"Service continues":routeActive?"Verification running":"Awaiting response"}</em></div>
    </div>
-   <div class="tablet-operator-line"><i></i><small>Diagnosis · Permanent recovery · System oversight</small></div>
-  </section>
+</section>
   <section class="tablet-section tablet-process">
    <div class="tablet-section-head"><div><span>02 / RESPONSE SEQUENCE</span><h3>Adaptive resilience process</h3></div></div>
    <div class="tablet-phase-grid">${phaseCards}</div>
