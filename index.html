@@ -662,6 +662,45 @@ tbody tr:last-child td{border-bottom:0}
 .tablet-phase.done .tablet-phase-icon{background:#7751b5!important}
 @keyframes sndFaultPulse{0%,100%{box-shadow:0 0 0 2px #ff263d44,0 0 19px #ff163c55,inset 0 0 20px #ff263d22}50%{box-shadow:0 0 0 4px #ff263d55,0 0 34px #ff163c88,inset 0 0 32px #ff263d44}}
 
+
+/* Final recovery state and infographic-style line icons */
+.tablet-hero-meta{
+ width:100%; min-height:142px; padding:22px 24px;
+ grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px;
+ border:1.5px solid #8c73b7; border-left:4px solid #b69bff;
+ border-radius:16px;
+ background:linear-gradient(100deg,#29213b 0%,#211d30 55%,#2b2340 100%);
+ box-shadow:0 0 0 2px #9c7ad522,0 12px 28px #08061055;
+}
+.tablet-hero-meta>div{gap:9px;padding:4px 12px}
+.tablet-hero-meta small{font-size:clamp(11px,1.2vw,14px)!important;font-weight:850;letter-spacing:.13em;color:#d9c9f5!important}
+.tablet-hero-meta b{font-size:clamp(18px,2.1vw,25px)!important;font-weight:900;color:#fff!important;line-height:1.22}
+.tablet-phase-icon{
+ width:44px;height:44px;border-radius:13px;display:grid;place-items:center;
+ background:linear-gradient(145deg,#f5f2ff,#e7ddff);color:#352276;
+ border:1px solid #c8b7f0;box-shadow:0 3px 10px #1c123422;
+}
+.tablet-phase-icon svg{
+ width:33px;height:33px;fill:none;stroke:currentColor;stroke-width:2.35;
+ stroke-linecap:round;stroke-linejoin:round;
+}
+.tablet-phase{align-content:start}
+.tablet-phase.current .tablet-phase-icon{background:linear-gradient(145deg,#c9aaff,#9870e8);color:#211044;border-color:#e3d2ff}
+.tablet-phase.done .tablet-phase-icon{background:linear-gradient(145deg,#d9f8e6,#a6e6bf);color:#155d36;border-color:#7bd69f}
+.tablet-system.service.verified{
+ border:2px solid #43e58a!important;
+ background:linear-gradient(145deg,#16834b 0%,#0e5936 60%,#093c29 100%)!important;
+ box-shadow:0 0 0 3px #4df39a55,0 0 34px #25e68188,inset 0 0 24px #8dffc322!important;
+}
+.tablet-system.service.verified .tablet-system-icon,
+.tablet-system.service.verified small,
+.tablet-system.service.verified b,
+.tablet-system.service.verified em{color:#f1fff6!important}
+.tablet-system.service.verified .tablet-system-icon{font-size:38px}
+.tablet-hero:has(.tablet-live-dot.complete){border-color:#43d987;box-shadow:0 0 0 2px #43d98744,0 0 25px #20d87933}
+.tablet-live-dot.complete{background:#36e58a!important;box-shadow:0 0 0 6px #36e58a33,0 0 20px #36e58a!important}
+.tablet-status-chip.complete{background:#116a3d!important;border-color:#49e18b!important;color:#eafff2!important}
+
 </style>
 </head>
 <body>
@@ -1106,23 +1145,32 @@ function viewerDashboard(){
  const impact=sim?.impact||latest?.impact||fault().impact;
  const selected=sim?.selectedAlternative||latest?.selectedAlternative||fault().alternative;
  const routeActive=sim?.failoverState==="route_active"||step>=5;
- const verified=complete&&sim?.verificationState==="passed"&&step>=7;
+ const verified=!!sim&&sim.verificationState==="passed"&&(step>=6||complete);
  const clock=sim?.startedAtMs?new Date(sim.startedAtMs).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—";
  const elapsed=sim?.startedAtMs?Math.max(0,Math.floor((Date.now()-sim.startedAtMs)/1000)):0;
- const phasesUI=[
-  ["Monitor","Service health and performance","▤"],
-  ["Detect","Failure signal confirmed","⌕"],
-  ["Analyze","Impact and dependencies","◎"],
-  ["Evaluate","Standby paths compared","⑂"],
-  ["Select","Continuity path selected","◇"],
-  ["Failover","Traffic path transition","⇄"],
-  ["Verify","Service continuity checked","✓"]
+ const phaseIcon=(name)=>({
+  Monitor:`<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="7" width="35" height="13" rx="4"/><rect x="5" y="27" width="35" height="13" rx="4"/><circle cx="13" cy="13.5" r="2"/><circle cx="13" cy="33.5" r="2"/><path d="M23 14h11M23 34h7M32 25l4-4 3 7 4-5"/></svg>`,
+  Detect:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M19 6 4 34h30L19 6Z"/><path d="M19 16v8M19 29v.5"/><circle cx="34" cy="33" r="9"/><path d="m41 40 4 4"/></svg>`,
+  Analyze:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M23 8c-6-5-13 0-12 6-7 2-7 12-1 15-2 7 5 12 11 8l3-3V9ZM25 8c6-5 13 0 12 6 7 2 7 12 1 15 2 7-5 12-11 8l-3-3V9Z"/><path d="M15 16c4 0 5 3 5 5M11 28c4-2 7 0 8 3M33 16c-4 0-5 3-5 5M37 28c-4-2-7 0-8 3M24 9v30"/></svg>`,
+  Evaluate:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 40V7M24 7l-6 7M24 7l6 7M24 25H8m0 0 6-6m-6 6 6 6M24 25h16m0 0-6-6m6 6-6 6"/></svg>`,
+  Select:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 40 10v12c0 11-7 18-16 22C15 40 8 33 8 22V10l16-6Z"/><path d="m16 24 6 6 11-13"/></svg>`,
+  Failover:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 15h29l-6-6M41 33H12l6 6"/><path d="m30 9 6 6-6 6M18 27l-6 6 6 6"/></svg>`,
+  Verify:`<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 40 10v12c0 11-7 18-16 22C15 40 8 33 8 22V10l16-6Z"/><path d="m16 24 6 6 11-13"/></svg>`
+})[name];
+const phasesUI=[
+  ["Monitor","Service health and performance",phaseIcon("Monitor")],
+  ["Detect","Failure signal confirmed",phaseIcon("Detect")],
+  ["Analyze","Impact and dependencies",phaseIcon("Analyze")],
+  ["Evaluate","Standby paths compared",phaseIcon("Evaluate")],
+  ["Select","Continuity path selected",phaseIcon("Select")],
+  ["Failover","Traffic path transition",phaseIcon("Failover")],
+  ["Verify","Service continuity checked",phaseIcon("Verify")]
  ];
  const phaseCards=phasesUI.map((p,i)=>`<div class="tablet-phase ${step>i?"done":step===i&&running?"current":""}"><span class="tablet-phase-icon">${p[2]}</span><b>${String(i+1).padStart(2,"0")} ${p[0]}</b><small>${p[1]}</small></div>`).join("");
  const altNames=[selected,"Alternative path C","Alternative path D"];
  const altCards=altNames.map((name,i)=>`<div class="tablet-alt ${i===0&&routeActive?"chosen":""}"><span class="tablet-alt-code">${["B","C","D"][i]}</span><div><b>${esc(name)}</b><small>${i===0&&routeActive?"Active service path":i===0?"Selected for failover":"Standby candidate"}</small></div><span class="tablet-alt-state">${i===0&&routeActive?"✓":"○"}</span></div>`).join("");
- const stateLabel=running?"SERVICE INTERRUPTION DETECTED":complete?"SERVICE CONTINUITY RESTORED":"SYSTEMS READY";
- const stateClass=running?"running":complete?"complete":"ready";
+ const stateLabel=verified?"SERVICE CONTINUITY RESTORED":running?"SERVICE INTERRUPTION DETECTED":complete?"SERVICE CONTINUITY RESTORED":"SYSTEMS READY";
+ const stateClass=verified?"complete":running?"running":complete?"complete":"ready";
  const reportEvents=phasesUI.slice(0,step).map((p,i)=>`<div class="tablet-event ${i===step-1?"event-current":""}"><span class="tablet-event-time">${sim?.startedAtMs?new Date(sim.startedAtMs+(i+1)*(Number(sim.phaseDurationMs)||4500)).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—"}</span><i></i><div><b>${p[0]}</b><small>${[
  "Continuous service health checks are running.",
  "The selected failure condition was identified.",
