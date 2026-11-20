@@ -401,6 +401,133 @@ tbody tr:last-child td{border-bottom:0}
  .operator-screen{height:calc(100vh - 225px);min-height:360px}
  .operator-kpis .kpi{min-height:57px}
 }
+
+/* Complete SND tablet display redesign */
+.role-viewer .sidebar,.role-viewer .mobile-nav,.role-viewer #sidebar-toggle{display:none!important}
+.role-viewer .frame{display:block;min-height:calc(100vh - 58px)}
+.role-viewer .content{width:100%;max-width:1740px;margin:0 auto;padding:22px 28px 30px}
+.role-viewer .heading{margin:0 0 12px;display:flex;align-items:end;justify-content:space-between}
+.role-viewer .heading .eyebrow{font-size:9px;letter-spacing:.18em;color:#c2a9f1}
+.role-viewer .heading h1{font-size:22px;margin:2px 0 0;letter-spacing:-.03em}
+.role-viewer .heading .subtitle{display:none}
+.role-viewer .tablet-console{display:grid;gap:14px;color:#f4f0fc}
+.tablet-hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(330px,.9fr);gap:20px;align-items:center;padding:22px 25px;border:1px solid #594b75;border-radius:16px;background:radial-gradient(ellipse at 5% 5%,#7860a044,transparent 45%),linear-gradient(110deg,#262039,#191821 72%);box-shadow:0 12px 32px #09081055}
+.tablet-hero-copy{min-width:0}
+.tablet-kicker{display:flex;align-items:center;gap:9px;font-size:9px;letter-spacing:.17em;color:#c9b9eb;font-weight:700}
+.tablet-live-dot{width:9px;height:9px;border-radius:50%;background:#9d8cae;box-shadow:0 0 0 5px #9d8cae20}
+.tablet-live-dot.running{background:#d9a3c5;box-shadow:0 0 0 5px #d9a3c520}
+.tablet-live-dot.complete{background:#8bc7a7;box-shadow:0 0 0 5px #8bc7a720}
+.tablet-hero h2{font-size:clamp(23px,3vw,34px);margin:12px 0 6px;line-height:1.12;letter-spacing:-.035em}
+.tablet-hero p{font-size:11px;color:#bcb4c9;margin:0;max-width:680px}
+.tablet-hero-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border-left:1px solid #55496b;padding-left:18px}
+.tablet-hero-meta>div{display:grid;gap:6px;min-width:0}
+.tablet-hero-meta small,.tablet-facts small{font-size:8px;letter-spacing:.13em;color:#a99eb8}
+.tablet-hero-meta b{font-size:12px;color:#f0eaff;overflow-wrap:anywhere}
+.tablet-section{background:linear-gradient(145deg,#201d29,#191821);border:1px solid #393344;border-radius:14px;padding:16px 18px;min-width:0;box-shadow:0 8px 24px #0908102b}
+.tablet-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.tablet-section-head>div{display:grid;gap:4px;min-width:0}
+.tablet-section-head>div>span{font-size:8px;letter-spacing:.15em;color:#a99abf}
+.tablet-section-head h3{font-size:16px;margin:0;font-weight:680;letter-spacing:-.02em;overflow-wrap:anywhere}
+.tablet-section-head>strong{font:700 22px var(--mono);color:#d4c2f5;white-space:nowrap}
+.tablet-section-head>strong i{font-size:10px;font-style:normal;color:#9288a0}
+.tablet-phase-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.tablet-phase{position:relative;display:flex;flex-direction:column;gap:7px;min-height:103px;padding:10px;border:1px solid #3c3548;border-radius:10px;background:#211e2a}
+.tablet-phase-icon{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#352b48;color:#cdbaf0;font-size:17px}
+.tablet-phase b{font-size:10px;color:#eee8f7}
+.tablet-phase small{font-size:8px;line-height:1.4;color:#a79fb0}
+.tablet-phase.done{border-color:#78629f;background:linear-gradient(145deg,#30263e,#211e2a)}
+.tablet-phase.done .tablet-phase-icon{background:#7359a1;color:white}
+.tablet-phase.current{border-color:#c5a9ef;box-shadow:0 0 0 1px #bca0ed33,0 0 22px #9b7bd322}
+.tablet-phase.current .tablet-phase-icon{background:#9c7bce;color:#fff}
+.tablet-status-chip{font-size:8px;letter-spacing:.12em;border:1px solid #65557f;color:#c9b7eb;background:#302740;padding:6px 9px;border-radius:20px;white-space:nowrap}
+.tablet-status-chip.running{border-color:#a879a0;color:#e3c1dc;background:#3b2939}
+.tablet-status-chip.complete{border-color:#58846d;color:#a9d9bd;background:#23362d}
+.tablet-flow{display:grid;grid-template-columns:minmax(125px,1fr) 26px minmax(160px,1.12fr) 26px minmax(190px,1.25fr) 26px minmax(125px,.95fr);align-items:center;gap:7px}
+.tablet-system{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:7px;min-height:144px;padding:13px;border:1px solid #65546f;border-radius:11px;background:linear-gradient(145deg,#302637,#211e29);min-width:0}
+.tablet-system.primary{border-color:#a47d9c;background:linear-gradient(145deg,#3b2b3b,#25202c)}
+.tablet-system.service{border-color:#628b76;background:linear-gradient(145deg,#26392f,#202a26)}
+.tablet-system-icon{font-size:23px;color:#c7b1ed}
+.tablet-system.service .tablet-system-icon{color:#91d0a9}
+.tablet-system small{font-size:8px;letter-spacing:.12em;color:#aaa1b4}
+.tablet-system b{font-size:11px;line-height:1.35;overflow-wrap:anywhere}
+.tablet-system em{font-size:9px;color:#bbb2c6;font-style:normal}
+.tablet-flow-arrow{display:flex;align-items:center;justify-content:center;position:relative;color:#c1a6f0;font-size:24px}
+.tablet-flow-arrow span{height:2px;width:100%;background:linear-gradient(90deg,#765e9d,#c0a5ef)}
+.tablet-flow-arrow b{position:absolute;right:-1px;background:#201d29;font-weight:400}
+.tablet-snd-core{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:162px;padding:13px 8px;border:1px solid #b99de9;border-radius:14px;background:radial-gradient(ellipse at 50% 0%,#9474d966,transparent 65%),linear-gradient(145deg,#42325e,#292237);box-shadow:0 0 0 2px #ad91e82a,0 0 28px #a78bdb33,inset 0 0 26px #b49be522;text-align:center}
+.tablet-snd-emblem{position:relative;display:grid;place-items:center;width:65px;height:65px;border-radius:19px;background:linear-gradient(145deg,#c6b1f1,#7559ac);box-shadow:0 0 23px #b49ae999;color:white}
+.tablet-snd-emblem span{font-size:19px;font-weight:900;letter-spacing:.04em}
+.tablet-snd-emblem i{position:absolute;right:7px;top:2px;font-size:17px;font-style:normal}
+.tablet-snd-core>b{font-size:11px;color:#f4edff}
+.tablet-snd-core>small{font-size:8px;letter-spacing:.03em;color:#d0c1e9}
+.tablet-snd-glow{position:absolute;bottom:-35px;width:130px;height:40px;background:#b49ae9;filter:blur(28px);opacity:.25}
+.tablet-alternatives{display:grid;gap:7px;min-width:0}
+.tablet-alt{display:grid;grid-template-columns:26px minmax(0,1fr) 14px;gap:8px;align-items:center;padding:8px;border:1px solid #4b4258;border-radius:9px;background:#25212e;min-width:0}
+.tablet-alt-code{display:grid;place-items:center;width:25px;height:25px;border-radius:7px;background:#3a304c;color:#d6c4f4;font-size:11px;font-weight:800}
+.tablet-alt>div{display:grid;gap:3px;min-width:0}
+.tablet-alt b{font-size:9px;line-height:1.3;overflow-wrap:anywhere}
+.tablet-alt small{font-size:8px;color:#a89fb2}
+.tablet-alt-state{font-size:12px;color:#a99bbd}
+.tablet-alt.chosen{border-color:#b89ce8;background:linear-gradient(100deg,#46345f,#2b2437);box-shadow:0 0 14px #a98bd522}
+.tablet-alt.chosen .tablet-alt-code{background:#8b6bbd;color:#fff}
+.tablet-alt.chosen .tablet-alt-state{color:#c6aaf0}
+.tablet-operator-line{display:flex;justify-content:center;align-items:center;gap:11px;margin-top:13px;color:#d7c7f1}
+.tablet-operator-line span{font-size:8px;font-weight:800;letter-spacing:.14em}
+.tablet-operator-line i{width:48px;height:1px;background:#78649c}
+.tablet-operator-line small{font-size:8px;color:#a99fb5}
+.tablet-bottom{display:grid;grid-template-columns:1.08fr .92fr;gap:13px;align-items:stretch}
+.tablet-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.tablet-facts>div{display:grid;gap:6px;padding:10px 0;border-top:1px solid #3a3443;min-width:0}
+.tablet-facts b{font-size:10px;line-height:1.4;overflow-wrap:anywhere}
+.tablet-event-list{display:grid;gap:0;max-height:230px;overflow:auto;padding-right:4px}
+.tablet-event{display:grid;grid-template-columns:58px 8px minmax(0,1fr);gap:9px;padding:8px 0;border-bottom:1px solid #37313f;align-items:start}
+.tablet-event:last-child{border-bottom:0}
+.tablet-event-time{font:9px var(--mono);color:#a89db6;padding-top:2px}
+.tablet-event>i{width:7px;height:7px;border-radius:50%;background:#8875ad;margin-top:4px}
+.tablet-event.event-current>i{background:#d0b4f2;box-shadow:0 0 0 5px #b79ae522}
+.tablet-event b{font-size:9px}
+.tablet-event small{display:block;font-size:8px;color:#aaa1b1;line-height:1.4;margin-top:3px}
+.tablet-waiting{display:grid;grid-template-columns:30px 1fr;gap:3px 9px;align-items:center;padding:16px 5px;color:#d8c9ef}
+.tablet-waiting>span{grid-row:span 2;font-size:22px;color:#b59ae8}
+.tablet-waiting b{font-size:10px}
+.tablet-waiting small{font-size:8px;color:#a79eae}
+@media(max-width:1050px){
+ .role-viewer .content{padding:17px 16px 24px}
+ .tablet-hero{grid-template-columns:1fr}
+ .tablet-hero-meta{border-left:0;border-top:1px solid #55496b;padding:12px 0 0}
+ .tablet-flow{grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr);row-gap:11px}
+ .tablet-flow-arrow:nth-of-type(4){display:none}
+ .tablet-alternatives{grid-column:1/3;grid-row:2}
+ .tablet-flow-arrow:nth-of-type(6){display:none}
+ .tablet-system.service{grid-column:3;grid-row:1}
+ .tablet-bottom{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+ .role-viewer .content{padding:12px 10px 20px}
+ .role-viewer .heading{margin-bottom:9px}
+ .role-viewer .heading h1{font-size:19px}
+ .tablet-hero{padding:16px}
+ .tablet-hero h2{font-size:23px}
+ .tablet-hero-meta{gap:8px}
+ .tablet-hero-meta b{font-size:10px}
+ .tablet-section{padding:13px 12px}
+ .tablet-section-head h3{font-size:14px}
+ .tablet-phase-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .tablet-phase{min-height:90px;padding:8px}
+ .tablet-phase b{font-size:9px}
+ .tablet-phase small{font-size:7px}
+ .tablet-flow{grid-template-columns:minmax(0,1fr) 13px minmax(0,1fr);gap:5px}
+ .tablet-system{min-height:120px;padding:8px}
+ .tablet-system b{font-size:9px}
+ .tablet-snd-core{min-height:137px}
+ .tablet-snd-emblem{width:52px;height:52px}
+ .tablet-snd-emblem span{font-size:16px}
+ .tablet-alternatives{grid-column:1/4;grid-row:2}
+ .tablet-system.service{grid-column:3;grid-row:1}
+ .tablet-facts{grid-template-columns:1fr 1fr;gap:0 10px}
+ .tablet-facts b{font-size:9px}
+}
+
 </style>
 </head>
 <body>
@@ -802,53 +929,79 @@ function architecturePage(){
 
 function viewerDashboard(){
  const latest=remoteIncidents[0]||null;
- const running=currentSimulation?.status==="running";
- const complete=currentSimulation?.status==="completed"||latest?.status==="report_prepared";
- const step=Math.max(0,Math.min(7,Number(currentSimulation?.step??s.step??latest?.step??0)));
- const incident=latest?.incidentTitle||currentSimulation?.incidentTitle||"No active incident";
- const env=latest?.environment||currentSimulation?.environment||"Awaiting scenario";
- const comp=latest?.affectedComponent||currentSimulation?.affectedComponent||"—";
- const alt=latest?.selectedAlternative||currentSimulation?.selectedAlternative||"—";
- const phase=latest?.phase||phases[Math.max(0,step-1)]||"Standby";
- const state=running?"INCIDENT IN PROGRESS":complete?"SERVICE RESTORED":"SYSTEM NORMAL";
- const steps=phases.map((p,i)=>`<div class="viewer-flow-step ${step>i?"done":step===i&&running?"current":""}"><b>0${i+1}</b><div style="margin-top:7px">${esc(p)}</div></div>`).join("");
- return `<div class="viewer-hero">
-  <div class="viewer-state"><div class="viewer-state-label">SND CORE</div><div><div class="viewer-state-value">${state}</div><div class="viewer-state-foot">${esc(env)}${latest?.incidentId?" · "+esc(latest.incidentId):""}</div></div></div>
-  <div class="viewer-metric"><span>CURRENT STAGE</span><strong>${String(step).padStart(2,"0")} / 07</strong><span>${esc(phase)}</span></div>
- </div>
- <div class="viewer-method">
-  <div class="viewer-method-title"><b>HOW SND WORKS</b><span>ADAPTIVE RESILIENCE PROCESS</span></div>
-  <div class="viewer-method-grid">
-   <div class="viewer-method-step"><span class="method-icon">▤</span><b>01 · Monitor</b><small>Service health & performance</small></div>
-   <div class="viewer-method-step"><span class="method-icon">⌕</span><b>02 · Detect</b><small>Abnormal signals & failures</small></div>
-   <div class="viewer-method-step"><span class="method-icon">◎</span><b>03 · Analyze</b><small>Incident impact & dependencies</small></div>
-   <div class="viewer-method-step"><span class="method-icon">⑂</span><b>04 · Evaluate</b><small>Available continuity paths</small></div>
-   <div class="viewer-method-step"><span class="method-icon">⬡</span><b>05 · Select</b><small>Most suitable alternative</small></div>
-   <div class="viewer-method-step"><span class="method-icon">✓</span><b>06 · Verify</b><small>Service continuity</small></div>
-  </div>
- </div>
- <div class="viewer-failover">
-  <div class="viewer-failover-heading"><strong>SND ADAPTIVE RESILIENCE</strong><span>${running?"RESPONSE IN PROGRESS":"SERVICE CONTINUITY"}</span></div>
-  <div class="viewer-failover-main">
-   <div class="viewer-failover-node primary"><small>PRIMARY SYSTEM</small><b>${esc(comp)}</b><em>${running?"Failure detected":"Primary path"}</em></div>
-   <div class="viewer-failover-arrow">⟶</div>
-   <div class="viewer-snd-layer"><div class="viewer-snd-mark">SND</div><b>Adaptive Resilience Layer</b><small>Intelligent adaptive resilience layer</small></div>
-   <div class="viewer-failover-arrow">⟶</div>
-   <div class="viewer-alternatives">
-    <div class="viewer-alt ${step>=4?"selected":""}"><b>B</b><span>${esc(alt||"Standby path B")}</span><small>${step>=4?"Selected path":"Available alternative"}</small></div>
-    <div class="viewer-alt"><b>C</b><span>Alternative Path C</span><small>Available alternative</small></div>
-    <div class="viewer-alt"><b>D</b><span>Alternative Path D</span><small>Available alternative</small></div>
+ const sim=currentSimulation||null;
+ const status=sim?.status||latest?.status||"idle";
+ const running=status==="running"||status==="in_progress";
+ const complete=status==="completed"||status==="report_prepared";
+ const step=Math.max(0,Math.min(7,Number(s.step||latest?.step||0)));
+ const env=sim?.environment||latest?.environment||scenario().label;
+ const title=sim?.incidentTitle||latest?.incidentTitle||fault().label;
+ const component=sim?.affectedComponent||latest?.affectedComponent||fault().component;
+ const signal=sim?.observedSignal||latest?.observedSignal||fault().signal;
+ const impact=sim?.impact||latest?.impact||fault().impact;
+ const selected=sim?.selectedAlternative||latest?.selectedAlternative||fault().alternative;
+ const clock=sim?.startedAtMs?new Date(sim.startedAtMs).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—";
+ const elapsed=sim?.startedAtMs?Math.max(0,Math.floor((Date.now()-sim.startedAtMs)/1000)):0;
+ const phasesUI=[
+  ["Monitor","Service health and performance","▤"],
+  ["Detect","Failure signal confirmed","⌕"],
+  ["Analyze","Impact and dependencies","◎"],
+  ["Evaluate","Standby paths compared","⑂"],
+  ["Select","Continuity path selected","◇"],
+  ["Failover","Traffic path transition","⇄"],
+  ["Verify","Service continuity checked","✓"]
+ ];
+ const phaseCards=phasesUI.map((p,i)=>`<div class="tablet-phase ${step>i?"done":step===i&&running?"current":""}"><span class="tablet-phase-icon">${p[2]}</span><b>${String(i+1).padStart(2,"0")} ${p[0]}</b><small>${p[1]}</small></div>`).join("");
+ const altNames=[selected,"Alternative path C","Alternative path D"];
+ const altCards=altNames.map((name,i)=>`<div class="tablet-alt ${i===0&&step>=5?"chosen":""}"><span class="tablet-alt-code">${["B","C","D"][i]}</span><div><b>${esc(name)}</b><small>${i===0&&step>=5?"Selected by SND":"Standby candidate"}</small></div><span class="tablet-alt-state">${i===0&&step>=5?"✓":"○"}</span></div>`).join("");
+ const stateLabel=running?"SERVICE RECOVERY IN PROGRESS":complete?"SERVICE CONTINUITY RESTORED":"SYSTEMS READY";
+ const stateClass=running?"running":complete?"complete":"ready";
+ const reportEvents=phasesUI.slice(0,step).map((p,i)=>`<div class="tablet-event ${i===step-1?"event-current":""}"><span class="tablet-event-time">${sim?.startedAtMs?new Date(sim.startedAtMs+(i+1)*(Number(sim.phaseDurationMs)||4500)).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—"}</span><i></i><div><b>${p[0]}</b><small>${[
+ "Continuous service health checks are running.",
+ "The selected failure condition was identified.",
+ "Affected service and expected operational impact were assessed.",
+ "Configured standby alternatives were compared.",
+ "The most suitable configured alternative was selected.",
+ "The failover sequence is being processed.",
+ "Service continuity checks are being completed."
+ ][i]}</small></div></div>`).join("");
+ return `<div class="tablet-console">
+  <header class="tablet-hero">
+   <div class="tablet-hero-copy"><div class="tablet-kicker"><span class="tablet-live-dot ${stateClass}"></span> SND RESILIENCE CONTROL</div><h2>${stateLabel}</h2><p>${running?esc(title):complete?"The response sequence has completed. Service continuity is verified in this simulation.":"Monitoring is ready. A scenario can be started from the authorized control device."}</p></div>
+   <div class="tablet-hero-meta"><div><small>ENVIRONMENT</small><b>${esc(env)}</b></div><div><small>RESPONSE TIME</small><b>${clock}</b></div><div><small>ELAPSED</small><b>${elapsed?elapsed+" sec":"—"}</b></div></div>
+  </header>
+  <section class="tablet-section tablet-process">
+   <div class="tablet-section-head"><div><span>01 / RESPONSE SEQUENCE</span><h3>Adaptive resilience process</h3></div><strong>${String(step).padStart(2,"0")} <i>/ 07</i></strong></div>
+   <div class="tablet-phase-grid">${phaseCards}</div>
+  </section>
+  <section class="tablet-section tablet-topology">
+   <div class="tablet-section-head"><div><span>02 / CONTINUITY ARCHITECTURE</span><h3>Adaptive failover</h3></div><em class="tablet-status-chip ${stateClass}">${running?"IN PROGRESS":complete?"VERIFIED":"STANDBY"}</em></div>
+   <div class="tablet-flow">
+    <div class="tablet-system primary"><span class="tablet-system-icon">▤</span><small>PRIMARY SYSTEM</small><b>${esc(component)}</b><em>${running?"Failure detected":complete?"Recovered":"Available"}</em></div>
+    <div class="tablet-flow-arrow"><span></span><b>›</b></div>
+    <div class="tablet-snd-core"><div class="tablet-snd-emblem"><span> SND </span><i>↗</i></div><b>Adaptive Resilience Layer</b><small>Monitor · Analyze · Adapt</small><div class="tablet-snd-glow"></div></div>
+    <div class="tablet-flow-arrow"><span></span><b>›</b></div>
+    <div class="tablet-alternatives">${altCards}</div>
+    <div class="tablet-flow-arrow"><span></span><b>›</b></div>
+    <div class="tablet-system service"><span class="tablet-system-icon">✓</span><small>SERVICE STATUS</small><b>${step>=7?"Continuity verified":running?"Recovery in progress":"Ready"}</b><em>${step>=7?"Service continues":"Awaiting response"}</em></div>
    </div>
-   <div class="viewer-failover-arrow">⟶</div>
-   <div class="viewer-failover-node success"><small>SERVICE STATE</small><b>${step>=6?"Continuity verified":running?"Recovery in progress":"Ready"}</b><em>${step>=6?"Service continues":"Awaiting incident"}</em></div>
-  </div>
-  <div class="viewer-human-oversight">HUMAN OPERATOR · DIAGNOSIS & PERMANENT RECOVERY</div>
- </div>
- <div class="viewer-flow"><div class="operator-headline"><strong>Resilience sequence</strong><span>${running?"LIVE":"STATUS"}</span></div><div class="viewer-flow-grid">${steps}</div></div>
- <div class="viewer-detail-grid">
-  <div class="viewer-detail"><span>Incident</span><b>${esc(incident)}</b></div>
-  <div class="viewer-detail"><span>Affected component</span><b>${esc(comp)}</b></div>
-  <div class="viewer-detail"><span>Standby alternative</span><b>${esc(alt)}</b></div>
+   <div class="tablet-operator-line"><span>HUMAN OPERATOR</span><i></i><small>Diagnosis · Permanent recovery · System oversight</small></div>
+  </section>
+  <section class="tablet-bottom">
+   <div class="tablet-section tablet-incident">
+    <div class="tablet-section-head"><div><span>03 / INCIDENT DETAILS</span><h3>${esc(title)}</h3></div><em class="tablet-status-chip ${stateClass}">${running?"ACTIVE":complete?"CLOSED":"READY"}</em></div>
+    <div class="tablet-facts">
+     <div><small>AFFECTED COMPONENT</small><b>${esc(component)}</b></div>
+     <div><small>OBSERVED SIGNAL</small><b>${esc(signal)}</b></div>
+     <div><small>EXPECTED IMPACT</small><b>${esc(impact)}</b></div>
+     <div><small>SELECTED ALTERNATIVE</small><b>${esc(step>=5?selected:"Pending evaluation")}</b></div>
+    </div>
+   </div>
+   <div class="tablet-section tablet-events">
+    <div class="tablet-section-head"><div><span>04 / EVENT TIMELINE</span><h3>Response activity</h3></div><em>${step} / 07</em></div>
+    <div class="tablet-event-list">${reportEvents||'<div class="tablet-waiting"><span>◷</span><b>Awaiting response sequence</b><small>Updates appear automatically when the control device starts a scenario.</small></div>'}</div>
+   </div>
+  </section>
  </div>`;
 }
 function operatorOverview(){
@@ -939,8 +1092,9 @@ function render(){
  const core=canViewCore();
  $("core-nav").classList.toggle("hidden",!core||s.mode==="viewer");$("operator-nav").classList.toggle("hidden",core);
  $("sidebar-toggle").classList.toggle("hidden",s.mode==="viewer");
+ appShell.classList.toggle("role-viewer",s.mode==="viewer");
  document.querySelector(".frame").classList.toggle("role-viewer-frame",s.mode==="viewer");
- $("mobile-core").classList.toggle("hidden",!core);$("mobile-operator").classList.toggle("hidden",core);
+ $("mobile-core").classList.toggle("hidden",!core||s.mode==="viewer");$("mobile-operator").classList.toggle("hidden",core);
  document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",core&&b.dataset.page===s.page));
  document.querySelectorAll("[data-op]").forEach(b=>b.classList.toggle("active",!core&&b.dataset.op===s.op));
  let title,eyebrow,subtitle,body;
@@ -953,7 +1107,7 @@ function render(){
   const ops={"op-overview":["OPERATOR / SITUATION","Operations summary",operatorOverview],"op-incidents":["OPERATOR / QUEUE","Incident queue",operatorIncidents],"op-services":["OPERATOR / SERVICES","Service status",operatorServices],"op-audit":["OPERATOR / AUDIT","Audit and review",operatorAudit]};
   [eyebrow,title,body]=ops[s.op];subtitle="";body=body();
  }
- $("eyebrow").textContent=eyebrow;$("title").textContent=title;$("subtitle").textContent=subtitle;$("view").innerHTML=body;
+ $("eyebrow").textContent=s.mode==="viewer"?"SND / RESILIENCE OPERATIONS":eyebrow;$("title").textContent=s.mode==="viewer"?"Service continuity":title;$("subtitle").textContent=s.mode==="viewer"?"":subtitle;$("view").innerHTML=body;
  $("actions").classList.add("hidden");
  $("event-count").textContent=String(active()?s.step:0).padStart(2,"0");save();
 }
