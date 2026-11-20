@@ -1114,6 +1114,174 @@ tbody tr:last-child td{border-bottom:0}
   .tablet-operator-line{display:none!important}
 }
 
+
+/* V14 — unify tablet palette with the main SND console and restore a balanced landscape grid */
+@media (min-width: 760px) and (max-width: 1200px) {
+  body { background: var(--bg); color: var(--text); }
+  .role-viewer .content { max-width: 1600px; padding: 9px 13px 12px; }
+  .role-viewer .heading { margin: 0 0 7px; }
+  .role-viewer .heading .eyebrow { color: var(--accent); }
+  .role-viewer .heading h1 { font-size: 19px; }
+  .role-viewer .tablet-console { gap: 8px; color: var(--text); }
+
+  /* Use the same navy/charcoal surfaces as the laptop console.
+     Lavender is reserved for SND and active workflow emphasis. */
+  .tablet-hero {
+    grid-template-columns: minmax(0,1.25fr) minmax(270px,.9fr);
+    gap: 12px;
+    padding: 11px 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: linear-gradient(110deg,var(--surface-2),var(--surface));
+    box-shadow: none;
+  }
+  .tablet-hero h2 { font-size: 23px; margin: 6px 0 3px; }
+  .tablet-hero p { color: var(--muted); font-size: 9px; }
+  .tablet-kicker { color: var(--accent); font-size: 8px; }
+  .tablet-hero-meta {
+    gap: 8px; padding-left: 12px; border-left-color: var(--border);
+  }
+  .tablet-hero-meta small,.tablet-facts small { color: var(--dim); font-size: 7px; }
+  .tablet-hero-meta b { color: var(--text); font-size: 10px; }
+
+  .tablet-section {
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--surface);
+    box-shadow: none;
+  }
+  .tablet-section-head { margin-bottom: 7px; }
+  .tablet-section-head>div>span { color: var(--dim); font-size: 7px; }
+  .tablet-section-head h3 { color: var(--text); font-size: 13px; }
+  .tablet-section-head>strong { color: var(--accent); font-size: 16px; }
+
+  /* Four connected blocks stay on one line, with SND clearly central. */
+  .tablet-flow {
+    grid-template-columns:
+      minmax(105px,.86fr) 16px
+      minmax(125px,1fr) 16px
+      minmax(160px,1.22fr) 16px
+      minmax(105px,.86fr);
+    gap: 4px;
+  }
+  .tablet-system {
+    min-height: 112px; height: 112px;
+    padding: 8px; gap: 5px;
+    border-color: var(--border);
+    border-radius: 7px;
+    background: var(--surface-2);
+  }
+  .tablet-system.primary {
+    border-color: var(--border);
+    background: var(--surface-2);
+  }
+  .tablet-system.service {
+    border-color: var(--border);
+    background: var(--surface-2);
+  }
+  .tablet-system-icon { font-size: 19px; color: var(--accent); }
+  .tablet-system.service .tablet-system-icon { color: var(--good); }
+  .tablet-system small { color: var(--dim); font-size: 7px; }
+  .tablet-system b { color: var(--text); font-size: 9px; line-height: 1.25; }
+  .tablet-system em { color: var(--muted); font-size: 7px; }
+  .tablet-flow-arrow { font-size: 17px; color: var(--accent); }
+  .tablet-flow-arrow span { background: linear-gradient(90deg,var(--accent-2),var(--accent)); }
+  .tablet-flow-arrow b { background: var(--surface); }
+
+  .tablet-snd-core {
+    min-height: 120px; height: 120px;
+    padding: 8px 6px; gap: 5px;
+    border: 1px solid var(--accent);
+    border-radius: 9px;
+    background: linear-gradient(145deg,#302a43,#211f2c);
+    box-shadow: 0 0 0 1px #b6a2f622, 0 0 14px #8f79d822;
+  }
+  .tablet-snd-emblem {
+    width: 45px; height: 45px; border-radius: 13px;
+    background: linear-gradient(145deg,#b6a2f6,#7562a9);
+    box-shadow: 0 0 14px #b6a2f644;
+  }
+  .tablet-snd-emblem span { font-size: 15px; }
+  .tablet-snd-emblem i { font-size: 11px; }
+  .tablet-snd-core>b { color: var(--text); font-size: 9px; }
+  .tablet-snd-core>small { color: #c9c1df; font-size: 7px; }
+  .tablet-alternatives { gap: 4px; }
+  .tablet-alt {
+    grid-template-columns: 21px minmax(0,1fr) 11px;
+    gap: 5px; min-height: 32px; padding: 5px;
+    border-color: var(--border); border-radius: 6px;
+    background: var(--surface-2);
+  }
+  .tablet-alt-code {
+    width: 20px; height: 20px; border-radius: 5px;
+    background: #29263a; color: var(--accent); font-size: 9px;
+  }
+  .tablet-alt b { color: var(--text); font-size: 7px; }
+  .tablet-alt small { color: var(--dim); font-size: 6px; }
+  .tablet-alt.chosen {
+    border-color: var(--accent);
+    background: #282438;
+    box-shadow: 0 0 8px #b6a2f61a;
+  }
+  .tablet-alt.chosen .tablet-alt-code { background: var(--accent-2); color: white; }
+
+  /* All seven steps on one row, never a 4+3 wrap on iPad landscape. */
+  .tablet-phase-grid { grid-template-columns: repeat(7,minmax(0,1fr)); gap: 5px; }
+  .tablet-phase {
+    min-width: 0; min-height: 68px; padding: 6px;
+    gap: 4px; border-color: var(--border);
+    border-radius: 6px; background: var(--surface-2);
+  }
+  .tablet-phase-icon {
+    width: 23px; height: 23px; border-radius: 6px;
+    background: #29263a; color: var(--accent); font-size: 13px;
+  }
+  .tablet-phase b { color: var(--text); font-size: 7px; line-height: 1.2; }
+  .tablet-phase small { color: var(--muted); font-size: 6px; line-height: 1.25; }
+  .tablet-phase.done { border-color: #527c68; background: #1d2a26; }
+  .tablet-phase.done .tablet-phase-icon { background: #276044; color: #e8fff1; }
+  .tablet-phase.current { border-color: var(--accent); box-shadow: 0 0 0 1px #b6a2f622; }
+  .tablet-phase.current .tablet-phase-icon { background: var(--accent-2); color: white; }
+
+  .tablet-status-chip {
+    padding: 4px 7px; font-size: 7px;
+    border-color: var(--border); background: var(--surface-2);
+    color: var(--muted);
+  }
+  .tablet-status-chip.running { border-color: var(--bad); color: var(--bad); background: #2b1d25; }
+  .tablet-status-chip.complete { border-color: var(--good); color: var(--good); background: #1b2b24; }
+
+  .tablet-progress-footer { margin-top: 6px; padding-top: 6px; gap: 5px 10px; }
+  .tablet-progress-footer>span { font-size: 7px; color: var(--dim); }
+  .tablet-progress-footer>b { font-size: 12px; color: var(--accent); }
+  .tablet-progress-track { height: 4px; background: var(--surface-3); }
+  .tablet-progress-track>i { background: linear-gradient(90deg,var(--accent-2),var(--accent)); }
+
+  .tablet-bottom { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tablet-facts { gap: 0 10px; }
+  .tablet-facts>div { padding: 6px 0; gap: 3px; border-color: var(--border-soft); }
+  .tablet-facts b { color: var(--text); font-size: 8px; }
+  .tablet-event-list { max-height: 105px; }
+  .tablet-event { grid-template-columns: 43px 7px minmax(0,1fr); gap: 6px; padding: 5px 0; border-color: var(--border-soft); }
+  .tablet-event-time { font-size: 7px; color: var(--dim); }
+  .tablet-event b { color: var(--text); font-size: 7px; }
+  .tablet-event small { color: var(--muted); font-size: 6px; line-height: 1.25; }
+  .tablet-waiting { padding: 8px 4px; }
+}
+
+/* Smaller iPad / split-screen: preserve the same palette and allow a clean two-row flow. */
+@media (min-width: 760px) and (max-width: 900px) {
+  .tablet-flow {
+    grid-template-columns:minmax(0,1fr) 14px minmax(0,1fr);
+    gap:5px;
+  }
+  .tablet-alternatives { grid-column:1/4; grid-row:2; }
+  .tablet-flow-arrow:nth-of-type(4), .tablet-flow-arrow:nth-of-type(6) { display:none; }
+  .tablet-system.service { grid-column:3; grid-row:1; }
+  .tablet-bottom { grid-template-columns:1fr 1fr; }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
