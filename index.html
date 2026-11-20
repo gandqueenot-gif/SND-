@@ -618,6 +618,50 @@ tbody tr:last-child td{border-bottom:0}
  .tablet-phase-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
+
+/* SND incident-state clarity and prominent environment header */
+.tablet-hero-meta{
+  min-height:112px; padding:17px 0 17px 22px; gap:15px;
+  align-items:center; background:linear-gradient(100deg,#211b2b88,#30223a66);
+  border-radius:12px; border:1px solid #6d5a82;
+}
+.tablet-hero-meta>div{padding:5px 10px}
+.tablet-hero-meta small{font-size:12px!important;font-weight:800;letter-spacing:.16em;color:#d4c5e9!important}
+.tablet-hero-meta b{font-size:clamp(17px,2vw,23px)!important;font-weight:850;color:#fff!important;line-height:1.2}
+.tablet-live-dot.running{background:#ff263d!important;box-shadow:0 0 0 6px #ff263d38,0 0 18px #ff1835!important}
+.tablet-status-chip.running{border-color:#ff354b!important;color:#fff!important;background:#a8001b!important;box-shadow:0 0 16px #ff173533}
+.tablet-hero:has(.tablet-live-dot.running){border-color:#e42d45;box-shadow:0 0 0 1px #ff334d55,0 0 26px #ff1b3522}
+.tablet-system.primary.fault-active{
+ border:2px solid #ff263d!important;
+ background:linear-gradient(145deg,#8f1023 0%,#5a0b1b 58%,#310b17 100%)!important;
+ box-shadow:0 0 0 2px #ff263d44,0 0 28px #ff163c66,inset 0 0 25px #ff263d2b!important;
+ animation:sndFaultPulse 1.5s ease-in-out infinite;
+}
+.tablet-system.primary.fault-active .tablet-system-icon,
+.tablet-system.primary.fault-active small,
+.tablet-system.primary.fault-active b,
+.tablet-system.primary.fault-active em{color:#fff!important}
+.tablet-system.primary.fault-active em{font-weight:900;letter-spacing:.04em}
+.tablet-system.primary.isolated{opacity:1!important;border-color:#ff5365!important;background:linear-gradient(145deg,#65101f,#2b111b)!important}
+.tablet-system.service.pending{
+ border:2px solid #8e3446!important;
+ background:linear-gradient(145deg,#38202a,#241b24)!important;
+ box-shadow:0 0 0 1px #d62e4a22!important;
+}
+.tablet-system.service.pending .tablet-system-icon{color:#ff6478!important}
+.tablet-system.service.pending small,.tablet-system.service.pending b{color:#ffdce1!important}
+.tablet-system.service.pending em{color:#e9aeb8!important}
+.tablet-system.service.verified{
+ border:2px solid #55d68a!important;
+ background:linear-gradient(145deg,#17633d,#103a2a)!important;
+ box-shadow:0 0 0 2px #55d68a44,0 0 30px #28cf7655!important;
+}
+.tablet-system.service.verified .tablet-system-icon{color:#b8ffd1!important}
+.tablet-phase.current{border:2px solid #c8a8ff!important;background:linear-gradient(145deg,#44305e,#282033)!important;box-shadow:0 0 0 2px #b58af044,0 0 22px #9d6eff55!important}
+.tablet-phase.done{border-color:#9677c9!important}
+.tablet-phase.done .tablet-phase-icon{background:#7751b5!important}
+@keyframes sndFaultPulse{0%,100%{box-shadow:0 0 0 2px #ff263d44,0 0 19px #ff163c55,inset 0 0 20px #ff263d22}50%{box-shadow:0 0 0 4px #ff263d55,0 0 34px #ff163c88,inset 0 0 32px #ff263d44}}
+
 </style>
 </head>
 <body>
@@ -815,7 +859,7 @@ function syncSimulationClock(){
 async function startSimulation(){
  if(!currentUser||!canControl())return;
  const key=s.scenario, selectedFault=fault(), now=Date.now();
- s.step=0;s.incidentId=null;s.reviewed=false;s.route=selectedFault.alternative;lastPersistedStep=-1;
+ s.step=0;s.incidentId=null;s.reviewed=false;s.route=selectedFault.alternative;lastPersistedStep=-1;currentSimulation=null;if(simulationTimer){clearInterval(simulationTimer);simulationTimer=null;}
  try{
   await setDoc(doc(db,"sndControl","current"),{
    status:"running",scenarioKey:key,faultId:s.faultId,
@@ -825,7 +869,8 @@ async function startSimulation(){
    startedAtMs:now,phaseDurationMs:4500,runId:"SND-SIM-"+now,
    updatedAt:serverTimestamp()
   });
-  currentSimulation={status:"running",scenarioKey:key,faultId:s.faultId,environment:scenario().label,incidentTitle:selectedFault.label,affectedComponent:selectedFault.component,observedSignal:selectedFault.signal,impact:selectedFault.impact,selectedAlternative:selectedFault.alternative,failoverState:"standby",verificationState:"pending",serviceContinuity:"degraded",primaryState:"available",standbyState:"standby",startedAtMs:now,phaseDurationMs:4500};
+  currentSimulation={status:"running",scenarioKey:key,faultId:s.faultId,environment:scenario().label,incidentTitle:selectedFault.label,affectedComponent:selectedFault.component,observedSignal:selectedFault.signal,impact:selectedFault.impact,selectedAlternative:selectedFault.alternative,failoverState:"standby",verificationState:"pending",serviceContinuity:"degraded",primaryState:"failed",standbyState:"standby",startedAtMs:now,phaseDurationMs:4500};
+  if(canViewCore())render();
   syncSimulationClock();notify("Simulation started. The sequence will now run automatically.");
  }catch(err){notify("Could not start the simulation: "+err.message)}
 }
@@ -1053,7 +1098,7 @@ function viewerDashboard(){
  const status=sim?.status||latest?.status||"idle";
  const running=status==="running"||status==="in_progress";
  const complete=status==="completed"||status==="report_prepared";
- const step=Math.max(0,Math.min(7,Number(s.step||latest?.step||0)));
+ const step=Math.max(0,Math.min(7,Number(sim?s.step:(latest?.step||0))));
  const env=sim?.environment||latest?.environment||scenario().label;
  const title=sim?.incidentTitle||latest?.incidentTitle||fault().label;
  const component=sim?.affectedComponent||latest?.affectedComponent||fault().component;
@@ -1061,7 +1106,7 @@ function viewerDashboard(){
  const impact=sim?.impact||latest?.impact||fault().impact;
  const selected=sim?.selectedAlternative||latest?.selectedAlternative||fault().alternative;
  const routeActive=sim?.failoverState==="route_active"||step>=5;
- const verified=sim?.verificationState==="passed"||step>=6;
+ const verified=complete&&sim?.verificationState==="passed"&&step>=7;
  const clock=sim?.startedAtMs?new Date(sim.startedAtMs).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—";
  const elapsed=sim?.startedAtMs?Math.max(0,Math.floor((Date.now()-sim.startedAtMs)/1000)):0;
  const phasesUI=[
@@ -1076,7 +1121,7 @@ function viewerDashboard(){
  const phaseCards=phasesUI.map((p,i)=>`<div class="tablet-phase ${step>i?"done":step===i&&running?"current":""}"><span class="tablet-phase-icon">${p[2]}</span><b>${String(i+1).padStart(2,"0")} ${p[0]}</b><small>${p[1]}</small></div>`).join("");
  const altNames=[selected,"Alternative path C","Alternative path D"];
  const altCards=altNames.map((name,i)=>`<div class="tablet-alt ${i===0&&routeActive?"chosen":""}"><span class="tablet-alt-code">${["B","C","D"][i]}</span><div><b>${esc(name)}</b><small>${i===0&&routeActive?"Active service path":i===0?"Selected for failover":"Standby candidate"}</small></div><span class="tablet-alt-state">${i===0&&routeActive?"✓":"○"}</span></div>`).join("");
- const stateLabel=running?"SERVICE RECOVERY IN PROGRESS":complete?"SERVICE CONTINUITY RESTORED":"SYSTEMS READY";
+ const stateLabel=running?"SERVICE INTERRUPTION DETECTED":complete?"SERVICE CONTINUITY RESTORED":"SYSTEMS READY";
  const stateClass=running?"running":complete?"complete":"ready";
  const reportEvents=phasesUI.slice(0,step).map((p,i)=>`<div class="tablet-event ${i===step-1?"event-current":""}"><span class="tablet-event-time">${sim?.startedAtMs?new Date(sim.startedAtMs+(i+1)*(Number(sim.phaseDurationMs)||4500)).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—"}</span><i></i><div><b>${p[0]}</b><small>${[
  "Continuous service health checks are running.",
@@ -1095,13 +1140,13 @@ function viewerDashboard(){
   <section class="tablet-section tablet-topology">
    <div class="tablet-section-head"><div><span>01 / CONTINUITY ARCHITECTURE</span><h3>Adaptive failover</h3></div><em class="tablet-status-chip ${stateClass}">${running?"IN PROGRESS":complete?"VERIFIED":"STANDBY"}</em></div>
    <div class="tablet-flow">
-    <div class="tablet-system primary ${routeActive?"isolated":""}"><span class="tablet-system-icon">▤</span><small>PRIMARY SYSTEM</small><b>${esc(component)}</b><em>${routeActive?"Isolated from active service":running?"Failure detected":"Available"}</em></div>
+    <div class="tablet-system primary ${running?"fault-active":""} ${routeActive?"isolated":""}"><span class="tablet-system-icon">▤</span><small>PRIMARY SYSTEM</small><b>${esc(component)}</b><em>${routeActive?"Isolated from active service":running?"CRITICAL FAILURE DETECTED":"Available"}</em></div>
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
     <div class="tablet-snd-core"><div class="tablet-snd-emblem"><span> SND </span></div><b>Adaptive Resilience Layer</b><small>Monitor · Analyze · Adapt</small><div class="tablet-snd-glow"></div></div>
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
     <div class="tablet-alternatives">${altCards}</div>
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
-    <div class="tablet-system service ${verified?"verified":""}"><span class="tablet-system-icon">${verified?"✓":"◷"}</span><small>SERVICE STATUS</small><b>${verified?"Continuity verified":routeActive?"Path switched":running?"Recovery in progress":"Ready"}</b><em>${verified?"Service continues":routeActive?"Verification running":"Awaiting response"}</em></div>
+    <div class="tablet-system service ${verified?"verified":"pending"}"><span class="tablet-system-icon">${verified?"✓":"◷"}</span><small>SERVICE STATUS</small><b>${verified?"Continuity verified":running?"Recovery in progress":"Ready"}</b><em>${verified?"Service continues":running?"Awaiting full recovery verification":"Awaiting response"}</em></div>
    </div>
 </section>
   <section class="tablet-section tablet-process">
