@@ -1033,6 +1033,87 @@ tbody tr:last-child td{border-bottom:0}
   .tablet-event>i{width:5px!important;height:5px!important}
 }
 
+
+/* V13 — compact landscape tablet composition, preserving the existing SND workflow */
+.role-viewer .content{
+  max-width:1600px;
+  padding:12px 16px 16px;
+}
+.role-viewer .heading{margin-bottom:8px}
+.role-viewer .heading h1{font-size:19px}
+.role-viewer .tablet-console{gap:9px}
+.tablet-hero{
+  grid-template-columns:minmax(0,1.25fr) minmax(290px,.9fr);
+  gap:14px;padding:13px 17px;border-radius:13px;
+}
+.tablet-hero h2{font-size:clamp(20px,2.1vw,27px);margin:7px 0 4px}
+.tablet-hero p{font-size:10px}
+.tablet-hero-meta{gap:9px;padding-left:13px}
+.tablet-hero-meta b{font-size:11px}
+.tablet-section{padding:11px 13px;border-radius:12px}
+.tablet-section-head{margin-bottom:8px}
+.tablet-section-head h3{font-size:14px}
+.tablet-flow{
+  grid-template-columns:minmax(105px,.78fr) 17px minmax(125px,.92fr) 17px minmax(165px,1.18fr) 17px minmax(105px,.78fr);
+  gap:5px;
+}
+.tablet-system{
+  min-height:104px;height:104px;padding:9px;gap:5px;border-radius:10px;
+}
+.tablet-system-icon{font-size:18px}
+.tablet-system small{font-size:7px}
+.tablet-system b{font-size:9px;line-height:1.25}
+.tablet-system em{font-size:8px}
+.tablet-snd-core{
+  min-height:112px;height:112px;padding:8px 6px;gap:5px;border-radius:12px;
+  box-shadow:0 0 0 1px #ad91e82a,0 0 17px #a78bdb28,inset 0 0 16px #b49be522;
+}
+.tablet-snd-emblem{width:48px;height:48px;border-radius:14px}
+.tablet-snd-emblem span{font-size:15px}
+.tablet-snd-emblem i{font-size:12px}
+.tablet-snd-core>b{font-size:9px}
+.tablet-snd-core>small{font-size:7px}
+.tablet-alternatives{gap:5px}
+.tablet-alt{padding:5px 7px;gap:6px;grid-template-columns:22px minmax(0,1fr) 12px}
+.tablet-alt-code{width:21px;height:21px;font-size:9px}
+.tablet-alt b{font-size:8px}
+.tablet-alt small{font-size:7px}
+.tablet-operator-line{display:none!important}
+.tablet-phase-grid{gap:6px}
+.tablet-phase{min-height:76px;padding:7px;gap:5px;border-radius:9px}
+.tablet-phase-icon{width:25px;height:25px;border-radius:7px;font-size:14px}
+.tablet-phase b{font-size:9px}
+.tablet-phase small{font-size:7px;line-height:1.25}
+.tablet-bottom{gap:9px}
+.tablet-facts>div{padding:7px 0;gap:4px}
+.tablet-facts b{font-size:9px}
+.tablet-event-list{max-height:150px}
+.tablet-event{padding:6px 0;gap:7px}
+.tablet-event-time,.tablet-event b{font-size:8px}
+.tablet-event small{font-size:7px}
+@media (min-width:760px) and (max-width:1100px){
+  .role-viewer .content{padding:10px 12px 13px}
+  .tablet-hero{grid-template-columns:minmax(0,1.2fr) minmax(270px,.9fr);padding:11px 13px}
+  .tablet-flow{
+    grid-template-columns:minmax(92px,.78fr) 13px minmax(110px,.9fr) 13px minmax(145px,1.2fr) 13px minmax(92px,.78fr);
+    gap:4px;
+  }
+  .tablet-system{min-height:96px;height:96px;padding:7px}
+  .tablet-snd-core{min-height:104px;height:104px}
+  .tablet-snd-emblem{width:42px;height:42px}
+  .tablet-section{padding:9px 10px}
+  .tablet-phase-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+  .tablet-phase{min-height:70px;padding:5px}
+  .tablet-phase small{font-size:6.5px}
+  .tablet-bottom{grid-template-columns:1fr 1fr}
+}
+@media (max-width:759px){
+  .tablet-flow{grid-template-columns:minmax(0,1fr) 13px minmax(0,1fr);gap:5px}
+  .tablet-system{min-height:96px;height:auto}
+  .tablet-snd-core{min-height:104px;height:auto}
+  .tablet-operator-line{display:none!important}
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
