@@ -924,7 +924,123 @@ tbody tr:last-child td{border-bottom:0}
   .tablet-system {min-height:0!important}
 }
 
+
+/* SND final display tuning: iPad viewer + operator incident colors */
+.operator-alert.active{
+  border:1.5px solid #ff334f!important;
+  background:linear-gradient(110deg,#5b101d,#2a1721 78%)!important;
+  box-shadow:0 0 0 1px #ff334f55,0 0 22px #ff173a33!important;
+  color:#fff!important;
+}
+.operator-alert.active b{color:#fff!important}
+.operator-alert.active p{color:#ffe0e5!important}
+.operator-alert.resolved{
+  border:1.5px solid #42e88b!important;
+  background:linear-gradient(110deg,#075c35,#123a2a 78%)!important;
+  box-shadow:0 0 0 1px #42e88b55,0 0 22px #22d87833!important;
+  color:#fff!important;
+}
+.operator-alert.resolved b,.operator-alert.resolved p{color:#effff5!important}
+.report-state.active{background:#b90025!important;border-color:#ff3454!important;color:#fff!important}
+.report-state.resolved{background:#087b43!important;border-color:#42e88b!important;color:#fff!important}
+.operator-current-card:has(.pulse-dot){border-color:#ff3454!important}
+.operator-current-card:has(.good-dot){border-color:#42e88b!important}
+@media (orientation:landscape) and (min-width:900px) and (max-height:900px){
+  html,body{width:100%;height:100%;overflow:hidden!important}
+  .role-viewer .frame{height:calc(100dvh - 58px)!important;min-height:0!important;overflow:hidden!important}
+  .role-viewer .content{
+    width:100%!important;max-width:none!important;
+    height:calc(100dvh - 58px)!important;max-height:calc(100dvh - 58px)!important;
+    min-height:0!important;overflow:hidden!important;
+    padding:6px 10px 8px!important;
+    display:flex!important;flex-direction:column!important;
+  }
+  .role-viewer .heading{flex:0 0 32px!important;margin:0 0 5px!important}
+  .role-viewer .heading h1{font-size:17px!important;line-height:1.05!important}
+  .role-viewer .heading .eyebrow{font-size:7px!important;margin:0 0 2px!important}
+  .role-viewer .viewer-hero{display:none!important}
+  .tablet-console{
+    flex:1 1 auto!important;min-height:0!important;height:100%!important;
+    display:grid!important;overflow:hidden!important;gap:6px!important;
+    grid-template-rows:minmax(58px,.58fr) minmax(145px,1.55fr) minmax(128px,1.25fr) minmax(112px,1.15fr)!important;
+  }
+  .tablet-hero{min-height:0!important;padding:7px 11px!important;gap:8px!important}
+  .tablet-hero h2{font-size:clamp(15px,1.7vw,20px)!important;margin:3px 0 1px!important}
+  .tablet-hero p{font-size:8px!important;line-height:1.2!important}
+  .tablet-kicker{font-size:7px!important}
+  .tablet-hero-meta{min-height:0!important;padding:4px 0 4px 9px!important;gap:5px!important}
+  .tablet-hero-meta>div{padding:1px 4px!important;gap:2px!important}
+  .tablet-hero-meta small{font-size:7px!important}
+  .tablet-hero-meta b{font-size:clamp(11px,1.25vw,14px)!important}
+  .tablet-section{min-height:0!important;padding:7px 9px!important;overflow:hidden!important}
+  .tablet-section-head{margin:0 0 5px!important;gap:5px!important}
+  .tablet-section-head>div>span{font-size:6px!important}
+  .tablet-section-head h3{font-size:11px!important}
+  .tablet-section-head>strong{font-size:12px!important}
+  .tablet-topology{display:flex!important;flex-direction:column!important}
+  .tablet-topology .tablet-flow{
+    flex:1 1 auto!important;min-height:0!important;
+    grid-template-columns:minmax(105px,1fr) 14px minmax(120px,1.05fr) 14px minmax(145px,1.2fr) 14px minmax(100px,.9fr)!important;
+    gap:4px!important;align-items:stretch!important
+  }
+  .tablet-system{min-height:0!important;height:100%!important;padding:7px!important;gap:4px!important}
+  .tablet-system-icon{font-size:19px!important}
+  .tablet-system small{font-size:6px!important}
+  .tablet-system b{font-size:8px!important;line-height:1.2!important}
+  .tablet-system em{font-size:7px!important;line-height:1.2!important}
+  .tablet-snd-core{min-height:0!important;height:100%!important;padding:6px 4px!important;gap:4px!important}
+  .tablet-snd-emblem{width:42px!important;height:42px!important;border-radius:12px!important}
+  .tablet-snd-emblem span{font-size:13px!important}
+  .tablet-snd-core>b{font-size:8px!important}
+  .tablet-snd-core>small{font-size:6px!important}
+  .tablet-alternatives{gap:4px!important;align-content:center!important}
+  .tablet-alt{min-height:0!important;padding:5px!important;gap:5px!important;grid-template-columns:20px minmax(0,1fr) 10px!important}
+  .tablet-alt-code{width:19px!important;height:19px!important;font-size:8px!important}
+  .tablet-alt b{font-size:7px!important;line-height:1.1!important}
+  .tablet-alt small{font-size:6px!important;line-height:1.1!important}
+  .tablet-flow-arrow{font-size:15px!important}
+  .tablet-process{display:flex!important;flex-direction:column!important;padding:7px 9px!important}
+  .tablet-phase-grid{
+    flex:1 1 auto!important;min-height:0!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-template-rows:repeat(2,minmax(0,1fr))!important;
+    grid-auto-flow:row!important;gap:5px 7px!important
+  }
+  .tablet-phase{
+    min-height:0!important;padding:4px 7px!important;
+    display:grid!important;grid-template-columns:27px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;column-gap:6px!important;row-gap:1px!important;
+    align-content:center!important;align-items:center!important;text-align:left!important
+  }
+  .tablet-phase-icon{grid-column:1!important;grid-row:1/span 2!important;width:26px!important;height:26px!important;min-width:26px!important;border-radius:7px!important}
+  .tablet-phase-icon svg{width:19px!important;height:19px!important}
+  .tablet-phase b{grid-column:2!important;grid-row:1!important;font-size:8px!important;line-height:1.1!important;white-space:normal!important}
+  .tablet-phase small{grid-column:2!important;grid-row:2!important;font-size:6px!important;line-height:1.15!important;white-space:normal!important}
+  .tablet-progress-footer{flex:0 0 17px!important;min-height:17px!important;margin:0!important;padding:2px 0 0!important;gap:2px 8px!important}
+  .tablet-progress-footer>span{font-size:6px!important}
+  .tablet-progress-footer>b{font-size:9px!important}
+  .tablet-progress-track{height:3px!important}
+  .tablet-bottom{min-height:0!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px!important}
+  .tablet-incident,.tablet-events{min-height:0!important;display:flex!important;flex-direction:column!important}
+  .tablet-facts{flex:1 1 auto!important;min-height:0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0 8px!important}
+  .tablet-facts>div{padding:3px 0!important;gap:2px!important}
+  .tablet-facts small{font-size:6px!important}
+  .tablet-facts b{font-size:7px!important;line-height:1.15!important}
+  .tablet-event-list{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow:hidden!important}
+  .tablet-event{grid-template-columns:38px 6px minmax(0,1fr)!important;gap:4px!important;padding:3px 0!important}
+  .tablet-event-time,.tablet-event small{font-size:6px!important}
+  .tablet-event b{font-size:7px!important;line-height:1.1!important}
+  .tablet-event>i{width:5px!important;height:5px!important}
+}
+
 </style>
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SND">
+<link rel="apple-touch-icon" href="./snd-app-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+
 </head>
 <body>
 
@@ -1478,7 +1594,7 @@ function operatorOverview(){
  const rows=phaseNames.slice(0,step).map((name,i)=>`<div class="operator-report-row"><time>${fmtClock(started+(i+1)*interval)}</time><i class="stage-dot stage-${i}"></i><div><b>${esc(name)}</b><p>${esc(explanations[i])}<br><span>${esc(reasons[i])}</span></p></div></div>`).join("");
  const report=latest?`<div class="operator-report">
   <div class="operator-report-head"><div><strong>${esc(latest.incidentTitle||"Service incident")}</strong><small>${esc(latest.environment||"")} · ${esc(latest.incidentId||latest.id)}</small></div><span class="report-state ${step>=7?"resolved":"active"}">${step>=7?"REPORT READY":"RESPONSE ACTIVE"}</span></div>
-  <div class="operator-alert"><b>${step>=7?"SERVICE CONTINUITY REPORT":"SERVICE INTERRUPTION DETECTED"}</b><p>${esc(latest.observedSignal||"A service failure signal was detected.")} ${esc(latest.impact||"")}</p></div>
+  <div class="operator-alert ${step>=7?"resolved":"active"}"><b>${step>=7?"SERVICE CONTINUITY RESTORED":"SERVICE INTERRUPTION DETECTED"}</b><p>${esc(latest.observedSignal||"A service failure signal was detected.")} ${esc(latest.impact||"")}</p></div>
   <div class="operator-report-grid">
    <div class="operator-report-stat"><small>INCIDENT TIME</small><b>${fmtClock(started)}</b></div>
    <div class="operator-report-stat"><small>ELAPSED</small><b>${(elapsedMs/1000).toFixed(1)}s</b></div>
