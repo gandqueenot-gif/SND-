@@ -1282,6 +1282,274 @@ tbody tr:last-child td{border-bottom:0}
   .tablet-bottom { grid-template-columns:1fr 1fr; }
 }
 
+
+/* V15 HOTFIX — lock the iPad demo geometry so live incident text cannot reflow the screen */
+@media (orientation:landscape) and (min-width:900px) and (max-height:1000px) {
+  html, body {
+    width:100%!important; height:100%!important;
+    min-height:0!important; overflow:hidden!important;
+  }
+  body { overscroll-behavior:none!important; }
+  .role-viewer {
+    width:100%!important; height:100dvh!important; min-height:0!important;
+    overflow:hidden!important;
+  }
+  .role-viewer .frame {
+    width:100%!important; height:100dvh!important; min-height:0!important;
+    overflow:hidden!important;
+  }
+  .role-viewer .content {
+    width:100%!important; max-width:none!important;
+    height:calc(100dvh - var(--header-height,58px))!important;
+    max-height:calc(100dvh - var(--header-height,58px))!important;
+    min-height:0!important; overflow:hidden!important;
+    padding:6px 10px 7px!important;
+    display:flex!important; flex-direction:column!important;
+    box-sizing:border-box!important;
+  }
+  .role-viewer .heading {
+    flex:0 0 30px!important; min-height:30px!important;
+    margin:0 0 5px!important; overflow:hidden!important;
+  }
+  .role-viewer .heading .eyebrow { font-size:7px!important; line-height:1!important; margin:0 0 2px!important; }
+  .role-viewer .heading h1 { font-size:17px!important; line-height:1!important; margin:0!important; }
+
+  /* Fixed row tracks: the seven-step workflow can update without moving other panels. */
+  .role-viewer .tablet-console {
+    flex:1 1 auto!important; width:100%!important; height:auto!important;
+    min-height:0!important; max-height:100%!important; overflow:hidden!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:68px minmax(185px,1fr) 158px minmax(132px,.78fr)!important;
+    gap:6px!important; align-content:stretch!important;
+    box-sizing:border-box!important;
+  }
+  .tablet-console, .tablet-console * { box-sizing:border-box!important; min-width:0!important; }
+  .tablet-hero {
+    min-height:0!important; height:100%!important; max-height:100%!important;
+    padding:7px 12px!important; gap:10px!important;
+    grid-template-columns:minmax(0,1.2fr) minmax(320px,.9fr)!important;
+    overflow:hidden!important; border-radius:8px!important;
+    background:linear-gradient(110deg,#242333,#171821 78%)!important;
+    border:1px solid #393747!important; box-shadow:none!important;
+  }
+  .tablet-hero h2 {
+    display:block!important; max-height:24px!important; overflow:hidden!important;
+    white-space:nowrap!important; text-overflow:ellipsis!important;
+    font-size:clamp(16px,1.8vw,21px)!important; line-height:1.1!important;
+    margin:3px 0 2px!important;
+  }
+  .tablet-hero p {
+    max-height:13px!important; overflow:hidden!important;
+    white-space:nowrap!important; text-overflow:ellipsis!important;
+    font-size:8px!important; line-height:1.2!important;
+  }
+  .tablet-kicker { font-size:7px!important; line-height:1!important; }
+  .tablet-hero-meta {
+    min-height:0!important; height:100%!important; padding:3px 0 3px 10px!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important; gap:6px!important;
+    border:0!important; border-left:1px solid #464354!important;
+    background:transparent!important; box-shadow:none!important;
+  }
+  .tablet-hero-meta>div { min-height:0!important; padding:1px 3px!important; gap:2px!important; }
+  .tablet-hero-meta small { font-size:7px!important; line-height:1!important; }
+  .tablet-hero-meta b { font-size:clamp(10px,1.1vw,13px)!important; line-height:1.1!important; white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important; }
+
+  .tablet-section {
+    min-height:0!important; height:100%!important; max-height:100%!important;
+    padding:7px 9px!important; overflow:hidden!important;
+    border:1px solid #393747!important; border-radius:8px!important;
+    background:linear-gradient(145deg,#1d1d29,#171821)!important;
+    box-shadow:none!important;
+  }
+  .tablet-section-head {
+    flex:0 0 auto!important; min-height:18px!important;
+    margin:0 0 5px!important; gap:5px!important; overflow:hidden!important;
+  }
+  .tablet-section-head>div { min-width:0!important; gap:1px!important; }
+  .tablet-section-head>div>span { font-size:6px!important; line-height:1!important; }
+  .tablet-section-head h3 {
+    max-height:14px!important; overflow:hidden!important;
+    white-space:nowrap!important; text-overflow:ellipsis!important;
+    font-size:11px!important; line-height:1.1!important; margin:0!important;
+  }
+  .tablet-section-head>strong { font-size:12px!important; }
+
+  /* Fixed topology track: no card may grow when incident names/statuses change. */
+  .tablet-topology { display:flex!important; flex-direction:column!important; min-height:0!important; }
+  .tablet-topology .tablet-section-head { flex:0 0 20px!important; margin:0 0 4px!important; }
+  .tablet-topology .tablet-flow {
+    flex:1 1 auto!important; height:auto!important; min-height:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(105px,.82fr) 14px minmax(125px,.95fr) 14px minmax(155px,1.18fr) 14px minmax(105px,.82fr)!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    align-items:stretch!important; gap:4px!important; overflow:hidden!important;
+  }
+  .tablet-system, .tablet-snd-core {
+    height:100%!important; min-height:0!important; max-height:100%!important;
+    align-self:stretch!important; justify-content:center!important;
+    padding:7px!important; gap:4px!important; overflow:hidden!important;
+    border-radius:7px!important;
+  }
+  .tablet-system {
+    background:linear-gradient(145deg,#282735,#1d1d29)!important;
+    border:1.5px solid #777084!important;
+  }
+  .tablet-system.primary.fault-active {
+    border:2px solid #ff3150!important;
+    background:linear-gradient(145deg,#641126,#301824)!important;
+    box-shadow:0 0 12px #ff315044!important;
+  }
+  .tablet-system.service.pending {
+    border:1.5px solid #777084!important;
+    background:linear-gradient(145deg,#282735,#1d1d29)!important;
+  }
+  .tablet-system.service.verified {
+    border:2px solid #42e88b!important;
+    background:linear-gradient(145deg,#159b55,#075333)!important;
+    box-shadow:0 0 0 1px #63f4a155,0 0 16px #24e77c55!important;
+  }
+  .tablet-system-icon { font-size:18px!important; line-height:1!important; }
+  .tablet-system small { font-size:6px!important; line-height:1.1!important; letter-spacing:.08em!important; }
+  .tablet-system b {
+    display:-webkit-box!important; -webkit-line-clamp:2!important; -webkit-box-orient:vertical!important;
+    overflow:hidden!important; overflow-wrap:anywhere!important;
+    font-size:8px!important; line-height:1.2!important;
+  }
+  .tablet-system em {
+    display:-webkit-box!important; -webkit-line-clamp:2!important; -webkit-box-orient:vertical!important;
+    overflow:hidden!important; font-size:7px!important; line-height:1.2!important;
+  }
+  .tablet-snd-core {
+    border:1.5px solid #b69af0!important;
+    background:linear-gradient(145deg,#38304d,#211f2c)!important;
+    box-shadow:0 0 0 1px #b69af022,0 0 12px #9b7bd522!important;
+  }
+  .tablet-snd-emblem { width:42px!important; height:42px!important; flex:0 0 42px!important; border-radius:12px!important; }
+  .tablet-snd-emblem span { font-size:14px!important; }
+  .tablet-snd-core>b { font-size:8px!important; line-height:1.15!important; }
+  .tablet-snd-core>small { font-size:6px!important; line-height:1.1!important; }
+  .tablet-alternatives {
+    min-height:0!important; height:100%!important; overflow:hidden!important;
+    display:grid!important; grid-template-columns:1fr!important;
+    grid-template-rows:repeat(3,minmax(0,1fr))!important; gap:4px!important;
+    align-content:stretch!important;
+  }
+  .tablet-alt {
+    min-height:0!important; height:100%!important; max-height:100%!important;
+    padding:4px 6px!important; gap:5px!important;
+    grid-template-columns:20px minmax(0,1fr) 9px!important;
+    overflow:hidden!important; border-radius:6px!important;
+    border:1px solid #4a4658!important; background:#242330!important;
+  }
+  .tablet-alt-code { width:18px!important; height:18px!important; font-size:8px!important; }
+  .tablet-alt b {
+    display:block!important; font-size:7px!important; line-height:1.1!important;
+    white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important;
+  }
+  .tablet-alt small {
+    display:block!important; font-size:6px!important; line-height:1.1!important;
+    white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important;
+  }
+  .tablet-flow-arrow { font-size:15px!important; min-height:0!important; overflow:hidden!important; }
+
+  /* Keep all seven phases on one stable row. State changes only recolor a card. */
+  .tablet-process {
+    display:flex!important; flex-direction:column!important;
+    height:158px!important; min-height:158px!important; max-height:158px!important;
+    flex:0 0 158px!important; padding:7px 9px!important; gap:4px!important;
+    overflow:hidden!important;
+  }
+  .tablet-process .tablet-section-head { flex:0 0 16px!important; min-height:16px!important; margin:0!important; }
+  .tablet-phase-grid {
+    flex:1 1 auto!important; min-height:0!important; height:auto!important;
+    display:grid!important; grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    grid-template-rows:minmax(0,1fr)!important; grid-auto-flow:column!important;
+    gap:5px!important; overflow:hidden!important; align-items:stretch!important;
+  }
+  .tablet-phase {
+    display:flex!important; flex-direction:column!important; justify-content:flex-start!important;
+    min-width:0!important; min-height:0!important; height:100%!important; max-height:100%!important;
+    padding:5px!important; gap:4px!important; overflow:hidden!important;
+    border:1.5px solid #464252!important; border-radius:7px!important;
+    background:#22212d!important; box-shadow:none!important;
+  }
+  .tablet-phase-icon {
+    flex:0 0 23px!important; width:23px!important; height:23px!important;
+    min-width:23px!important; border-radius:6px!important;
+    background:#302b42!important; color:#d8c7ff!important;
+  }
+  .tablet-phase-icon svg { width:17px!important; height:17px!important; }
+  .tablet-phase b {
+    display:block!important; font-size:7px!important; line-height:1.1!important;
+    white-space:normal!important; overflow:hidden!important;
+    display:-webkit-box!important; -webkit-line-clamp:2!important; -webkit-box-orient:vertical!important;
+  }
+  .tablet-phase small {
+    display:-webkit-box!important; -webkit-line-clamp:2!important; -webkit-box-orient:vertical!important;
+    overflow:hidden!important; font-size:6px!important; line-height:1.15!important;
+  }
+  .tablet-phase.done {
+    border-color:#42d987!important; background:linear-gradient(145deg,#174a34,#192c26)!important;
+    box-shadow:inset 0 0 0 1px #42d98722!important;
+  }
+  .tablet-phase.done .tablet-phase-icon { background:#168b50!important; color:#fff!important; }
+  .tablet-phase.current { border-color:#c4a7ff!important; background:#302941!important; }
+  .tablet-phase.current .tablet-phase-icon { background:#9272cf!important; color:#fff!important; }
+  .tablet-progress-footer {
+    flex:0 0 10px!important; min-height:10px!important; height:10px!important;
+    margin:0!important; padding:2px 0 0!important; gap:4px 8px!important;
+  }
+  .tablet-progress-footer>span { font-size:6px!important; line-height:1!important; }
+  .tablet-progress-footer>b { font-size:8px!important; line-height:1!important; }
+  .tablet-progress-track { height:3px!important; }
+
+  .tablet-bottom {
+    min-height:0!important; height:100%!important; max-height:100%!important;
+    display:grid!important; grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:minmax(0,1fr)!important; gap:6px!important; overflow:hidden!important;
+  }
+  .tablet-incident, .tablet-events {
+    display:flex!important; flex-direction:column!important;
+    min-height:0!important; height:100%!important; overflow:hidden!important;
+    padding:7px 9px!important;
+  }
+  .tablet-incident .tablet-section-head,
+  .tablet-events .tablet-section-head { flex:0 0 20px!important; min-height:20px!important; margin:0 0 3px!important; }
+  .tablet-incident .tablet-section-head h3 { max-width:100%!important; }
+  .tablet-facts {
+    flex:1 1 auto!important; min-height:0!important; overflow:hidden!important;
+    display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-template-rows:repeat(2,minmax(0,1fr))!important; gap:0 9px!important;
+  }
+  .tablet-facts>div { min-height:0!important; padding:4px 0!important; gap:2px!important; overflow:hidden!important; }
+  .tablet-facts small { font-size:6px!important; line-height:1!important; }
+  .tablet-facts b {
+    display:-webkit-box!important; -webkit-line-clamp:2!important; -webkit-box-orient:vertical!important;
+    overflow:hidden!important; font-size:7px!important; line-height:1.15!important;
+  }
+  .tablet-event-list {
+    flex:1 1 auto!important; min-height:0!important; height:100%!important; max-height:100%!important;
+    overflow:hidden!important; display:grid!important; grid-auto-rows:minmax(0,1fr)!important;
+  }
+  .tablet-event { min-height:0!important; padding:3px 0!important; gap:5px!important; overflow:hidden!important; }
+  .tablet-event-time { font-size:6px!important; }
+  .tablet-event b { font-size:7px!important; line-height:1.1!important; }
+  .tablet-event small {
+    display:-webkit-box!important; -webkit-line-clamp:1!important; -webkit-box-orient:vertical!important;
+    overflow:hidden!important; font-size:6px!important; line-height:1.1!important;
+  }
+  .tablet-waiting { padding:4px!important; overflow:hidden!important; }
+  .tablet-waiting b { font-size:7px!important; }
+  .tablet-waiting small { font-size:6px!important; }
+
+  /* State classes must never change dimensions, only color and border tone. */
+  .tablet-phase, .tablet-system, .tablet-snd-core, .tablet-alt {
+    transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease!important;
+    animation:none!important; transform:none!important;
+  }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
