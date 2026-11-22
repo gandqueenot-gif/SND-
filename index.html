@@ -1550,6 +1550,140 @@ tbody tr:last-child td{border-bottom:0}
   }
 }
 
+
+/* V16 — presentation readability pass for iPad landscape */
+@media (orientation:landscape) and (min-width:900px) and (max-height:1100px) {
+  .tablet-console .tablet-section-head>div>span,
+  .tablet-console .tablet-kicker {
+    font-size:8px!important;
+    letter-spacing:.12em!important;
+    line-height:1.2!important;
+  }
+  .tablet-console .tablet-section-head h3 {
+    font-size:14px!important;
+    line-height:1.2!important;
+    max-height:18px!important;
+  }
+  .tablet-console .tablet-hero h2 {
+    font-size:clamp(19px,1.75vw,25px)!important;
+  }
+  .tablet-console .tablet-hero p {
+    font-size:10px!important;
+  }
+  .tablet-console .tablet-hero-meta small {
+    font-size:9px!important;
+  }
+  .tablet-console .tablet-hero-meta b {
+    font-size:clamp(13px,1.15vw,16px)!important;
+  }
+
+  /* Typography is prioritized over decorative symbols. */
+  .tablet-console .tablet-phase {
+    padding:7px 6px!important;
+    gap:5px!important;
+    justify-content:flex-start!important;
+  }
+  .tablet-console .tablet-phase-icon {
+    width:25px!important;
+    height:25px!important;
+    min-width:25px!important;
+    flex:0 0 25px!important;
+    border-radius:7px!important;
+  }
+  .tablet-console .tablet-phase-icon svg {
+    width:15px!important;
+    height:15px!important;
+  }
+  .tablet-console .tablet-phase b {
+    font-size:10px!important;
+    line-height:1.2!important;
+    -webkit-line-clamp:2!important;
+    min-height:22px!important;
+  }
+  .tablet-console .tablet-phase small {
+    font-size:8px!important;
+    line-height:1.2!important;
+    -webkit-line-clamp:2!important;
+  }
+
+  .tablet-console .tablet-system-icon {
+    font-size:17px!important;
+    line-height:1!important;
+  }
+  .tablet-console .tablet-system small {
+    font-size:8px!important;
+    line-height:1.2!important;
+  }
+  .tablet-console .tablet-system b {
+    font-size:10px!important;
+    line-height:1.25!important;
+  }
+  .tablet-console .tablet-system em {
+    font-size:8px!important;
+    line-height:1.2!important;
+  }
+  .tablet-console .tablet-snd-emblem {
+    width:36px!important;
+    height:36px!important;
+    flex:0 0 36px!important;
+    border-radius:10px!important;
+  }
+  .tablet-console .tablet-snd-emblem span {
+    font-size:12px!important;
+  }
+  .tablet-console .tablet-snd-core>b {
+    font-size:10px!important;
+  }
+  .tablet-console .tablet-snd-core>small {
+    font-size:8px!important;
+  }
+  .tablet-console .tablet-alt-code {
+    width:19px!important;
+    height:19px!important;
+    font-size:9px!important;
+  }
+  .tablet-console .tablet-alt b {
+    font-size:9px!important;
+    line-height:1.2!important;
+  }
+  .tablet-console .tablet-alt small {
+    font-size:8px!important;
+    line-height:1.2!important;
+  }
+  .tablet-console .tablet-facts small,
+  .tablet-console .tablet-event-time {
+    font-size:8px!important;
+    line-height:1.2!important;
+  }
+  .tablet-console .tablet-facts b,
+  .tablet-console .tablet-event b {
+    font-size:9px!important;
+    line-height:1.25!important;
+  }
+  .tablet-console .tablet-event small {
+    font-size:8px!important;
+    line-height:1.2!important;
+  }
+  .tablet-console .tablet-progress-footer>span {
+    font-size:8px!important;
+  }
+  .tablet-console .tablet-progress-footer>b {
+    font-size:9px!important;
+  }
+
+  /* Keep all cards aligned and avoid icon/text collisions. */
+  .tablet-console .tablet-phase-grid {
+    gap:7px!important;
+  }
+  .tablet-console .tablet-phase,
+  .tablet-console .tablet-system,
+  .tablet-console .tablet-snd-core,
+  .tablet-console .tablet-alt {
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
