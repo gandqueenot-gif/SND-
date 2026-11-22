@@ -2256,6 +2256,227 @@ tbody tr:last-child td{border-bottom:0}
   .role-viewer .tablet-event { padding:3px 0!important; }
 }
 
+
+/* V20 — stable SND architecture, fixed stage geometry, full iPad landscape fit */
+@media (orientation:landscape) and (min-width:900px) and (max-height:1100px) {
+  .role-viewer .frame { min-height:100dvh!important; }
+  .role-viewer .content {
+    box-sizing:border-box!important;
+    width:100%!important;
+    max-width:none!important;
+    min-height:calc(100dvh - 58px)!important;
+    height:calc(100dvh - 58px)!important;
+    padding:12px 18px 14px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:hidden!important;
+  }
+  .role-viewer .heading {
+    flex:0 0 34px!important;
+    min-height:34px!important;
+    margin:0 0 7px!important;
+    align-items:center!important;
+  }
+  .role-viewer .heading h1 {font-size:19px!important}
+  .role-viewer .eyebrow {font-size:9px!important}
+  .role-viewer #view {
+    flex:1 1 auto!important;
+    min-height:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  .role-viewer .tablet-console {
+    flex:1 1 auto!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:64px minmax(170px,1.42fr) 112px minmax(120px,.9fr)!important;
+    gap:8px!important;
+    overflow:hidden!important;
+  }
+  .role-viewer .tablet-hero {
+    min-height:64px!important;
+    height:100%!important;
+    box-sizing:border-box!important;
+    padding:7px 14px!important;
+    grid-template-columns:minmax(0,1.3fr) minmax(330px,.9fr)!important;
+    gap:12px!important;
+  }
+  .role-viewer .tablet-hero h2 {
+    font-size:clamp(19px,2vw,25px)!important;
+    margin:3px 0 2px!important;
+    line-height:1.08!important;
+  }
+  .role-viewer .tablet-hero p {font-size:9px!important;line-height:1.15!important}
+  .role-viewer .tablet-hero-meta {min-height:42px!important;padding:4px 0 4px 12px!important;gap:8px!important}
+  .role-viewer .tablet-hero-meta>div {gap:3px!important}
+  .role-viewer .tablet-hero-meta small {font-size:9px!important}
+  .role-viewer .tablet-hero-meta b {font-size:14px!important}
+
+  .role-viewer .tablet-topology,
+  .role-viewer .tablet-process,
+  .role-viewer .tablet-bottom {
+    box-sizing:border-box!important;
+    min-height:0!important;
+    height:100%!important;
+    padding:7px 10px!important;
+    overflow:hidden!important;
+  }
+  .role-viewer .tablet-topology {display:flex!important;flex-direction:column!important}
+  .role-viewer .tablet-section-head {flex:0 0 auto!important;margin:0 0 5px!important;gap:7px!important}
+  .role-viewer .tablet-section-head>div>span {font-size:8px!important;line-height:1.1!important}
+  .role-viewer .tablet-section-head h3 {font-size:13px!important;line-height:1.1!important;margin:2px 0 0!important}
+
+  /* Fixed columns: Primary → SND → Decision → B/C/D → Service. */
+  .role-viewer .tablet-flow {
+    flex:1 1 auto!important;
+    min-height:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(105px,.88fr) 13px minmax(112px,.92fr) 13px minmax(104px,.88fr) 13px minmax(150px,1.18fr) 13px minmax(105px,.88fr)!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    grid-auto-flow:row!important;
+    align-items:stretch!important;
+    gap:4px!important;
+  }
+  .role-viewer .tablet-flow>.tablet-system.primary {grid-column:1!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-flow-arrow:nth-child(2) {grid-column:2!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-snd-core {grid-column:3!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-flow-arrow:nth-child(4) {grid-column:4!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-decision {grid-column:5!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-flow-arrow:nth-child(6) {grid-column:6!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-alternatives {grid-column:7!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-flow-arrow:nth-child(8) {grid-column:8!important;grid-row:1!important}
+  .role-viewer .tablet-flow>.tablet-system.service {grid-column:9!important;grid-row:1!important}
+
+  .role-viewer .tablet-system {
+    box-sizing:border-box!important;
+    width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;
+    padding:8px!important;gap:5px!important;border-radius:9px!important;
+    justify-content:center!important;overflow:hidden!important;
+  }
+  .role-viewer .tablet-system-icon {font-size:19px!important;line-height:1!important}
+  .role-viewer .tablet-system small {font-size:8px!important;line-height:1.1!important}
+  .role-viewer .tablet-system b {font-size:10px!important;line-height:1.2!important;overflow-wrap:anywhere!important}
+  .role-viewer .tablet-system em {font-size:8px!important;line-height:1.15!important}
+  .role-viewer .tablet-snd-core {
+    box-sizing:border-box!important;width:100%!important;height:100%!important;
+    min-height:0!important;max-height:none!important;padding:7px 4px!important;gap:5px!important;
+    border-radius:10px!important;justify-content:center!important;
+  }
+  .role-viewer .tablet-snd-emblem {width:38px!important;height:38px!important;flex:0 0 38px!important;border-radius:11px!important}
+  .role-viewer .tablet-snd-emblem span {font-size:13px!important}
+  .role-viewer .tablet-snd-core>b {font-size:10px!important;line-height:1.15!important}
+  .role-viewer .tablet-snd-core>small {font-size:8px!important;line-height:1.1!important}
+  .role-viewer .tablet-decision {
+    box-sizing:border-box!important;min-width:0!important;width:100%!important;height:100%!important;
+    display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+    gap:7px!important;padding:7px 5px!important;text-align:center!important;overflow:hidden!important;
+    border:1px solid #8f79b7!important;border-radius:9px!important;
+    background:linear-gradient(145deg,#302842,#211e2c)!important;
+  }
+  .role-viewer .tablet-decision-icon {
+    display:grid!important;place-items:center!important;width:34px!important;height:34px!important;flex:0 0 34px!important;
+    border-radius:9px!important;background:#382e4d!important;color:#d8c5ff!important;
+  }
+  .role-viewer .tablet-decision-icon svg {width:22px!important;height:22px!important;fill:none!important;stroke:currentColor!important;stroke-width:2.3!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+  .role-viewer .tablet-decision>b {font-size:10px!important;line-height:1.2!important}
+  .role-viewer .tablet-decision>small {font-size:8px!important;line-height:1.15!important;color:#bdb0d4!important}
+  .role-viewer .tablet-alternatives {
+    box-sizing:border-box!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:repeat(3,minmax(0,1fr))!important;align-content:stretch!important;align-items:stretch!important;
+    gap:5px!important;width:100%!important;height:100%!important;min-height:0!important;overflow:hidden!important;
+  }
+  .role-viewer .tablet-alt {
+    box-sizing:border-box!important;display:grid!important;
+    grid-template-columns:23px minmax(0,1fr) 12px!important;
+    width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;
+    padding:5px 6px!important;gap:5px!important;overflow:hidden!important;
+    transition:none!important;transform:none!important;animation:none!important;
+  }
+  .role-viewer .tablet-alt-code {width:21px!important;height:21px!important;font-size:9px!important}
+  .role-viewer .tablet-alt b {font-size:9px!important;line-height:1.15!important}
+  .role-viewer .tablet-alt small {font-size:7px!important;line-height:1.1!important}
+  .role-viewer .tablet-flow-arrow {font-size:17px!important;min-width:0!important}
+  .role-viewer .tablet-flow-arrow span {height:2px!important}
+
+  /* The seven stages never reflow or resize as state classes change. */
+  .role-viewer .tablet-process {display:flex!important;flex-direction:column!important}
+  .role-viewer .tablet-phase-grid {
+    flex:1 1 auto!important;min-height:0!important;height:auto!important;
+    display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    grid-template-rows:minmax(0,1fr)!important;grid-auto-flow:row!important;
+    align-items:stretch!important;gap:5px!important;
+  }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(1){grid-column:1!important;grid-row:1!important}
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(2){grid-column:2!important;grid-row:1!important}
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(3){grid-column:3!important;grid-row:1!important}
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(4){grid-column:4!important;grid-row:1!important}
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(5){grid-column:5!important;grid-row:1!important}
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(6){grid-column:6!important;grid-row:1!important}
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(7){grid-column:7!important;grid-row:1!important}
+  .role-viewer .tablet-phase {
+    box-sizing:border-box!important;position:relative!important;
+    display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;
+    width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-height:none!important;
+    padding:5px!important;gap:4px!important;overflow:hidden!important;
+    transition:background-color .15s linear,border-color .15s linear,color .15s linear!important;
+    transform:none!important;animation:none!important;
+  }
+  .role-viewer .tablet-phase-icon {
+    box-sizing:border-box!important;width:23px!important;height:23px!important;min-width:23px!important;
+    flex:0 0 23px!important;border-radius:6px!important;transition:none!important;transform:none!important;
+  }
+  .role-viewer .tablet-phase-icon svg {width:15px!important;height:15px!important}
+  .role-viewer .tablet-phase b {font-size:9px!important;line-height:1.1!important;max-height:22px!important;overflow:hidden!important}
+  .role-viewer .tablet-phase small {font-size:7px!important;line-height:1.1!important;max-height:18px!important;overflow:hidden!important}
+  .role-viewer .tablet-phase.done {border:1.5px solid #4fe18d!important;background:linear-gradient(145deg,#155a38,#103725)!important;box-shadow:inset 0 0 0 1px #54e99533!important}
+  .role-viewer .tablet-phase.done .tablet-phase-icon {background:#1fae68!important;color:#fff!important;border:1px solid #8bffc0!important}
+  .role-viewer .tablet-phase.current {border:2px solid #c8a8ff!important;background:linear-gradient(145deg,#39294e,#282033)!important;box-shadow:inset 0 0 0 1px #c8a8ff44!important}
+  .role-viewer .tablet-phase.current .tablet-phase-icon {background:#8d68c8!important;color:#fff!important}
+  .role-viewer .tablet-progress-footer {margin-top:4px!important;padding-top:3px!important;gap:4px 8px!important}
+  .role-viewer .tablet-progress-footer>span {font-size:7px!important}
+  .role-viewer .tablet-progress-footer>b {font-size:8px!important}
+
+  .role-viewer .tablet-bottom {display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:7px!important}
+  .role-viewer .tablet-facts {gap:0 10px!important}
+  .role-viewer .tablet-facts>div {gap:4px!important;padding:6px 0!important}
+  .role-viewer .tablet-facts small,.role-viewer .tablet-event-time {font-size:7px!important}
+  .role-viewer .tablet-facts b,.role-viewer .tablet-event b {font-size:9px!important;line-height:1.15!important}
+  .role-viewer .tablet-event-list {max-height:none!important;overflow:hidden!important}
+  .role-viewer .tablet-event {grid-template-columns:48px 7px minmax(0,1fr)!important;gap:6px!important;padding:3px 0!important}
+  .role-viewer .tablet-event small {font-size:7px!important;line-height:1.15!important}
+
+  /* Strong red is reserved for interruption/recovery; green only after verification. */
+  .role-viewer .tablet-hero:has(.tablet-live-dot.running) {
+    border:2px solid #ff2948!important;
+    background:linear-gradient(100deg,#35131f,#211821 72%)!important;
+    box-shadow:0 0 0 1px #ff294855,0 0 18px #ff234455!important;
+  }
+  .role-viewer .tablet-live-dot.running {background:#ff304f!important;box-shadow:0 0 0 5px #ff304f33!important}
+  .role-viewer .tablet-status-chip.running {
+    border:1px solid #ff3855!important;color:#fff!important;background:#b80d2a!important;
+    box-shadow:0 0 12px #ff1f4144!important;
+  }
+  .role-viewer .tablet-system.primary.fault-active {
+    border:2px solid #ff304d!important;background:linear-gradient(145deg,#a30e2a,#4a1020)!important;
+    box-shadow:0 0 0 1px #ff304d66,0 0 22px #ff163c66!important;
+  }
+  .role-viewer .tablet-system.service.pending {
+    border:2px solid #ff304d!important;background:linear-gradient(145deg,#8e1028,#3e1523)!important;
+    box-shadow:0 0 0 1px #ff304d66,0 0 18px #ff163c55!important;
+  }
+  .role-viewer .tablet-system.service.pending .tablet-system-icon,
+  .role-viewer .tablet-system.service.pending small,
+  .role-viewer .tablet-system.service.pending b {color:#fff!important}
+  .role-viewer .tablet-system.service.pending em {color:#ffd2d9!important}
+  .role-viewer .tablet-system.service.verified {
+    border:2px solid #43ed91!important;background:linear-gradient(145deg,#087a45,#06452e)!important;
+    box-shadow:0 0 0 2px #43ed9144,0 0 25px #24d97855!important;
+  }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2731,7 +2952,7 @@ const phasesUI=[
  const phaseCards=phasesUI.map((p,i)=>`<div class="tablet-phase ${step>i?"done":step===i&&running?"current":""}"><span class="tablet-phase-icon">${p[2]}</span><b>${String(i+1).padStart(2,"0")} ${p[0]}</b><small>${p[1]}</small></div>`).join("");
  const altNames=[selected,"Alternative path C","Alternative path D"];
  const altCards=altNames.map((name,i)=>`<div class="tablet-alt ${i===0&&routeActive?"chosen":""}"><span class="tablet-alt-code">${["B","C","D"][i]}</span><div><b>${esc(name)}</b><small>${i===0&&routeActive?"Active service path":i===0?"Selected for failover":"Standby candidate"}</small></div><span class="tablet-alt-state">${i===0&&routeActive?"✓":"○"}</span></div>`).join("");
- const stateLabel=verified?"SERVICE CONTINUITY RESTORED":running?"SERVICE INTERRUPTION DETECTED":complete?"SERVICE CONTINUITY RESTORED":"SYSTEMS READY";
+ const stateLabel=verified?"SERVICE CONTINUITY RESTORED":running?(step>=6?"SERVICE RECOVERY IN PROGRESS":"SERVICE INTERRUPTION DETECTED"):complete?"SERVICE CONTINUITY RESTORED":"SYSTEMS READY";
  const stateClass=verified?"complete":running?"running":complete?"complete":"ready";
  const reportEvents=phasesUI.slice(0,step).map((p,i)=>`<div class="tablet-event ${i===step-1?"event-current":""}"><span class="tablet-event-time">${sim?.startedAtMs?new Date(sim.startedAtMs+(i+1)*(Number(sim.phaseDurationMs)||4500)).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):"—"}</span><i></i><div><b>${p[0]}</b><small>${[
  "Continuous service health checks are running.",
@@ -2753,6 +2974,12 @@ const phasesUI=[
     <div class="tablet-system primary ${running?"fault-active":""} ${routeActive?"isolated":""}"><span class="tablet-system-icon">▤</span><small>PRIMARY SYSTEM</small><b>${esc(component)}</b><em>${routeActive?"Isolated from active service":running?"CRITICAL FAILURE DETECTED":"Available"}</em></div>
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
     <div class="tablet-snd-core"><div class="tablet-snd-emblem"><span> SND </span></div><b>Adaptive Resilience Layer</b><small>Monitor · Analyze · Adapt</small><div class="tablet-snd-glow"></div></div>
+    <div class="tablet-flow-arrow"><span></span><b>›</b></div>
+    <div class="tablet-decision">
+     <span class="tablet-decision-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5c-8 0-14 6-14 14 0 5 2 8 6 11 2 2 3 4 3 7h10c0-3 1-5 3-7 4-3 6-6 6-11 0-8-6-14-14-14Z"/><path d="M19 42h10M18 37h12M18 20c2-3 4-4 6-4s4 1 6 4"/></svg></span>
+     <b>Analyze &amp; Select Path</b>
+     <small>${step>=3?"Impact assessed · alternatives evaluated":"Decision analysis"}</small>
+    </div>
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
     <div class="tablet-alternatives">${altCards}</div>
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
