@@ -2106,6 +2106,156 @@ tbody tr:last-child td{border-bottom:0}
   }
 }
 
+
+/* V19 — restore readable scale and lock the workflow order */
+@media (orientation:landscape) and (min-width:900px) and (max-height:1100px) {
+  .role-viewer .content {
+    height:calc(100dvh - var(--header-height,58px))!important;
+    max-height:calc(100dvh - var(--header-height,58px))!important;
+    padding:5px 10px 7px!important;
+  }
+  .role-viewer .heading {
+    flex:0 0 29px!important;
+    min-height:29px!important;
+    margin:0 0 4px!important;
+  }
+  .role-viewer .heading h1 { font-size:17px!important; }
+  .role-viewer .tablet-console {
+    height:100%!important;
+    min-height:0!important;
+    grid-template-rows:62px minmax(150px,1.45fr) 108px minmax(125px,1.15fr)!important;
+    gap:6px!important;
+  }
+  .role-viewer .tablet-hero {
+    min-height:62px!important;
+    padding:7px 12px!important;
+  }
+  .role-viewer .tablet-hero h2 {
+    font-size:clamp(18px,1.8vw,23px)!important;
+    max-height:25px!important;
+  }
+  .role-viewer .tablet-hero p { font-size:9px!important; }
+  .role-viewer .tablet-hero-meta small { font-size:9px!important; }
+  .role-viewer .tablet-hero-meta b { font-size:14px!important; }
+
+  .role-viewer .tablet-topology,
+  .role-viewer .tablet-process,
+  .role-viewer .tablet-bottom {
+    min-height:0!important;
+    height:100%!important;
+    overflow:hidden!important;
+    padding:7px 10px!important;
+  }
+  .role-viewer .tablet-section-head {
+    margin-bottom:5px!important;
+  }
+  .role-viewer .tablet-section-head>div>span { font-size:8px!important; }
+  .role-viewer .tablet-section-head h3 { font-size:13px!important; }
+
+  /* Architecture: compact blocks, but no tiny text or oversized empty cards. */
+  .role-viewer .tablet-flow {
+    grid-template-columns:minmax(112px,.9fr) 14px minmax(125px,1fr) 14px minmax(155px,1.18fr) 14px minmax(112px,.9fr)!important;
+    gap:4px!important;
+  }
+  .role-viewer .tablet-system {
+    height:94px!important;
+    min-height:94px!important;
+    max-height:94px!important;
+    padding:7px!important;
+    gap:4px!important;
+  }
+  .role-viewer .tablet-system-icon { font-size:16px!important; }
+  .role-viewer .tablet-system small { font-size:9px!important; }
+  .role-viewer .tablet-system b { font-size:11px!important; line-height:1.2!important; }
+  .role-viewer .tablet-system em { font-size:9px!important; }
+  .role-viewer .tablet-snd-core {
+    height:94px!important;
+    min-height:94px!important;
+    max-height:94px!important;
+    padding:6px!important;
+    gap:4px!important;
+  }
+  .role-viewer .tablet-snd-emblem {
+    width:36px!important;height:36px!important;flex:0 0 36px!important;
+  }
+  .role-viewer .tablet-snd-emblem span { font-size:13px!important; }
+  .role-viewer .tablet-snd-core>b { font-size:11px!important; }
+  .role-viewer .tablet-snd-core>small { font-size:9px!important; }
+  .role-viewer .tablet-alternatives {
+    grid-template-rows:repeat(3,minmax(0,1fr))!important;
+    gap:4px!important;
+  }
+  .role-viewer .tablet-alt {
+    min-height:0!important;
+    padding:4px 6px!important;
+    gap:5px!important;
+  }
+  .role-viewer .tablet-alt b { font-size:10px!important; }
+  .role-viewer .tablet-alt small { font-size:8px!important; }
+
+  /* Explicit placement prevents any browser auto-placement/reflow between updates. */
+  .role-viewer .tablet-phase-grid {
+    display:grid!important;
+    grid-template-columns:repeat(7,minmax(0,1fr))!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    grid-auto-flow:initial!important;
+    align-items:stretch!important;
+    gap:5px!important;
+    min-height:0!important;
+    height:auto!important;
+  }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(1) { grid-column:1!important;grid-row:1!important; }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(2) { grid-column:2!important;grid-row:1!important; }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(3) { grid-column:3!important;grid-row:1!important; }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(4) { grid-column:4!important;grid-row:1!important; }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(5) { grid-column:5!important;grid-row:1!important; }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(6) { grid-column:6!important;grid-row:1!important; }
+  .role-viewer .tablet-phase-grid>.tablet-phase:nth-child(7) { grid-column:7!important;grid-row:1!important; }
+  .role-viewer .tablet-phase {
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:6px!important;
+    gap:4px!important;
+  }
+  .role-viewer .tablet-phase-icon {
+    width:22px!important;height:22px!important;min-width:22px!important;
+    flex:0 0 22px!important;
+  }
+  .role-viewer .tablet-phase-icon svg { width:14px!important;height:14px!important; }
+  .role-viewer .tablet-phase b {
+    font-size:10px!important;
+    line-height:1.15!important;
+    min-height:0!important;
+    max-height:24px!important;
+    overflow:hidden!important;
+  }
+  .role-viewer .tablet-phase small {
+    font-size:8px!important;
+    line-height:1.15!important;
+    max-height:20px!important;
+    overflow:hidden!important;
+  }
+  .role-viewer .tablet-progress-footer { margin-top:4px!important; }
+  .role-viewer .tablet-progress-footer>span { font-size:8px!important; }
+  .role-viewer .tablet-progress-footer>b { font-size:9px!important; }
+
+  .role-viewer .tablet-bottom {
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    gap:6px!important;
+  }
+  .role-viewer .tablet-facts small,
+  .role-viewer .tablet-event-time { font-size:8px!important; }
+  .role-viewer .tablet-facts b,
+  .role-viewer .tablet-event b { font-size:10px!important; line-height:1.2!important; }
+  .role-viewer .tablet-event small { font-size:8px!important; line-height:1.2!important; }
+  .role-viewer .tablet-event { padding:3px 0!important; }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
