@@ -2975,6 +2975,51 @@ tbody tr:last-child td{border-bottom:0}
   }
 }
 
+
+/* V25 — align every failover node to the Analyze card's vertical center */
+@media (orientation:landscape) and (min-width:900px) and (max-height:1100px) {
+  .role-viewer .tablet-flow {
+    align-items:center!important;
+  }
+  .role-viewer .tablet-flow > .tablet-system.primary,
+  .role-viewer .tablet-flow > .tablet-snd-core,
+  .role-viewer .tablet-flow > .tablet-decision,
+  .role-viewer .tablet-flow > .tablet-system.service {
+    height:154px!important;
+    min-height:154px!important;
+    max-height:154px!important;
+    align-self:center!important;
+    box-sizing:border-box!important;
+  }
+  .role-viewer .tablet-flow > .tablet-alternatives {
+    height:154px!important;
+    min-height:154px!important;
+    max-height:154px!important;
+    align-self:center!important;
+    display:grid!important;
+    grid-template-rows:repeat(3,minmax(0,1fr))!important;
+    gap:6px!important;
+    box-sizing:border-box!important;
+  }
+  .role-viewer .tablet-flow > .tablet-alternatives > .tablet-alt {
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    box-sizing:border-box!important;
+    display:grid!important;
+    align-items:center!important;
+    padding:5px 8px!important;
+  }
+  .role-viewer .tablet-flow > .tablet-flow-arrow {
+    align-self:center!important;
+    min-height:0!important;
+    height:34px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
