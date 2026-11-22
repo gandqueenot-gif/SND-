@@ -2894,6 +2894,87 @@ tbody tr:last-child td{border-bottom:0}
   }
 }
 
+
+/* V24 — match the approved iPad composition and prevent clipped process cards */
+@media (orientation:landscape) and (min-width:900px) and (max-height:1100px) {
+  .role-viewer .tablet-console {
+    grid-template-rows:58px minmax(190px,1.22fr) 112px minmax(150px,1fr)!important;
+    gap:8px!important;
+    align-content:stretch!important;
+  }
+  .role-viewer .tablet-process {
+    min-height:112px!important;
+    padding:7px 10px 8px!important;
+    overflow:visible!important;
+  }
+  .role-viewer .tablet-process .tablet-section-head {
+    min-height:19px!important;
+    flex:0 0 19px!important;
+    margin:0 0 4px!important;
+  }
+  .role-viewer .tablet-phase-grid {
+    flex:0 0 58px!important;
+    height:58px!important;
+    min-height:58px!important;
+    grid-template-rows:58px!important;
+    gap:7px!important;
+    overflow:visible!important;
+  }
+  .role-viewer .tablet-phase {
+    height:58px!important;
+    min-height:58px!important;
+    max-height:58px!important;
+    padding:4px 3px!important;
+    gap:4px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+  }
+  .role-viewer .tablet-phase b {
+    font-size:10px!important;
+    line-height:1.15!important;
+    white-space:nowrap!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  .role-viewer .tablet-progress-footer {
+    margin-top:4px!important;
+    min-height:7px!important;
+  }
+  .role-viewer .tablet-progress-footer>span {
+    font-size:7px!important;
+  }
+  .role-viewer .tablet-progress-footer>b {
+    font-size:8px!important;
+  }
+
+  /* Standby is neutral. Red means an active interruption/recovery only. */
+  .role-viewer .tablet-system.service.ready {
+    border:1.5px solid #8b7ca7!important;
+    background:linear-gradient(145deg,#292536,#201e2b)!important;
+    box-shadow:none!important;
+    color:#eee9f7!important;
+  }
+  .role-viewer .tablet-system.service.ready .tablet-system-icon,
+  .role-viewer .tablet-system.service.ready small,
+  .role-viewer .tablet-system.service.ready b {
+    color:#e8e0f5!important;
+  }
+  .role-viewer .tablet-system.service.ready em {
+    color:#bdb3cb!important;
+  }
+  .role-viewer .tablet-system.service.pending {
+    border:2px solid #ff304d!important;
+    background:linear-gradient(145deg,#9d102b,#451321)!important;
+    box-shadow:0 0 0 1px #ff304d66,0 0 20px #ff163c55!important;
+  }
+  .role-viewer .tablet-system.service.verified {
+    border:2px solid #43ed91!important;
+    background:linear-gradient(145deg,#087a45,#06452e)!important;
+    box-shadow:0 0 0 2px #43ed9144,0 0 22px #24d97855!important;
+  }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3405,7 +3486,7 @@ const altCards=altNames.map((name,i)=>`<div class="tablet-alt ${i===0&&routeActi
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
     <div class="tablet-alternatives">${altCards}</div>
     <div class="tablet-flow-arrow"><span></span><b>›</b></div>
-    <div class="tablet-system service ${verified?"verified":"pending"}"><span class="tablet-system-icon">${verified?'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m8 25 10 10L40 11"/></svg>':'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 14v11l8 5"/></svg>'}</span><small>SERVICE STATUS</small><b>${verified?"Continuity verified":running?"Recovery in progress":"Ready"}</b><em>${verified?"Service continues":running?"Awaiting full recovery verification":"Awaiting response"}</em></div>
+    <div class="tablet-system service ${verified?"verified":running?"pending":"ready"}"><span class="tablet-system-icon">${verified?'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m8 25 10 10L40 11"/></svg>':'<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 14v11l8 5"/></svg>'}</span><small>SERVICE STATUS</small><b>${verified?"Continuity verified":running?"Recovery in progress":"Ready"}</b><em>${verified?"Service continues":running?"Awaiting full recovery verification":"Awaiting response"}</em></div>
    </div>
 </section>
   <section class="tablet-section tablet-process">
