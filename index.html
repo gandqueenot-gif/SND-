@@ -1684,6 +1684,209 @@ tbody tr:last-child td{border-bottom:0}
   }
 }
 
+
+/* V17 — compact architecture cards, readable labels, unmistakable service state */
+@media (orientation:landscape) and (min-width:900px) {
+  .role-viewer .tablet-console {
+    gap:7px!important;
+  }
+  .role-viewer .tablet-section {
+    padding:10px 12px!important;
+  }
+  .role-viewer .tablet-section-head {
+    margin-bottom:8px!important;
+  }
+  .role-viewer .tablet-section-head>div>span {
+    font-size:9px!important;
+    line-height:1.2!important;
+  }
+  .role-viewer .tablet-section-head h3 {
+    font-size:15px!important;
+    line-height:1.2!important;
+  }
+
+  /* Smaller architecture blocks, larger readable labels */
+  .role-viewer .tablet-flow {
+    grid-template-columns:minmax(112px,.92fr) 17px minmax(130px,1fr) 17px minmax(165px,1.22fr) 17px minmax(112px,.9fr)!important;
+    gap:5px!important;
+  }
+  .role-viewer .tablet-system {
+    min-height:112px!important;
+    padding:9px!important;
+    gap:5px!important;
+    border-radius:9px!important;
+  }
+  .role-viewer .tablet-system-icon {
+    font-size:17px!important;
+  }
+  .role-viewer .tablet-system small {
+    font-size:9px!important;
+    letter-spacing:.08em!important;
+  }
+  .role-viewer .tablet-system b {
+    font-size:12px!important;
+    line-height:1.25!important;
+  }
+  .role-viewer .tablet-system em {
+    font-size:10px!important;
+    line-height:1.2!important;
+  }
+  .role-viewer .tablet-snd-core {
+    min-height:112px!important;
+    padding:8px!important;
+    gap:5px!important;
+  }
+  .role-viewer .tablet-snd-emblem {
+    width:42px!important;
+    height:42px!important;
+    border-radius:12px!important;
+  }
+  .role-viewer .tablet-snd-emblem span {
+    font-size:15px!important;
+  }
+  .role-viewer .tablet-snd-core>b {
+    font-size:12px!important;
+  }
+  .role-viewer .tablet-snd-core>small {
+    font-size:9px!important;
+  }
+  .role-viewer .tablet-alternatives {
+    gap:5px!important;
+  }
+  .role-viewer .tablet-alt {
+    grid-template-columns:22px minmax(0,1fr) 12px!important;
+    padding:6px!important;
+    gap:6px!important;
+  }
+  .role-viewer .tablet-alt-code {
+    width:21px!important;
+    height:21px!important;
+    font-size:10px!important;
+  }
+  .role-viewer .tablet-alt b {
+    font-size:11px!important;
+    line-height:1.2!important;
+  }
+  .role-viewer .tablet-alt small {
+    font-size:9px!important;
+    line-height:1.2!important;
+  }
+
+  /* Seven smaller phase tiles, with readable type */
+  .role-viewer .tablet-phase-grid {
+    gap:6px!important;
+  }
+  .role-viewer .tablet-phase {
+    min-height:78px!important;
+    padding:7px 6px!important;
+    gap:5px!important;
+    border-radius:8px!important;
+  }
+  .role-viewer .tablet-phase-icon {
+    width:24px!important;
+    height:24px!important;
+    border-radius:7px!important;
+    font-size:14px!important;
+  }
+  .role-viewer .tablet-phase-icon svg {
+    width:15px!important;
+    height:15px!important;
+  }
+  .role-viewer .tablet-phase b {
+    font-size:11px!important;
+    line-height:1.2!important;
+  }
+  .role-viewer .tablet-phase small {
+    font-size:9px!important;
+    line-height:1.2!important;
+  }
+  .role-viewer .tablet-facts small,
+  .role-viewer .tablet-event-time {
+    font-size:9px!important;
+  }
+  .role-viewer .tablet-facts b,
+  .role-viewer .tablet-event b {
+    font-size:11px!important;
+    line-height:1.25!important;
+  }
+  .role-viewer .tablet-event small {
+    font-size:9px!important;
+    line-height:1.25!important;
+  }
+
+  /* Strong red during an active failure; green only after verification. */
+  .role-viewer .tablet-hero.running {
+    border:2px solid #ff173b!important;
+    background:linear-gradient(100deg,#5b0718 0%,#281723 55%,#1c1a25 100%)!important;
+    box-shadow:0 0 0 2px #ff173b44,0 0 24px #ff173b55!important;
+  }
+  .role-viewer .tablet-hero.running h2,
+  .role-viewer .tablet-hero.running .tablet-live-dot {
+    color:#fff!important;
+  }
+  .role-viewer .tablet-live-dot.running {
+    background:#ff173b!important;
+    box-shadow:0 0 0 5px #ff173b33,0 0 14px #ff173b!important;
+  }
+  .role-viewer .tablet-status-chip.running {
+    color:#fff!important;
+    background:#d9002d!important;
+    border-color:#ff4962!important;
+    font-weight:900!important;
+  }
+  .role-viewer .tablet-system.primary.fault-active {
+    border:2px solid #ff173b!important;
+    background:linear-gradient(145deg,#a80024 0%,#690016 62%,#39000f 100%)!important;
+    box-shadow:0 0 0 2px #ff173b55,0 0 22px #ff173b66!important;
+  }
+  .role-viewer .tablet-system.service.pending {
+    border:2px solid #ff3652!important;
+    background:linear-gradient(145deg,#4d1522,#281a24)!important;
+    box-shadow:0 0 14px #ff173b22!important;
+  }
+  .role-viewer .tablet-system.service.pending .tablet-system-icon,
+  .role-viewer .tablet-system.service.pending small,
+  .role-viewer .tablet-system.service.pending b,
+  .role-viewer .tablet-system.service.pending em {
+    color:#ffb4c0!important;
+  }
+  .role-viewer .tablet-hero.complete {
+    border:2px solid #19ed78!important;
+    background:linear-gradient(100deg,#064b2c 0%,#123626 55%,#1c1a25 100%)!important;
+    box-shadow:0 0 0 2px #19ed7844,0 0 24px #19ed7855!important;
+  }
+  .role-viewer .tablet-live-dot.complete {
+    background:#19ed78!important;
+    box-shadow:0 0 0 5px #19ed7833,0 0 14px #19ed78!important;
+  }
+  .role-viewer .tablet-status-chip.complete {
+    color:#fff!important;
+    background:#078a43!important;
+    border-color:#19ed78!important;
+    font-weight:900!important;
+  }
+  .role-viewer .tablet-system.service.verified {
+    border:2px solid #19ed78!important;
+    background:linear-gradient(145deg,#078b43 0%,#05612f 65%,#034322 100%)!important;
+    box-shadow:0 0 0 2px #19ed7855,0 0 25px #19ed7866,inset 0 0 22px #b5ffd322!important;
+  }
+  .role-viewer .tablet-system.service.verified .tablet-system-icon,
+  .role-viewer .tablet-system.service.verified small,
+  .role-viewer .tablet-system.service.verified b,
+  .role-viewer .tablet-system.service.verified em {
+    color:#fff!important;
+  }
+  .role-viewer .tablet-console.complete .tablet-phase {
+    border-color:#12c96a!important;
+    background:linear-gradient(145deg,#075b35,#123626)!important;
+    box-shadow:0 0 8px #19ed7833!important;
+  }
+  .role-viewer .tablet-console.complete .tablet-phase-icon {
+    background:#0aaf57!important;
+    color:#fff!important;
+  }
+}
+
 </style>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1888,10 +2091,10 @@ function syncSimulationClock(){
 async function startSimulation(){
  if(!currentUser||!canControl())return;
  const key=s.scenario, selectedFault=fault(), now=Date.now();
- s.step=0;s.incidentId=null;s.reviewed=false;s.route=selectedFault.alternative;lastPersistedStep=-1;currentSimulation=null;if(simulationTimer){clearInterval(simulationTimer);simulationTimer=null;}
+ s.step=0;s.incidentId=null;s.reviewed=false;s.route=selectedFault.alternative;lastPersistedStep=-1;currentSimulation=null;if(simulationTimer){clearInterval(simulationTimer);simulationTimer=null;}if(canViewCore())render();
  try{
   await setDoc(doc(db,"sndControl","current"),{
-   status:"running",scenarioKey:key,faultId:s.faultId,
+   status:"running",scenarioKey:key,faultId:s.faultId,activeIncidentId:null,previousRunClearedAtMs:now,
    environment:scenario().label,incidentTitle:selectedFault.label,
    affectedComponent:selectedFault.component,observedSignal:selectedFault.signal,
    impact:selectedFault.impact,selectedAlternative:selectedFault.alternative,
